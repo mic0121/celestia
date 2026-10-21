@@ -167,18 +167,22 @@
         </button>
       </div>
 
-      <!-- ÉTAPE VRAI TAROT (SI ACTIVÉ VIA LE LOGO) -->
+      <!-- ÉTAPE VRAI TAROT -->
       <div id="step-vrai-tarot" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500 text-center">
         <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest block mb-2">Arcane Majeur Tiré</span>
         <h2 id="tarot-card-title" class="font-cinzel text-3xl font-bold text-amber-200 mb-4">LE JUGEMENT</h2>
         
-        <div class="w-48 h-80 mx-auto my-6 rounded-xl border-2 border-amber-500/40 bg-slate-950 flex flex-col justify-between p-4 shadow-2xl relative overflow-hidden">
-          <div class="text-amber-400 font-cinzel text-xs text-left" id="tarot-card-num">XX</div>
-          <div class="my-auto text-6xl" id="tarot-card-icon">🎴</div>
-          <div class="text-amber-300 font-cinzel text-sm font-bold uppercase" id="tarot-card-label">LE JUGEMENT</div>
+        <div class="w-52 h-88 mx-auto my-6 rounded-xl border-2 border-amber-500/50 bg-slate-950 flex flex-col justify-between p-3 shadow-2xl relative overflow-hidden">
+          <div class="text-amber-400 font-cinzel text-xs text-left font-bold" id="tarot-card-num">XX</div>
+          
+          <div class="my-2 h-64 flex items-center justify-center overflow-hidden rounded">
+            <img id="tarot-card-img" src="" alt="Carte Tarot" class="h-full object-contain shadow-lg rounded" />
+          </div>
+
+          <div class="text-amber-300 font-cinzel text-xs font-bold uppercase tracking-wider" id="tarot-card-label">LE JUGEMENT</div>
         </div>
 
-        <p id="tarot-card-desc" class="text-slate-300 text-sm leading-relaxed mb-6">
+        <p id="tarot-card-desc" class="text-slate-300 text-sm leading-relaxed mb-6 max-w-lg mx-auto">
           Un réveil spirituel majeur s'annonce. Vous êtes appelé à lâcher prise sur le passé et à embrasser une nouvelle phase d'accomplissement personnel.
         </p>
 
@@ -199,10 +203,10 @@
 
   <!-- ================= FAUSSE PAGE D'ERREUR 404 ================= -->
   <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
-    <div class="max-w-md w-full text-center space-y-6 my-auto">
+    <div class="max-w-md w-full text-center space-y-6 my-auto pt-4">
       
-      <!-- Grand 404 -->
-      <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight">404</h1>
+      <!-- Grand 404 corrigé (non coupé) -->
+      <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight leading-none pt-2">404</h1>
 
       <!-- Message principal -->
       <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
@@ -231,16 +235,16 @@
       <div class="pt-6 space-y-4">
         <h2 class="text-xl font-bold text-slate-900">Téléchargez nos applications</h2>
         
-        <!-- SECRET 2 : LE SIGNE S'INSERE SANS CROCHETS ET LÉGÈREMENT SOULIGNÉ AU DÉPART -->
+        <!-- SECRET 2 : SIGNE DISCRET DANS "DEFINITIONS" -->
         <p class="text-sm text-gray-600 leading-relaxed px-2">
-          Nos applications proposent également plus de 1.5 million de <span id="secret-sign-spot" class="underline decoration-gray-300 decoration-1 underline-offset-2 transition-all duration-500">définitions</span> et synonymes ainsi qu'un accès à nos articles de référence. Consultez vos mots partout et à tout moment — nous fonctionnons aussi hors ligne !
+          Nos applications proposent également plus de 1.5 million de <span id="secret-sign-spot" class="underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500">définitions</span> et synonymes ainsi qu'un accès à nos articles de référence. Consultez vos mots partout et à tout moment — nous fonctionnons aussi hors ligne !
         </p>
 
         <!-- Boutons Google Play / App Store -->
         <div class="flex flex-row items-center justify-center gap-3 pt-3">
           
-          <!-- Google Play -->
-          <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
+          <!-- TRIGGER PEEK : Clic sur Google Play pour ouvrir le panneau secret de mentaliste -->
+          <div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-98 transition">
             <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
               <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
             </svg>
@@ -250,13 +254,13 @@
             </div>
           </div>
 
-          <!-- App Store -->
+          <!-- App Store Traduit en français -->
           <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
             <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
-              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
             </svg>
             <div>
-              <div class="text-[9px] uppercase tracking-wider text-gray-300">GET IT ON THE</div>
+              <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR L'</div>
               <div class="text-xs font-semibold leading-none mt-0.5">App Store</div>
             </div>
           </div>
@@ -268,11 +272,89 @@
   </div>
 
 
+  <!-- ================= OVERLAY DISCRET DE PEEK MENTALISTE ================= -->
+  <div id="peek-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 max-w-sm w-full text-slate-100 space-y-4 shadow-2xl relative font-sans">
+      
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <span class="text-amber-400 font-cinzel text-xs font-bold tracking-widest uppercase">✦ Fiche Secrète Mentaliste</span>
+        <button type="button" id="close-peek" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-3 text-sm">
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Date de Naissance</div>
+          <div id="peek-dob" class="font-bold text-amber-200 text-base">--</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Signe Astral</div>
+            <div id="peek-zodiac" class="font-bold text-slate-200">--</div>
+          </div>
+
+          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Signe Chinois</div>
+            <div id="peek-chinese" class="font-bold text-slate-200">--</div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Célébrité née le même jour</div>
+          <div id="peek-celeb" class="font-bold text-amber-300 text-base">--</div>
+        </div>
+      </div>
+
+      <button type="button" id="btn-close-peek-main" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider transition">
+        Fermer la fiche
+      </button>
+
+    </div>
+  </div>
+
+
   <!-- ================= SCRIPT JAVASCRIPT ================= -->
   <script>
     let userZodiacSign = "";
     let secretAstroNumber = 0;
     let isRealTarotMode = false;
+    let selectedDay = 0;
+    let selectedMonth = 0;
+    let selectedYear = 0;
+
+    const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+    // BANQUE DE CÉLÉBRITÉS PAR MOIS ET JOUR [Mois 1..12][Jour 1..31]
+    const celebrities = {
+      1: { 1: "Christine Lagarde (1956)", 8: "Elvis Presley (1935)", 15: "Pitbull (1981)", 17: "Jim Carrey (1962)", 20: "Omar Sy (1978)", 25: "Volodymyr Zelensky (1978)" },
+      2: { 5: "Cristiano Ronaldo (1985)", 12: "Charles Darwin (1809)", 14: "Ed Sheeran (1991)", 17: "Michael Jordan (1963)", 22: "Drew Barrymore (1975)", 26: "Rihanna (1988)" },
+      3: { 1: "Justin Bieber (1994)", 6: "Michel-Ange (1475)", 10: "Sharon Stone (1958)", 14: "Albert Einstein (1879)", 21: "Antoine Griezmann (1991)", 30: "Céline Dion (1968)" },
+      4: { 7: "Jackie Chan (1954)", 9: "Jean-Paul Belmondo (1933)", 15: "Emma Watson (1990)", 21: "Reine Élisabeth II (1926)", 23: "Gilles Lellouche (1972)", 28: "Jessica Alba (1981)" },
+      5: { 2: "David Beckham (1975)", 11: "Laetitia Casta (1978)", 13: "Robert Pattinson (1986)", 19: "Squeezie (1996)", 22: "Novak Djokovic (1987)", 26: "Lenny Kravitz (1964)" },
+      6: { 1: "Morgan Freeman (1937)", 9: "Johnny Hallyday (1943)", 18: "Jamel Debbouze (1975)", 21: "Zinédine Zidane (1972)", 24: "Lionel Messi (1987)", 26: "Ariana Grande (1993)" },
+      7: { 3: "Tom Cruise (1962)", 9: "Tom Hanks (1956)", 10: "Gims (1986)", 16: "Will Ferrell (1967)", 21: "Charlotte Gainsbourg (1971)", 30: "Arnold Schwarzenegger (1947)" },
+      8: { 4: "Barack Obama (1961)", 8: "Roger Federer (1981)", 10: "Antonio Banderas (1960)", 15: "Ben Affleck (1972)", 21: "Usain Bolt (1986)", 29: "Michael Jackson (1958)" },
+      9: { 2: "Keanu Reeves (1964)", 4: "Beyoncé (1981)", 12: "Paul Walker (1973)", 18: "Ronaldo Nazário (1976)", 25: "Will Smith (1968)", 30: "Marion Cotillard (1975)" },
+      10: { 8: "Matt Damon (1970)", 16: "Charles Leclerc (1997)", 21: "Kim Kardashian (1980)", 23: "Ryan Reynolds (1976)", 25: "Katy Perry (1984)", 28: "Bill Gates (1955)" },
+      11: { 7: "David Guetta (1967)", 11: "Leonardo DiCaprio (1974)", 17: "Sophie Marceau (1966)", 22: "Scarlett Johansson (1984)", 25: "Gaspard Ulliel (1984)", 30: "Kaley Cuoco (1985)" },
+      12: { 3: "Julianne Moore (1960)", 8: "Thylane Blondeau (2001)", 18: "Brad Pitt (1963)", 20: "Kylian Mbappé (1998)", 25: "Justin Trudeau (1971)", 30: "LeBron James (1984)" }
+    ];
+
+    function getCelebrity(day, month) {
+      if (celebrities[month] && celebrities[month][day]) {
+        return celebrities[month][day];
+      }
+      const genericCelebs = [
+        "Taylor Swift (1989)", "Dwayne Johnson (1972)", "Lady Gaga (1986)",
+        "Johnny Depp (1963)", "Zendaya (1996)", "Ryan Gosling (1980)"
+      ];
+      return genericCelebs[(day + month) % genericCelebs.length];
+    }
+
+    function getChineseZodiac(year) {
+      const animals = ["Singe", "Coq", "Chien", "Cochon", "Rat", "Bœuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval", "Chèvre"];
+      return animals[year % 12];
+    }
 
     const barnumReadings = [
       "<p>Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.</p><p>Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines.</p>",
@@ -298,28 +380,28 @@
     ];
 
     const tarotCards = [
-      { name: "LE BATELEUR", num: "I", icon: "🧙‍♂️", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
-      { name: "LA PAPESSE", num: "II", icon: "📜", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
-      { name: "L'IMPÉRATRICE", num: "III", icon: "👑", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." },
-      { name: "L'EMPEREUR", num: "IV", icon: "🏛️", desc: "Structure, stability et maîtrise. Le moment est venu de poser des bases solides et de prendre le contrôle." },
-      { name: "LE PAPE", num: "V", icon: "🔮", desc: "Guidance spirituelle, tradition et conseils avisés. Une alliance ou un enseignement important se présente à vous." },
-      { name: "L'AMOUREUX", num: "VI", icon: "💖", desc: "Un choix important venu du cœur s'impose à vous. Alignez vos valeurs avec vos désirs authentiques." },
-      { name: "LE CHARIOT", num: "VII", icon: "⚔️", desc: "Victoire, détermination et mouvement vers l'avant. Vos efforts soutenus portent leurs fruits rapidement." },
-      { name: "LA JUSTICE", num: "VIII", icon: "⚖️", desc: "Équilibre, vérité et clarté. Chaque décision passée trouve son juste réalignement aujourd'hui." },
-      { name: "L'HERMITE", num: "IX", icon: "🕯️", desc: "Sagesse intérieure, introspection et patience. La lumière que vous cherchez se trouve au fond de vous." },
-      { name: "LA ROUE DE FORTUNE", num: "X", icon: "🎡", desc: "Changement de cycle, opportunité et destin. Tournant positif inattendu dans vos affaires." },
-      { name: "LA FORCE", num: "XI", icon: "🦁", desc: "Courage, maîtrise de soi et compassion. Votre force intérieure triomphe sur les obstacles extérieurs." },
-      { name: "LE PENDU", num: "XII", icon: "🙃", desc: "Lâcher-prise et changement de perspective. Une pause nécessaire pour voir la situation sous un nouvel angle." },
-      { name: "L'ARCANE SANS NOM", num: "XIII", icon: "🦋", desc: "Transformation radicale et fin d'un cycle usé. Faites de la place à la renaissance qui s'annonce." },
-      { name: "TEMPÉRANCE", num: "XIV", icon: "🍷", desc: "Harmonie, guérison et modération. La patience et l'équilibre apportent une paix durable." },
-      { name: "LE DIABLE", num: "XV", icon: "🔥", desc: "Attachements, désirs et puissance créative brute. Prenez conscience de ce qui vous enchaîne pour vous en libérer." },
-      { name: "LA MAISON DIEU", num: "XVI", icon: "⚡", desc: "Révélation soudaine et libération. Ce qui s'effondre laisse la place à une vérité plus authentique." },
-      { name: "L'ÉTOILE", num: "XVII", icon: "⭐", desc: "Espoir, inspiration et protection céleste. Ayez foi en l'avenir, la lumière guide vos pas." },
-      { name: "LA LUNE", num: "XVIII", icon: "🌙", desc: "Rêves, subconscient et imaginaire. Traversez les illusions pour révéler la vérité cachée." },
-      { name: "LE SOLEIL", num: "XIX", icon: "☀️", desc: "Joie, succès, clarté et vitalité radiante. Tout s'éclaire d'un jour nouveau et chaleureux." },
-      { name: "LE JUGEMENT", num: "XX", icon: "🎺", desc: "Éveil, appel intérieur et seconde chance. Il est temps de répondre à votre véritable vocation." },
-      { name: "LE MONDE", num: "XXI", icon: "🌍", desc: "Accomplissement total, succès et plénitude. Vous atteignez le sommet de votre parcours actuel." },
-      { name: "LE MAT", num: "0", icon: "🎒", desc: "Saut de foi, spontanéité et liberté absolue. Lancez-vous dans l'aventure sans regarder en arrière." }
+      { name: "LE BATELEUR", num: "I", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_01_Magician.jpg", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
+      { name: "LA PAPESSE", num: "II", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
+      { name: "L'IMPÉRATRICE", num: "III", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." },
+      { name: "L'EMPEREUR", num: "IV", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg", desc: "Structure, stabilité et maîtrise. Le moment est venu de poser des bases solides et de prendre le contrôle." },
+      { name: "LE PAPE", num: "V", img: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg", desc: "Guidance spirituelle, tradition et conseils avisés. Une alliance ou un enseignement important se présente à vous." },
+      { name: "L'AMOUREUX", num: "VI", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/TheLovers.jpg", desc: "Un choix important venu du cœur s'impose à vous. Alignez vos valeurs avec vos désirs authentiques." },
+      { name: "LE CHARIOT", num: "VII", img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg", desc: "Victoire, détermination et mouvement vers l'avant. Vos efforts soutenus portent leurs fruits rapidement." },
+      { name: "LA JUSTICE", num: "VIII", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_08_Justice.jpg", desc: "Équilibre, vérité et clarté. Chaque décision passée trouve son juste réalignement aujourd'hui." },
+      { name: "L'HERMITE", num: "IX", img: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg", desc: "Sagesse intérieure, introspection et patience. La lumière que vous cherchez se trouve au fond de vous." },
+      { name: "LA ROUE DE FORTUNE", num: "X", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg", desc: "Changement de cycle, opportunité et destin. Tournant positif inattendu dans vos affaires." },
+      { name: "LA FORCE", num: "XI", img: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_11_Strength.jpg", desc: "Courage, maîtrise de soi et compassion. Votre force intérieure triomphe sur les obstacles extérieurs." },
+      { name: "LE PENDU", num: "XII", img: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg", desc: "Lâcher-prise et changement de perspective. Une pause nécessaire pour voir la situation sous un nouvel angle." },
+      { name: "L'ARCANE SANS NOM", num: "XIII", img: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg", desc: "Transformation radicale et fin d'un cycle usé. Faites de la place à la renaissance qui s'annonce." },
+      { name: "TEMPÉRANCE", num: "XIV", img: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg", desc: "Harmonie, guérison et modération. La patience et l'équilibre apportent une paix durable." },
+      { name: "LE DIABLE", num: "XV", img: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg", desc: "Attachements, désirs et puissance créative brute. Prenez conscience de ce qui vous enchaîne pour vous en libérer." },
+      { name: "LA MAISON DIEU", num: "XVI", img: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg", desc: "Révélation soudaine et libération. Ce qui s'effondre laisse la place à une vérité plus authentique." },
+      { name: "L'ÉTOILE", num: "XVII", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg", desc: "Espoir, inspiration et protection céleste. Ayez foi en l'avenir, la lumière guide vos pas." },
+      { name: "LA LUNE", num: "XVIII", img: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg", desc: "Rêves, subconscient et imaginaire. Traversez les illusions pour révéler la vérité cachée." },
+      { name: "LE SOLEIL", num: "XIX", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg", desc: "Joie, succès, clarté et vitalité radiante. Tout s'éclaire d'un jour nouveau et chaleureux." },
+      { name: "LE JUGEMENT", num: "XX", img: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg", desc: "Éveil, appel intérieur et seconde chance. Il est temps de répondre à votre véritable vocation." },
+      { name: "LE MONDE", num: "XXI", img: "https://upload.wikimedia.org/wikipedia/commons/ff/ff/RWS_Tarot_21_World.jpg", desc: "Accomplissement total, succès et plénitude. Vous atteignez le sommet de votre parcours actuel." },
+      { name: "LE MAT", num: "0", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg", desc: "Saut de foi, spontanéité et liberté absolue. Lancez-vous dans l'aventure sans regarder en arrière." }
     ];
 
     function getZodiacSign(day, month) {
@@ -362,12 +444,13 @@
       }
       errorMsg.classList.add('hidden');
 
-      const day = parseInt(dayVal);
-      const month = parseInt(monthVal);
+      selectedDay = parseInt(dayVal);
+      selectedMonth = parseInt(monthVal);
+      selectedYear = parseInt(yearVal);
 
       // FORMULE EXACTE : Jour * 2 + Mois
-      secretAstroNumber = (day * 2) + month;
-      userZodiacSign = getZodiacSign(day, month);
+      secretAstroNumber = (selectedDay * 2) + selectedMonth;
+      userZodiacSign = getZodiacSign(selectedDay, selectedMonth);
 
       document.getElementById('secret-number').textContent = secretAstroNumber;
 
@@ -394,7 +477,7 @@
         document.getElementById('tarot-card-title').textContent = trueTarot.name;
         document.getElementById('tarot-card-label').textContent = trueTarot.name;
         document.getElementById('tarot-card-num').textContent = trueTarot.num;
-        document.getElementById('tarot-card-icon').textContent = trueTarot.icon;
+        document.getElementById('tarot-card-img').src = trueTarot.img;
         document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
         document.getElementById('step-vrai-tarot').classList.remove('hidden');
       } else {
@@ -404,15 +487,35 @@
 
         // INJECTION DU SIGNE : Sans crochet, même typographie, légèrement souligné
         const secretSpot = document.getElementById('secret-sign-spot');
-        secretSpot.textContent = userZodiacSign.toLowerCase(); // Ex: "lion", "bélier"
+        secretSpot.textContent = userZodiacSign.toLowerCase();
         secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
 
-        // MINUTEUR DE 15 SECONDES : Disparition du soulignement et retour du mot "définitions"
+        // MINUTEUR DE 15 SECONDES
         setTimeout(() => {
           secretSpot.className = "no-underline font-normal transition-all duration-500";
           secretSpot.textContent = "définitions";
         }, 15000);
       }
+    });
+
+    // PEEK TRIGGER : Clic sur Google Play pour afficher les infos secrètes
+    document.getElementById('peek-trigger').addEventListener('click', function() {
+      if (!selectedDay || !selectedMonth || !selectedYear) return;
+
+      document.getElementById('peek-dob').textContent = `${selectedDay} ${monthNames[selectedMonth - 1]} ${selectedYear}`;
+      document.getElementById('peek-zodiac').textContent = userZodiacSign;
+      document.getElementById('peek-chinese').textContent = getChineseZodiac(selectedYear);
+      document.getElementById('peek-celeb').textContent = getCelebrity(selectedDay, selectedMonth);
+
+      document.getElementById('peek-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('close-peek').addEventListener('click', function() {
+      document.getElementById('peek-modal').classList.add('hidden');
+    });
+
+    document.getElementById('btn-close-peek-main').addEventListener('click', function() {
+      document.getElementById('peek-modal').classList.add('hidden');
     });
   </script>
 </body>
