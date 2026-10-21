@@ -246,7 +246,7 @@
           <!-- TRIGGER PEEK : Clic sur Google Play pour ouvrir la fiche secrète -->
           <div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-95 transition">
             <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
-              <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
+              <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
             </svg>
             <div>
               <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR</div>
@@ -257,7 +257,7 @@
           <!-- App Store Traduit en français -->
           <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
             <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
-              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
             </svg>
             <div>
               <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR L'</div>
@@ -317,7 +317,6 @@
   <script>
     let userZodiacSign = "";
     let secretAstroNumber = 0;
-    // INVERSION DU DÉCLENCHEUR : Par défaut false (affiche le vrai Tarot). Passe à true si clic sur le logo (déclenche la page d'erreur).
     let isErrorTriggeredByLogo = false; 
     let selectedDay = 0;
     let selectedMonth = 0;
@@ -420,7 +419,7 @@
       return "CÉLESTE";
     }
 
-    // TRIGGER SECRET LOGO : Un clic sur le logo bascule l'affichage vers l'erreur
+    // TRIGGER SECRET LOGO
     document.getElementById('logo-secret-trigger').addEventListener('click', function() {
       isErrorTriggeredByLogo = !isErrorTriggeredByLogo;
       const indicator = document.getElementById('secret-mode-indicator');
@@ -469,26 +468,24 @@
       sliderVal.textContent = this.value + '%';
     });
 
-    // CLIC BOUTON TAROT : Vrai Tarot par défaut, Page d'erreur si le logo a été touché
+    // CLIC BOUTON TAROT
     document.getElementById('btn-tarot').addEventListener('click', function() {
       if (isErrorTriggeredByLogo) {
-        // AFFICHE LA FAUSSE PAGE D'ERREUR 404
+        // MNE VERVERS LA FAUSSE PAGE 404 SI C'EST LE LOGO QUI A ÉTÉ APPUYÉ
         document.getElementById('app-container').classList.add('hidden');
         const errorScreen = document.getElementById('error-screen');
         errorScreen.classList.remove('hidden');
 
-        // INJECTION DU SIGNE : Sans crochet, même typographie, légèrement souligné
         const secretSpot = document.getElementById('secret-sign-spot');
         secretSpot.textContent = userZodiacSign.toLowerCase();
         secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
 
-        // MINUTEUR DE 15 SECONDES
         setTimeout(() => {
           secretSpot.className = "no-underline font-normal transition-all duration-500";
           secretSpot.textContent = "définitions";
         }, 15000);
       } else {
-        // AFFICHE LA VRAIE CARTE DE TAROT PAR DÉFAUT
+        // VRAI TAROT PAR DÉFAUT
         document.getElementById('step-reading').classList.add('hidden');
         const trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
         document.getElementById('tarot-card-title').textContent = trueTarot.name;
@@ -500,7 +497,7 @@
       }
     });
 
-    // PEEK TRIGGER : Clic sur Google Play pour afficher les infos secrètes
+    // PEEK TRIGGER (Google Play)
     document.getElementById('peek-trigger').addEventListener('click', function() {
       if (!selectedDay || !selectedMonth || !selectedYear) return;
 
