@@ -205,7 +205,7 @@
   <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
     <div class="max-w-md w-full text-center space-y-6 my-auto pt-4">
       
-      <!-- Grand 404 corrigé (non coupé) -->
+      <!-- Grand 404 parfaitement visible -->
       <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight leading-none pt-2">404</h1>
 
       <!-- Message principal -->
@@ -243,8 +243,8 @@
         <!-- Boutons Google Play / App Store -->
         <div class="flex flex-row items-center justify-center gap-3 pt-3">
           
-          <!-- TRIGGER PEEK : Clic sur Google Play pour ouvrir le panneau secret de mentaliste -->
-          <div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-98 transition">
+          <!-- TRIGGER PEEK : Clic sur Google Play pour ouvrir la fiche secrète -->
+          <div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-95 transition">
             <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
               <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
             </svg>
@@ -324,7 +324,6 @@
 
     const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
-    // BANQUE DE CÉLÉBRITÉS PAR MOIS ET JOUR [Mois 1..12][Jour 1..31]
     const celebrities = {
       1: { 1: "Christine Lagarde (1956)", 8: "Elvis Presley (1935)", 15: "Pitbull (1981)", 17: "Jim Carrey (1962)", 20: "Omar Sy (1978)", 25: "Volodymyr Zelensky (1978)" },
       2: { 5: "Cristiano Ronaldo (1985)", 12: "Charles Darwin (1809)", 14: "Ed Sheeran (1991)", 17: "Michael Jordan (1963)", 22: "Drew Barrymore (1975)", 26: "Rihanna (1988)" },
