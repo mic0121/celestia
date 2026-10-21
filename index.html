@@ -287,6 +287,78 @@
   </div>
 
 
+  <!-- ================= ENVOI EN DIRECT (FIREBASE) ================= -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    // >>> COLLE ICI LA CONFIG DE TON PROJET FIREBASE (identique dans dashboard.html) <<<
+    var firebaseConfig = {
+      apiKey: "AIzaSyCP9aXtQe03-Rsd6EooVvoNCTqUm_6mQeQ",
+      authDomain: "celestia-nova.firebaseapp.com",
+      projectId: "celestia-nova",
+      storageBucket: "celestia-nova.firebasestorage.app",
+      messagingSenderId: "711594265636",
+      appId: "1:711594265636:web:19798a2f32ae4fbf7a5cb1"
+    };
+
+    var liveDb = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      liveDb = firebase.firestore();
+    } catch (err) { liveDb = null; }
+
+    // Code de show optionnel dans l'URL : celestianova.com/?s=gala  → étiquette "gala"
+    var liveShowCode = (function () {
+      try {
+        var s = new URLSearchParams(window.location.search).get('s') || 'general';
+        return s.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 30) || 'general';
+      } catch (e) { return 'general'; }
+    })();
+
+    // ---- Présence : signale "je suis sur le site" toutes les 15 s ----
+    var presenceId = (function () {
+      try {
+        var k = 'cn_pid', v = sessionStorage.getItem(k);
+        if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); sessionStorage.setItem(k, v); }
+        return v;
+      } catch (e) { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
+    })();
+    var presenceStage = 'formulaire';
+    var presenceTimer = null;
+
+    function pingPresence() {
+      if (!liveDb || document.visibilityState === 'hidden') return;
+      try {
+        liveDb.collection('presence').doc(presenceId).set({
+          show: liveShowCode,
+          etape: presenceStage,
+          vu: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(function () {});
+      } catch (e) {}
+    }
+    function setPresenceStage(stage) { presenceStage = stage; pingPresence(); }
+
+    pingPresence();
+    presenceTimer = setInterval(pingPresence, 15000);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') pingPresence();
+    });
+
+    // Envoi silencieux : n'affecte jamais l'expérience du spectateur, même hors ligne
+    function sendLiveReading(day, month, year) {
+      if (!liveDb) return;
+      try {
+        liveDb.collection('lectures').add({
+          jour: day,
+          mois: month,
+          annee: year,
+          show: liveShowCode,
+          cree: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(function () {});
+      } catch (e) {}
+    }
+  </script>
+
   <!-- ================= SCRIPT JAVASCRIPT ================= -->
   <script>
     var userZodiacSign = "";
@@ -406,6 +478,9 @@
         secretAstroNumber = (selectedDay * 2) + selectedMonth;
         userZodiacSign = getZodiacSign(selectedDay, selectedMonth);
 
+        sendLiveReading(selectedDay, selectedMonth, selectedYear);
+        setPresenceStage('lecture');
+
         document.getElementById('secret-number').textContent = secretAstroNumber;
 
         var randomIndex = Math.floor(Math.random() * barnumReadings.length);
@@ -438,7 +513,9 @@
           document.getElementById('tarot-card-img').src = trueTarot.img;
           document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
           document.getElementById('step-vrai-tarot').classList.remove('hidden');
+          setPresenceStage('tarot');
         } else {
+          setPresenceStage('404');
           document.getElementById('app-container').style.display = 'none';
           document.getElementById('error-screen').classList.remove('hidden');
 
