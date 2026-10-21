@@ -46,7 +46,7 @@
     <!-- En-tête -->
     <header class="py-6 px-4 border-b border-amber-900/30 bg-slate-950/40 backdrop-blur-md">
       <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <!-- TRIGGER SECRET : Un clic sur le Logo active/désactive la vraie carte Tarot -->
+        <!-- TRIGGER SECRET : Cliquer sur le logo active la fausse page d'erreur -->
         <div id="logo-secret-trigger" class="flex items-center space-x-3 cursor-pointer select-none">
           <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 to-amber-200 flex items-center justify-center shadow-lg shadow-amber-900/30">
             <span class="text-slate-950 font-bold text-lg font-cinzel">✦</span>
@@ -205,7 +205,7 @@
   <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
     <div class="max-w-md w-full text-center space-y-6 my-auto pt-4">
       
-      <!-- Grand 404 parfaitement visible -->
+      <!-- Grand 404 parfaitement centré -->
       <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight leading-none pt-2">404</h1>
 
       <!-- Message principal -->
@@ -317,7 +317,8 @@
   <script>
     let userZodiacSign = "";
     let secretAstroNumber = 0;
-    let isRealTarotMode = false;
+    // INVERSION DU DÉCLENCHEUR : Par défaut false (affiche le vrai Tarot). Passe à true si clic sur le logo (déclenche la page d'erreur).
+    let isErrorTriggeredByLogo = false; 
     let selectedDay = 0;
     let selectedMonth = 0;
     let selectedYear = 0;
@@ -419,11 +420,11 @@
       return "CÉLESTE";
     }
 
-    // TRIGGER SECRET LOGO
+    // TRIGGER SECRET LOGO : Un clic sur le logo bascule l'affichage vers l'erreur
     document.getElementById('logo-secret-trigger').addEventListener('click', function() {
-      isRealTarotMode = !isRealTarotMode;
+      isErrorTriggeredByLogo = !isErrorTriggeredByLogo;
       const indicator = document.getElementById('secret-mode-indicator');
-      if (isRealTarotMode) {
+      if (isErrorTriggeredByLogo) {
         indicator.className = "text-[10px] text-amber-400 opacity-100 font-bold transition-all duration-300";
       } else {
         indicator.className = "text-[10px] text-amber-500/0 transition-all duration-300";
@@ -468,18 +469,10 @@
       sliderVal.textContent = this.value + '%';
     });
 
-    // CLIC BOUTON TAROT -> PAGE D'ERREUR OU VRAI TAROT
+    // CLIC BOUTON TAROT : Vrai Tarot par défaut, Page d'erreur si le logo a été touché
     document.getElementById('btn-tarot').addEventListener('click', function() {
-      if (isRealTarotMode) {
-        document.getElementById('step-reading').classList.add('hidden');
-        const trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-        document.getElementById('tarot-card-title').textContent = trueTarot.name;
-        document.getElementById('tarot-card-label').textContent = trueTarot.name;
-        document.getElementById('tarot-card-num').textContent = trueTarot.num;
-        document.getElementById('tarot-card-img').src = trueTarot.img;
-        document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
-        document.getElementById('step-vrai-tarot').classList.remove('hidden');
-      } else {
+      if (isErrorTriggeredByLogo) {
+        // AFFICHE LA FAUSSE PAGE D'ERREUR 404
         document.getElementById('app-container').classList.add('hidden');
         const errorScreen = document.getElementById('error-screen');
         errorScreen.classList.remove('hidden');
@@ -494,6 +487,16 @@
           secretSpot.className = "no-underline font-normal transition-all duration-500";
           secretSpot.textContent = "définitions";
         }, 15000);
+      } else {
+        // AFFICHE LA VRAIE CARTE DE TAROT PAR DÉFAUT
+        document.getElementById('step-reading').classList.add('hidden');
+        const trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+        document.getElementById('tarot-card-title').textContent = trueTarot.name;
+        document.getElementById('tarot-card-label').textContent = trueTarot.name;
+        document.getElementById('tarot-card-num').textContent = trueTarot.num;
+        document.getElementById('tarot-card-img').src = trueTarot.img;
+        document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
+        document.getElementById('step-vrai-tarot').classList.remove('hidden');
       }
     });
 
