@@ -17,13 +17,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07060f; --card: #12101f; --line: #2a2440; --text: #e8e6f0;
+      --bg: #07060f; --card: #12101f; --card2: #181530; --line: #2a2440; --text: #e8e6f0;
       --muted: #8b86a3; --gold: #f2c35b; --gold-dim: #8a6a24; --new: #3b2a0a; --danger: #e5484d;
+      --twin: #c084fc; --twin-bg: #241638;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
     .wrap { max-width: 720px; margin: 0 auto; padding: 16px; padding-top: calc(16px + env(safe-area-inset-top)); padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
     h1 { font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: .12em; color: var(--gold); }
+    h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; }
     .muted { color: var(--muted); font-size: 13px; }
     button, select, input {
       font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line);
@@ -49,11 +51,34 @@
     .dot.on { background: #3ddc84; box-shadow: 0 0 8px #3ddc84; }
     .count { font-family: 'Cinzel', serif; font-size: 44px; color: var(--gold); line-height: 1; }
     .presence { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px; }
-    .pbox { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 8px; text-align: center; }
+    .pbox { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 6px; text-align: center; }
     .pbox .n { font-size: 26px; font-weight: 700; line-height: 1.1; }
-    .pbox .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+    .pbox .l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
     .pbox.total { border-color: var(--gold-dim); }
     .pbox.total .n { color: var(--gold); }
+
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-top: 12px; }
+    .force-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; }
+    .force-row select { flex: 1; }
+    .force-state { font-size: 13px; margin-top: 8px; color: var(--muted); }
+    .force-state b { color: var(--gold); }
+    .panel.forced { border-color: var(--gold-dim); background: #1c1708; }
+
+    .twins { background: var(--twin-bg); border: 1px solid #5b3a85; }
+    .twins h2 { color: var(--twin); }
+    .twin-line { margin-top: 8px; font-size: 15px; line-height: 1.4; }
+    .twin-line b { color: var(--twin); }
+
+    details.panel summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    details.panel summary::-webkit-details-marker { display: none; }
+    details.panel summary::after { content: '▾'; color: var(--muted); }
+    details.panel[open] summary::after { content: '▴'; }
+    .q { border-top: 1px solid var(--line); padding: 10px 0 2px; margin-top: 10px; }
+    .q .who { font-size: 12px; color: var(--muted); }
+    .q .who b { color: var(--text); }
+    .q .text { font-size: 15px; margin-top: 3px; line-height: 1.4; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--gold); color: #1a1205; vertical-align: 2px; }
+
     .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
     .toolbar select { flex: 1 1 140px; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
@@ -66,12 +91,22 @@
       padding: 14px 16px; margin-bottom: 10px; transition: background 2s, border-color 2s;
     }
     .entry.fresh { background: var(--new); border-color: var(--gold-dim); }
+    .entry.twin { border-color: #6d44a0; box-shadow: inset 3px 0 0 var(--twin); }
+    .name { grid-column: 1 / -1; font-size: 15px; font-weight: 700; color: var(--gold); letter-spacing: .02em; }
     .dob { font-size: 22px; font-weight: 700; letter-spacing: .01em; }
     .age { font-size: 22px; font-weight: 700; color: var(--gold); text-align: right; }
     .meta { font-size: 13px; color: var(--muted); }
     .meta b { color: var(--text); font-weight: 600; }
     .time { font-size: 12px; color: var(--muted); text-align: right; }
-    .celeb { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+    .full { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+    .full b { color: var(--text); font-weight: 600; }
+    .twin-tag { color: var(--twin); font-weight: 600; }
+    .eq { grid-column: 1 / -1; background: var(--card2); border-radius: 10px; padding: 8px 10px; margin-top: 4px; font-size: 14px; line-height: 1.4; }
+    .eq span { color: var(--muted); font-size: 12px; }
+    .ctrl { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+    .ctrl select { flex: 1; min-width: 0; width: 100%; padding: 7px 10px; font-size: 13px; }
+    .ctrl select.on { border-color: var(--gold); color: var(--gold); }
+    .ctrl label { font-size: 12px; color: var(--muted); white-space: nowrap; }
     .empty { text-align: center; padding: 48px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: 14px; }
     footer { margin-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   </style>
@@ -103,9 +138,30 @@
     <div class="presence">
       <div class="pbox total"><div class="n" id="p-total">0</div><div class="l">Sur le site</div></div>
       <div class="pbox"><div class="n" id="p-form">0</div><div class="l">Formulaire</div></div>
-      <div class="pbox"><div class="n" id="p-read">0</div><div class="l">Lecture</div></div>
+      <div class="pbox"><div class="n" id="p-read">0</div><div class="l">Lecture / Oracle</div></div>
       <div class="pbox"><div class="n" id="p-end">0</div><div class="l">Tarot / 404</div></div>
     </div>
+
+    <!-- Carte forcée pour tout le monde -->
+    <div class="panel" id="force-panel">
+      <h2>🃏 Carte de tarot pour tout le monde</h2>
+      <div class="force-row">
+        <select id="force-global"></select>
+      </div>
+      <div class="force-state" id="force-state">Au hasard (sans La Mort, Le Diable, La Tour)</div>
+    </div>
+
+    <!-- Paradoxe des anniversaires -->
+    <div class="panel twins" id="twins" style="display:none">
+      <h2>🎂 Même anniversaire dans la salle</h2>
+      <div id="twins-list"></div>
+    </div>
+
+    <!-- Questions à l'Oracle -->
+    <details class="panel" id="questions-panel" open>
+      <summary><h2>☾ Questions à l'Oracle <span class="badge" id="q-count">0</span></h2></summary>
+      <div id="questions-list"><div class="muted" style="margin-top:10px">Aucune question pour l'instant.</div></div>
+    </details>
 
     <div class="toolbar">
       <select id="filter-show"><option value="*">Tous les shows</option></select>
@@ -113,6 +169,7 @@
         <option value="recent">Plus récentes d'abord</option>
         <option value="calendar">Ordre du calendrier</option>
         <option value="age">Du plus jeune au plus vieux</option>
+        <option value="name">Par prénom</option>
       </select>
       <button class="primary" id="btn-new-show">Nouveau show</button>
     </div>
@@ -131,7 +188,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
-    // >>> MÊME CONFIG QUE DANS LE SITE <<<
     var firebaseConfig = {
       apiKey: "AIzaSyCP9aXtQe03-Rsd6EooVvoNCTqUm_6mQeQ",
       authDomain: "celestia-nova.firebaseapp.com",
@@ -147,6 +203,8 @@
 
     var MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
     var CHINESE = ["Singe","Coq","Chien","Cochon","Rat","Bœuf","Tigre","Lapin","Dragon","Serpent","Cheval","Chèvre"];
+    var CARDS = ["Le Mat","Le Bateleur","La Papesse","L'Impératrice","L'Empereur","Le Pape","L'Amoureux","Le Chariot","La Force","L'Ermite","La Roue de Fortune","La Justice","Le Pendu","La Mort","Tempérance","Le Diable","La Tour","L'Étoile","La Lune","Le Soleil","Le Jugement","Le Monde"];
+    var NUMS = ["0","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI"];
     var CELEBS = {
       1:{1:"Christine Lagarde",8:"Elvis Presley",15:"Pitbull",17:"Jim Carrey",20:"Omar Sy",25:"Volodymyr Zelensky"},
       2:{5:"Cristiano Ronaldo",12:"Charles Darwin",14:"Ed Sheeran",17:"Michael Jordan",22:"Drew Barrymore",26:"Rihanna"},
@@ -193,16 +251,26 @@
       if (text != null) e.textContent = text;
       return e;
     }
+    function hhmm(t, sec) {
+      var d = new Date(t), p = function (n) { return (n < 10 ? '0' : '') + n; };
+      return p(d.getHours()) + ':' + p(d.getMinutes()) + (sec ? ':' + p(d.getSeconds()) : '');
+    }
+    function validCard(n) { return typeof n === 'number' && n % 1 === 0 && n >= 0 && n <= 21; }
+    function cardLabel(i) { return NUMS[i] + ' · ' + CARDS[i]; }
+    function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
     // ---- État ----
     var showStart = Number(safeGet('cn_show_start')) || (Date.now() - 6 * 3600 * 1000); // défaut : 6 dernières heures
-    var entries = [];
-    var seen = {};
-    var firstLoad = true;
-    var unsub = null;
-
-    function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    var entries = [];          // lectures
+    var questions = [];        // questions à l'Oracle
+    var draws = {};            // pid -> dernière carte tirée
+    var controls = {};         // pid -> carte forcée ; 'global' -> carte forcée pour tous
+    var presence = {};
+    var seen = {}, seenQ = {};
+    var firstLoad = true, firstLoadQ = true;
+    var unsubs = [];
+    var renderPending = false;
 
     // ---- Connexion ----
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function(){});
@@ -221,22 +289,129 @@
     auth.onAuthStateChanged(function (user) {
       document.getElementById('login').style.display = user ? 'none' : 'block';
       document.getElementById('app').style.display = user ? 'block' : 'none';
-      if (user) { listen(); listenPresence(); }
-      else {
-        if (unsub) { unsub(); unsub = null; }
-        if (unsubPresence) { unsubPresence(); unsubPresence = null; }
-      }
+      stopAll();
+      if (user) { listenShow(); listenControls(); listenPresence(); }
     });
 
-    // ---- Présence en direct ----
-    var ACTIVE_MS = 40000;          // considéré présent si vu dans les 40 dernières secondes
-    var presence = {};
-    var unsubPresence = null;
+    function stopAll() { unsubs.forEach(function (u) { try { u(); } catch (e) {} }); unsubs = []; }
 
+    // ---- Écoute en temps réel : lectures, questions, tirages ----
+    var showUnsubs = [];
+    function listenShow() {
+      showUnsubs.forEach(function (u) { try { u(); } catch (e) {} });
+      showUnsubs = [];
+      entries = []; questions = []; draws = {}; seen = {}; seenQ = {};
+      firstLoad = true; firstLoadQ = true;
+      setStatus(false, 'Connexion…');
+      updateSince();
+      var since = firebase.firestore.Timestamp.fromMillis(showStart);
+
+      showUnsubs.push(db.collection('lectures').where('cree', '>=', since).orderBy('cree', 'desc')
+        .onSnapshot(function (snap) {
+          var gotNew = false;
+          entries = snap.docs.map(function (doc) {
+            var x = doc.data();
+            var isNew = !seen[doc.id];
+            seen[doc.id] = true;
+            if (isNew && !firstLoad) gotNew = true;
+            return {
+              id: doc.id, pid: x.pid || '', prenom: x.prenom || '',
+              d: x.jour, m: x.mois, y: x.annee, show: x.show || 'general',
+              t: x.cree ? x.cree.toMillis() : Date.now(), fresh: isNew && !firstLoad
+            };
+          });
+          firstLoad = false;
+          setStatus(true, 'En direct');
+          if (gotNew && navigator.vibrate) navigator.vibrate(60);
+          refreshShowFilter();
+          requestRender();
+        }, function () { setStatus(false, 'Hors ligne — vérifie les règles Firestore'); }));
+
+      showUnsubs.push(db.collection('questions').where('cree', '>=', since)
+        .onSnapshot(function (snap) {
+          var gotNew = false;
+          questions = snap.docs.map(function (doc) {
+            var x = doc.data();
+            if (!seenQ[doc.id]) { seenQ[doc.id] = true; if (!firstLoadQ) gotNew = true; }
+            return { id: doc.id, pid: x.pid || '', prenom: x.prenom || '', q: x.question || '', show: x.show || 'general', t: x.cree ? x.cree.toMillis() : Date.now() };
+          }).sort(function (a, b) { return b.t - a.t; });
+          firstLoadQ = false;
+          if (gotNew && navigator.vibrate) navigator.vibrate([40, 60, 40]);
+          renderQuestions();
+          requestRender();
+        }, function () {}));
+
+      showUnsubs.push(db.collection('tirages').where('cree', '>=', since)
+        .onSnapshot(function (snap) {
+          var latest = {};
+          snap.docs.forEach(function (doc) {
+            var x = doc.data(), t = x.cree ? x.cree.toMillis() : Date.now();
+            if (!x.pid || !validCard(x.carte)) return;
+            if (!latest[x.pid] || latest[x.pid].t < t) latest[x.pid] = { carte: x.carte, t: t };
+          });
+          draws = latest;
+          requestRender();
+        }, function () {}));
+
+      unsubs = unsubs.concat(showUnsubs);
+    }
+
+    // ---- Cartes forcées ----
+    function listenControls() {
+      unsubs.push(db.collection('controle').onSnapshot(function (snap) {
+        controls = {};
+        snap.docs.forEach(function (doc) {
+          var v = doc.data().carte;
+          if (!validCard(v)) return;
+          controls[doc.id === 'global' ? 'global' : doc.id.replace(/^p_/, '')] = v;
+        });
+        renderForcePanel();
+        requestRender();
+      }, function () {}));
+    }
+
+    function setGlobalCard(v) {
+      db.collection('controle').doc('global').set({ carte: v }).catch(function () { alert('Impossible d\'enregistrer la carte. Vérifie les règles Firestore.'); });
+    }
+    function setPersonalCard(pid, v) {
+      if (!pid) return;
+      var ref = db.collection('controle').doc('p_' + pid);
+      (v < 0 ? ref.delete() : ref.set({ carte: v })).catch(function () { alert('Impossible d\'enregistrer la carte.'); });
+    }
+
+    function fillCardSelect(sel, firstLabel, current) {
+      sel.innerHTML = '';
+      var o = el('option', null, firstLabel); o.value = '-1'; sel.appendChild(o);
+      for (var i = 0; i < 22; i++) { var c = el('option', null, cardLabel(i)); c.value = String(i); sel.appendChild(c); }
+      sel.value = String(validCard(current) ? current : -1);
+    }
+
+    var forceGlobalSel = document.getElementById('force-global');
+    fillCardSelect(forceGlobalSel, '🎲 Au hasard', -1);
+    forceGlobalSel.onchange = function () { setGlobalCard(parseInt(this.value, 10)); };
+
+    function renderForcePanel() {
+      var g = controls.global;
+      if (document.activeElement !== forceGlobalSel) forceGlobalSel.value = String(validCard(g) ? g : -1);
+      var panel = document.getElementById('force-panel');
+      var state = document.getElementById('force-state');
+      state.innerHTML = '';
+      if (validCard(g)) {
+        panel.classList.add('forced');
+        state.appendChild(document.createTextNode('Forcée : '));
+        state.appendChild(el('b', null, CARDS[g]));
+        state.appendChild(document.createTextNode(' — tout le monde la recevra en appuyant sur le bouton.'));
+      } else {
+        panel.classList.remove('forced');
+        state.textContent = 'Au hasard (sans La Mort, Le Diable, La Tour)';
+      }
+    }
+
+    // ---- Présence en direct ----
+    var ACTIVE_MS = 75000; // présent si vu dans les 75 dernières secondes (signal aux 30 s)
     function listenPresence() {
-      if (unsubPresence) unsubPresence();
       presence = {};
-      unsubPresence = db.collection('presence')
+      unsubs.push(db.collection('presence')
         .where('vu', '>=', firebase.firestore.Timestamp.fromMillis(Date.now() - 10 * 60000))
         .onSnapshot(function (snap) {
           snap.docChanges().forEach(function (ch) {
@@ -245,7 +420,7 @@
             presence[ch.doc.id] = { show: x.show || 'general', etape: x.etape, t: x.vu ? x.vu.toMillis() : Date.now() };
           });
           renderPresence();
-        }, function () {});
+        }, function () {}));
     }
 
     function renderPresence() {
@@ -257,7 +432,7 @@
         if (f !== '*' && p.show !== f) return;
         c.total++;
         if (p.etape === 'formulaire') c.formulaire++;
-        else if (p.etape === 'lecture') c.lecture++;
+        else if (p.etape === 'lecture' || p.etape === 'oracle') c.lecture++;
         else c.fin++;
       });
       document.getElementById('p-total').textContent = c.total;
@@ -267,7 +442,7 @@
     }
     setInterval(renderPresence, 3000);
 
-    // Ménage automatique : supprime les présences inactives depuis plus de 10 min
+    // Ménage automatique : présences inactives depuis plus de 10 min
     setInterval(function () {
       if (!auth.currentUser) return;
       db.collection('presence')
@@ -280,35 +455,7 @@
         }).catch(function () {});
     }, 60000);
 
-    // ---- Écoute en temps réel ----
-    function listen() {
-      if (unsub) unsub();
-      entries = []; seen = {}; firstLoad = true;
-      setStatus(false, 'Connexion…');
-      updateSince();
-      unsub = db.collection('lectures')
-        .where('cree', '>=', firebase.firestore.Timestamp.fromMillis(showStart))
-        .orderBy('cree', 'desc')
-        .onSnapshot(function (snap) {
-          var gotNew = false;
-          entries = snap.docs.map(function (doc) {
-            var x = doc.data();
-            var isNew = !seen[doc.id];
-            seen[doc.id] = true;
-            if (isNew && !firstLoad) gotNew = true;
-            return {
-              id: doc.id, d: x.jour, m: x.mois, y: x.annee, show: x.show || 'general',
-              t: x.cree ? x.cree.toMillis() : Date.now(), fresh: isNew && !firstLoad
-            };
-          });
-          firstLoad = false;
-          setStatus(true, 'En direct');
-          if (gotNew && navigator.vibrate) navigator.vibrate(60);
-          refreshShowFilter();
-          render();
-        }, function () { setStatus(false, 'Hors ligne — vérifie les règles Firestore'); });
-    }
-
+    // ---- Affichage ----
     function setStatus(on, txt) {
       document.getElementById('dot').className = 'dot' + (on ? ' on' : '');
       document.getElementById('status').textContent = txt;
@@ -332,15 +479,89 @@
       sel.value = shows[cur] ? cur : '*';
     }
 
-    function render() {
+    function personLabel(e) {
+      return e.prenom ? e.prenom : (age(e.d, e.m, e.y) + ' ans (' + e.y + ')');
+    }
+
+    // Ne redessine pas la liste pendant que tu manipules un menu (sinon il se fermerait)
+    function requestRender() {
+      var a = document.activeElement;
+      if (a && a.tagName === 'SELECT' && document.getElementById('list').contains(a)) {
+        renderPending = true;
+        return;
+      }
+      render();
+    }
+    document.addEventListener('focusout', function () {
+      setTimeout(function () { if (renderPending) { renderPending = false; requestRender(); } }, 50);
+    });
+
+    function filtered() {
       var f = document.getElementById('filter-show').value;
+      return entries.filter(function (e) { return f === '*' || e.show === f; });
+    }
+
+    function renderTwins(list) {
+      var groups = {};
+      list.forEach(function (e) {
+        var k = e.m * 100 + e.d;
+        (groups[k] = groups[k] || []).push(e);
+      });
+      var keys = Object.keys(groups).filter(function (k) { return groups[k].length > 1; })
+        .sort(function (a, b) { return groups[b].length - groups[a].length || a - b; });
+      var box = document.getElementById('twins'), out = document.getElementById('twins-list');
+      out.innerHTML = '';
+      var twinIds = {};
+      keys.forEach(function (k) {
+        var g = groups[k];
+        g.forEach(function (e) { twinIds[e.id] = true; });
+        var line = el('div', 'twin-line');
+        line.appendChild(el('b', null, g[0].d + ' ' + MONTHS[g[0].m - 1]));
+        line.appendChild(document.createTextNode(' — ' + g.map(personLabel).join(' · ') + (g.length > 2 ? '  (' + g.length + ' personnes !)' : '')));
+        out.appendChild(line);
+      });
+      box.style.display = keys.length ? 'block' : 'none';
+      return twinIds;
+    }
+
+    function renderQuestions() {
+      var f = document.getElementById('filter-show').value;
+      var list = questions.filter(function (q) { return f === '*' || q.show === f; });
+      document.getElementById('q-count').textContent = list.length;
+      var box = document.getElementById('questions-list');
+      box.innerHTML = '';
+      if (!list.length) { box.appendChild(el('div', 'muted', 'Aucune question pour l\'instant.')); box.firstChild.style.marginTop = '10px'; return; }
+      var byPid = {};
+      entries.forEach(function (e) { if (e.pid && !byPid[e.pid]) byPid[e.pid] = e; });
+      list.forEach(function (q) {
+        var row = el('div', 'q');
+        var who = el('div', 'who');
+        var person = byPid[q.pid];
+        var name = q.prenom || (person && person.prenom) || '';
+        if (name) who.appendChild(el('b', null, name));
+        if (person) who.appendChild(document.createTextNode((name ? ' · ' : '') + person.d + ' ' + MONTHS[person.m - 1] + ' ' + person.y + ' · ' + zodiac(person.d, person.m)));
+        if (!name && !person) who.appendChild(document.createTextNode('Anonyme'));
+        who.appendChild(document.createTextNode(' · ' + hhmm(q.t)));
+        row.appendChild(who);
+        row.appendChild(el('div', 'text', q.q));
+        box.appendChild(row);
+      });
+    }
+
+    function render() {
       var sort = document.getElementById('sort').value;
-      var list = entries.filter(function (e) { return f === '*' || e.show === f; });
+      var list = filtered();
 
       if (sort === 'calendar') list.sort(function (a, b) { return (a.m - b.m) || (a.d - b.d); });
       else if (sort === 'age') list.sort(function (a, b) { return (b.y - a.y) || (b.m - a.m) || (b.d - a.d); });
+      else if (sort === 'name') list.sort(function (a, b) {
+        if (!a.prenom !== !b.prenom) return a.prenom ? -1 : 1;
+        return a.prenom.localeCompare(b.prenom, 'fr');
+      });
 
       document.getElementById('count').textContent = list.length;
+      var twinIds = renderTwins(list);
+      renderQuestions();
 
       // Répartition par signe
       var chips = document.getElementById('chips'); chips.innerHTML = '';
@@ -351,13 +572,18 @@
         c.appendChild(el('b', null, String(bySign[z]))); chips.appendChild(c);
       });
 
+      // Questions par personne
+      var qByPid = {};
+      questions.forEach(function (q) { if (q.pid) (qByPid[q.pid] = qByPid[q.pid] || []).push(q); });
+
       var box = document.getElementById('list'); box.innerHTML = '';
       if (!list.length) {
         box.appendChild(el('div', 'empty', 'En attente des premières dates…'));
         return;
       }
       list.forEach(function (e) {
-        var card = el('div', 'entry' + (e.fresh ? ' fresh' : ''));
+        var card = el('div', 'entry' + (e.fresh ? ' fresh' : '') + (twinIds[e.id] ? ' twin' : ''));
+        if (e.prenom) card.appendChild(el('div', 'name', e.prenom));
         card.appendChild(el('div', 'dob', e.d + ' ' + MONTHS[e.m - 1] + ' ' + e.y));
         card.appendChild(el('div', 'age', age(e.d, e.m, e.y) + ' ans'));
 
@@ -369,12 +595,40 @@
         else if (dtb <= 30) meta.appendChild(document.createTextNode(' · fête dans ' + dtb + ' j'));
         card.appendChild(meta);
 
-        card.appendChild(el('div', 'time',
-          new Date(e.t).toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
-          (e.show !== 'general' ? ' · ' + e.show : '')));
+        card.appendChild(el('div', 'time', hhmm(e.t, true) + (e.show !== 'general' ? ' · ' + e.show : '')));
+
+        if (twinIds[e.id]) card.appendChild(el('div', 'full twin-tag', '🎂 Même anniversaire qu\'une autre personne'));
 
         var celeb = CELEBS[e.m] && CELEBS[e.m][e.d];
-        if (celeb) card.appendChild(el('div', 'celeb', 'Même jour que ' + celeb));
+        if (celeb) card.appendChild(el('div', 'full', 'Même jour que ' + celeb));
+
+        var drawn = e.pid && draws[e.pid];
+        if (drawn) {
+          var dl = el('div', 'full');
+          dl.appendChild(document.createTextNode('🃏 A tiré : '));
+          dl.appendChild(el('b', null, CARDS[drawn.carte]));
+          card.appendChild(dl);
+        }
+
+        (qByPid[e.pid] || []).forEach(function (q) {
+          var qb = el('div', 'eq');
+          qb.appendChild(el('span', null, '☾ Oracle · ' + hhmm(q.t)));
+          qb.appendChild(document.createElement('br'));
+          qb.appendChild(document.createTextNode(q.q));
+          card.appendChild(qb);
+        });
+
+        if (e.pid) {
+          var ctrl = el('div', 'ctrl');
+          ctrl.appendChild(el('label', null, 'Sa carte :'));
+          var sel = document.createElement('select');
+          var mine = controls[e.pid];
+          fillCardSelect(sel, validCard(controls.global) ? 'Comme tous : ' + CARDS[controls.global] : 'Comme tous : hasard', mine);
+          if (validCard(mine)) sel.className = 'on';
+          (function (pid) { sel.onchange = function () { setPersonalCard(pid, parseInt(this.value, 10)); this.blur(); }; })(e.pid);
+          ctrl.appendChild(sel);
+          card.appendChild(ctrl);
+        }
 
         box.appendChild(card);
         if (e.fresh) { setTimeout(function () { card.classList.remove('fresh'); }, 6000); e.fresh = false; }
@@ -388,20 +642,23 @@
       if (!confirm('Démarrer un nouveau show ? La liste repartira de zéro à partir de maintenant.')) return;
       showStart = Date.now();
       safeSet('cn_show_start', String(showStart));
-      listen();
+      unsubs = unsubs.filter(function (u) { return showUnsubs.indexOf(u) === -1; });
+      listenShow();
     };
 
     document.getElementById('btn-clear').onclick = function () {
-      if (!confirm('Supprimer définitivement TOUTES les dates enregistrées (tous les shows) ?')) return;
-      Promise.all([db.collection('lectures').get(), db.collection('presence').get()]).then(function (snaps) {
-        var docs = snaps[0].docs.concat(snaps[1].docs);
-        var batches = [], b = db.batch(), n = 0;
+      if (!confirm('Supprimer définitivement TOUTES les données (dates, prénoms, questions, tirages, cartes forcées) ?')) return;
+      var cols = ['lectures', 'questions', 'tirages', 'presence', 'controle'];
+      Promise.all(cols.map(function (c) { return db.collection(c).get(); })).then(function (snaps) {
+        var docs = [];
+        snaps.forEach(function (s) { docs = docs.concat(s.docs); });
+        var commits = [], b = db.batch(), n = 0;
         docs.forEach(function (doc) {
           b.delete(doc.ref); n++;
-          if (n % 450 === 0) { batches.push(b.commit()); b = db.batch(); }
+          if (n % 450 === 0) { commits.push(b.commit()); b = db.batch(); }
         });
-        batches.push(b.commit());
-        return Promise.all(batches);
+        commits.push(b.commit());
+        return Promise.all(commits);
       }).then(function () { alert('Tout est effacé.'); })
         .catch(function () { alert('Erreur pendant la suppression.'); });
     };
