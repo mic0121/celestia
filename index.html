@@ -61,6 +61,7 @@
     <!-- Contenu Principal -->
     <main class="max-w-2xl w-full mx-auto p-4 my-8">
       
+
       <!-- ÉTAPE 1 : Formulaire Date de Naissance -->
       <div id="step-form" class="mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500">
         <div class="text-center mb-8">
@@ -70,8 +71,15 @@
         </div>
 
         <form id="astro-form" onsubmit="return false;" class="space-y-6">
+
+          <!-- Prénom (facultatif) -->
+          <div>
+            <label for="first-name" class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Prénom <span class="normal-case text-slate-500 font-sans">(facultatif)</span></label>
+            <input id="first-name" type="text" maxlength="30" autocomplete="given-name" autocapitalize="words" spellcheck="false" placeholder="Votre prénom" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500">
+          </div>
+
           <div class="grid grid-cols-3 gap-3 md:gap-4">
-            
+
             <!-- Jour -->
             <div>
               <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Jour</label>
@@ -122,7 +130,7 @@
         <div class="text-center border-b border-amber-900/30 pb-6 mb-6">
           <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest">Matrice Thématique Alignée</span>
           <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-slate-100 mt-1">Analyse d'Aura & Alignement</h2>
-          
+
           <div class="mt-4 inline-flex items-center px-4 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-xs font-mono text-amber-300">
             <span>FRÉQUENCE VIBRATOIRE :&nbsp;</span>
             <span id="secret-number" class="font-bold text-amber-200">--</span>
@@ -144,6 +152,34 @@
           <p class="text-center text-xs text-emerald-400 mt-2 font-medium">✦ Résonance optimale confirmée.</p>
         </div>
 
+        <!-- ORACLE -->
+        <button id="btn-oracle" type="button" class="w-full py-3.5 mb-4 rounded-xl font-cinzel font-semibold tracking-wider text-amber-300 bg-slate-950/60 border border-amber-500/40 hover:bg-amber-950/40 hover:border-amber-400 transition duration-300 flex items-center justify-center space-x-2 cursor-pointer">
+          <span>☾</span><span>CONSULTER L'ORACLE</span>
+        </button>
+
+        <div id="oracle-panel" class="hidden bg-slate-900/80 rounded-xl p-5 border border-amber-900/40 mb-6">
+          <label for="oracle-q" class="block text-xs font-cinzel uppercase text-amber-200/80 mb-1 text-center">Posez une question précise à l'Oracle</label>
+          <p class="text-center text-xs text-slate-500 mb-3">Concentrez-vous sur votre question en l'écrivant.</p>
+          <textarea id="oracle-q" rows="3" maxlength="280" placeholder="Ma question est…" class="w-full bg-slate-950/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 resize-none"></textarea>
+          <p id="oracle-err" class="hidden text-rose-400 text-xs text-center mt-2">L'Oracle a besoin d'une question.</p>
+          <button id="btn-oracle-ask" type="button" class="w-full mt-3 py-3 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 transition duration-300 active:scale-95 cursor-pointer">
+            INTERROGER LES ASTRES ✦
+          </button>
+
+          <div id="oracle-loading" class="hidden text-center py-6">
+            <div class="text-3xl text-amber-300 animate-pulse">✦</div>
+            <p class="text-xs font-cinzel uppercase tracking-widest text-amber-200/70 mt-3">L'Oracle consulte les astres…</p>
+          </div>
+
+          <div id="oracle-result" class="hidden text-center pt-4">
+            <p id="oracle-question-echo" class="text-xs text-slate-500 italic mb-3"></p>
+            <p id="oracle-answer" class="font-cinzel text-lg md:text-xl text-amber-200 leading-snug"></p>
+            <button id="btn-oracle-again" type="button" class="mt-5 px-5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-cinzel text-xs tracking-wider transition cursor-pointer">
+              POSER UNE AUTRE QUESTION
+            </button>
+          </div>
+        </div>
+
         <button id="btn-tarot" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 flex items-center justify-center space-x-2 cursor-pointer">
           <span>VOIR MA CARTE DU TAROT ASTRAL</span>
           <span>→</span>
@@ -154,12 +190,16 @@
       <div id="step-vrai-tarot" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500 text-center">
         <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest block mb-2">Arcane Majeur Tiré</span>
         <h2 id="tarot-card-title" class="font-cinzel text-3xl font-bold text-amber-200 mb-4">LE JUGEMENT</h2>
-        
+
         <div class="w-52 h-88 mx-auto my-6 rounded-xl border-2 border-amber-500/50 bg-slate-950 flex flex-col justify-between p-3 shadow-2xl relative overflow-hidden">
           <div class="text-amber-400 font-cinzel text-xs text-left font-bold" id="tarot-card-num">XX</div>
-          
+
           <div class="my-2 h-64 flex items-center justify-center overflow-hidden rounded">
             <img id="tarot-card-img" src="" alt="Carte Tarot" class="h-full object-contain shadow-lg rounded" />
+            <div id="tarot-card-fallback" class="hidden h-full w-full flex flex-col items-center justify-center border border-amber-500/30 rounded bg-gradient-to-b from-slate-900 to-slate-950">
+              <span class="text-amber-300 text-4xl">✦</span>
+              <span id="tarot-card-fallback-num" class="font-cinzel text-amber-200 text-3xl font-bold mt-3"></span>
+            </div>
           </div>
 
           <div class="text-amber-300 font-cinzel text-xs font-bold uppercase tracking-wider" id="tarot-card-label">LE JUGEMENT</div>
@@ -256,6 +296,11 @@
       </div>
 
       <div class="space-y-3 text-sm">
+        <div id="peek-name-box" class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800">
+          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Prénom</div>
+          <div id="peek-name" class="font-bold text-amber-200 text-base">--</div>
+        </div>
+
         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
           <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Date de Naissance</div>
           <div id="peek-dob" class="font-bold text-amber-200 text-base">--</div>
@@ -287,11 +332,10 @@
   </div>
 
 
-  <!-- ================= ENVOI EN DIRECT (FIREBASE) ================= -->
+  <!-- ================= LIAISON EN DIRECT (FIREBASE) ================= -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
-    // >>> COLLE ICI LA CONFIG DE TON PROJET FIREBASE (identique dans dashboard.html) <<<
     var firebaseConfig = {
       apiKey: "AIzaSyCP9aXtQe03-Rsd6EooVvoNCTqUm_6mQeQ",
       authDomain: "celestia-nova.firebaseapp.com",
@@ -307,7 +351,16 @@
       liveDb = firebase.firestore();
     } catch (err) { liveDb = null; }
 
-    // Code de show optionnel dans l'URL : celestianova.com/?s=gala  → étiquette "gala"
+    // Hasard cryptographique (meilleur que Math.random)
+    function randInt(n) {
+      try {
+        var a = new Uint32Array(1);
+        window.crypto.getRandomValues(a);
+        return a[0] % n;
+      } catch (e) { return Math.floor(Math.random() * n); }
+    }
+
+    // Code de show optionnel dans l'URL : celestianova.com/?s=gala → étiquette "gala"
     var liveShowCode = (function () {
       try {
         var s = new URLSearchParams(window.location.search).get('s') || 'general';
@@ -315,19 +368,28 @@
       } catch (e) { return 'general'; }
     })();
 
-    // ---- Présence : signale "je suis sur le site" toutes les 15 s ----
+    // Identifiant anonyme de ce téléphone pour la session
     var presenceId = (function () {
+      function make() {
+        var chars = 'abcdefghijklmnopqrstuvwxyz0123456789', out = '';
+        for (var i = 0; i < 20; i++) out += chars.charAt(randInt(chars.length));
+        return out;
+      }
       try {
-        var k = 'cn_pid', v = sessionStorage.getItem(k);
-        if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); sessionStorage.setItem(k, v); }
+        var v = sessionStorage.getItem('cn_pid');
+        if (!v || !/^[a-z0-9]{8,40}$/.test(v)) { v = make(); sessionStorage.setItem('cn_pid', v); }
         return v;
-      } catch (e) { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
+      } catch (e) { return make(); }
     })();
+
+    // ---- Présence : signal toutes les 30 s tant que la page est visible ----
     var presenceStage = 'formulaire';
-    var presenceTimer = null;
+    var presenceStartedAt = Date.now();
+    var PRESENCE_MAX_MS = 45 * 60 * 1000; // arrête après 45 min pour économiser le quota gratuit
 
     function pingPresence() {
       if (!liveDb || document.visibilityState === 'hidden') return;
+      if (Date.now() - presenceStartedAt > PRESENCE_MAX_MS) return;
       try {
         liveDb.collection('presence').doc(presenceId).set({
           show: liveShowCode,
@@ -336,27 +398,57 @@
         }).catch(function () {});
       } catch (e) {}
     }
-    function setPresenceStage(stage) { presenceStage = stage; pingPresence(); }
-
+    function setPresenceStage(stage) {
+      if (presenceStage === stage) return;
+      presenceStage = stage;
+      pingPresence();
+    }
     pingPresence();
-    presenceTimer = setInterval(pingPresence, 15000);
+    setInterval(pingPresence, 30000);
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible') pingPresence();
     });
 
-    // Envoi silencieux : n'affecte jamais l'expérience du spectateur, même hors ligne
-    function sendLiveReading(day, month, year) {
+    // ---- Envois silencieux (n'affectent jamais l'expérience, même hors ligne) ----
+    function liveAdd(collection, data) {
       if (!liveDb) return;
       try {
-        liveDb.collection('lectures').add({
-          jour: day,
-          mois: month,
-          annee: year,
-          show: liveShowCode,
-          cree: firebase.firestore.FieldValue.serverTimestamp()
-        }).catch(function () {});
+        data.pid = presenceId;
+        data.show = liveShowCode;
+        data.cree = firebase.firestore.FieldValue.serverTimestamp();
+        liveDb.collection(collection).add(data).catch(function () {});
       } catch (e) {}
     }
+    function sendLiveReading(day, month, year, prenom) {
+      var data = { jour: day, mois: month, annee: year };
+      if (prenom) data.prenom = prenom;
+      liveAdd('lectures', data);
+    }
+    function sendOracleQuestion(question, prenom) {
+      var data = { question: question };
+      if (prenom) data.prenom = prenom;
+      liveAdd('questions', data);
+    }
+    function sendTarotDraw(cardIndex) {
+      liveAdd('tirages', { carte: cardIndex });
+    }
+
+    // ---- Carte forcée à distance (depuis le tableau de bord) ----
+    var forcedGlobal = -1;
+    var forcedPersonal = -1;
+    function validCard(n) { return typeof n === 'number' && n % 1 === 0 && n >= 0 && n <= 21; }
+    function watchControl(docId, setter) {
+      if (!liveDb) return;
+      try {
+        liveDb.collection('controle').doc(docId).onSnapshot(function (snap) {
+          var v = snap.exists ? snap.data().carte : -1;
+          setter(validCard(v) ? v : -1);
+          if (validCard(v)) preloadCard(v);
+        }, function () {});
+      } catch (e) {}
+    }
+    watchControl('global', function (v) { forcedGlobal = v; });
+    watchControl('p_' + presenceId, function (v) { forcedPersonal = v; });
   </script>
 
   <!-- ================= SCRIPT JAVASCRIPT ================= -->
@@ -367,6 +459,7 @@
     var selectedDay = 0;
     var selectedMonth = 0;
     var selectedYear = 0;
+    var userFirstName = "";
 
     var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 
@@ -401,17 +494,190 @@
       return animals[year % 12];
     }
 
+    // ================= 25 LECTURES (2 paragraphes chacune) =================
     var barnumReadings = [
-      "<p>Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.</p><p>Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines.</p>",
-      "<p>Vous êtes une personne qui apprécie l'autonomie, mais qui ressent parfois le poids des responsabilités. Il vous arrive de douter de vos choix passés, même si la majorité d'entre eux vous ont conduit là où vous deviez être.</p><p>Une opportunité inattendue liée à vos projets personnels se précisera très prochainement si vous restez attentif aux signes.</p>",
-      "<p>Vous possédez une grande réserve de capacités non exploitées que vous n'avez pas encore révélées à votre entourage. Vous êtes parfois très exigeant envers vous-même, ce qui peut engendrer des tensions intérieures évitables.</p><p>Les astres indiquent qu'un réalignement majeur dans vos relations amicales ou professionnelles portera ses fruits incessamment.</p>"
+      ["Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.",
+       "Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines."],
+      ["Vous êtes une personne qui apprécie l'autonomie, mais qui ressent parfois le poids des responsabilités. Il vous arrive de douter de vos choix passés, même si la majorité d'entre eux vous ont conduit là où vous deviez être.",
+       "Une opportunité inattendue liée à vos projets personnels se précisera très prochainement si vous restez attentif aux signes."],
+      ["Vous possédez une grande réserve de capacités non exploitées que vous n'avez pas encore révélées à votre entourage. Vous êtes parfois très exigeant envers vous-même, ce qui peut engendrer des tensions intérieures évitables.",
+       "Les astres indiquent qu'un réalignement majeur dans vos relations amicales ou professionnelles portera ses fruits incessamment."],
+      ["Vous avez un besoin profond d'être apprécié à votre juste valeur, mais vous préférez rarement le demander ouvertement. Vous donnez beaucoup aux autres, parfois plus que ce que vous recevez en retour.",
+       "La configuration actuelle de votre thème suggère qu'une reconnaissance longtemps attendue approche. Restez fidèle à votre façon de faire."],
+      ["Vous savez vous montrer sociable et chaleureux, mais certains jours, vous avez surtout besoin de calme et de solitude pour recharger vos batteries. Peu de gens comprennent vraiment cette part de vous.",
+       "Une rencontre récente, ou à venir, aura plus d'importance que vous ne l'imaginez en ce moment. Laissez-lui le temps de se révéler."],
+      ["Vous avez déjà pris des décisions courageuses que d'autres n'auraient pas osé prendre. Pourtant, vous vous demandez encore parfois si vous avez fait le bon choix.",
+       "Votre trajectoire céleste montre que vous êtes exactement là où vous devez être. Une porte qui semblait fermée pourrait se rouvrir sous une autre forme."],
+      ["Vous avez une mémoire étonnante pour certains détails, surtout ceux qui touchent vos émotions. Une situation du passé vous revient encore à l'esprit de temps à autre, sans prévenir.",
+       "Les astres vous invitent à tourner cette page avec douceur. Ce que vous libérez maintenant fera de la place pour quelque chose de plus grand."],
+      ["Vous êtes quelqu'un de loyal, et la trahison est probablement ce qui vous blesse le plus. Avec le temps, vous avez appris à choisir avec soin les personnes à qui vous accordez votre confiance.",
+       "Une personne de votre entourage vous admire davantage qu'elle ne l'exprime. Les prochaines semaines pourraient vous le faire découvrir."],
+      ["Vous avez un côté perfectionniste qui vous pousse à recommencer ce qui est déjà très bien. Cette exigence est votre force, mais elle vous empêche parfois de savourer vos réussites.",
+       "Votre énergie actuelle est idéale pour terminer un projet que vous repoussez depuis un moment. L'élan est de votre côté."],
+      ["Vous avez une capacité rare à sentir l'ambiance d'une pièce dès que vous y entrez. Vous percevez souvent les non-dits, même lorsque personne ne les exprime.",
+       "Cette sensibilité est un véritable don. Une situation récente vous a donné raison, et votre instinct continuera de vous guider juste."],
+      ["Vous aimez la stabilité, mais une partie de vous rêve secrètement d'aventure et de changement. Il vous arrive d'imaginer une vie très différente de celle que vous menez.",
+       "Les astres suggèrent qu'un petit changement concret, plutôt qu'un grand bouleversement, vous apportera la liberté que vous recherchez."],
+      ["Vous êtes souvent la personne vers qui les autres se tournent pour un conseil. Pourtant, quand c'est vous qui avez besoin de soutien, vous avez tendance à garder vos préoccupations pour vous.",
+       "Votre thème indique une période propice pour vous appuyer sur votre entourage. Quelqu'un attend simplement que vous lui en donniez l'occasion."],
+      ["Vous avez un humour bien à vous, parfois plus fin que ce que les gens remarquent au premier abord. Derrière votre légèreté se cache une grande profondeur.",
+       "Une conversation importante approche. Votre façon unique d'aborder les choses fera toute la différence."],
+      ["Vous avez traversé une épreuve dont vous êtes sorti plus fort, même si peu de gens savent à quel point cela vous a demandé d'efforts. Cette résilience fait partie de votre signature énergétique.",
+       "Le cycle difficile est derrière vous. Les mois à venir s'annoncent plus légers et plus fluides."],
+      ["Vous aimez comprendre le pourquoi des choses et vous n'acceptez pas facilement une réponse toute faite. Votre curiosité vous a souvent mené vers des découvertes inattendues.",
+       "Un apprentissage ou une nouvelle passion vous attire en ce moment. Les astres vous encouragent fortement à suivre cette intuition."],
+      ["Vous êtes plus ambitieux que vous ne le montrez. Vous gardez en tête un objectif précis dont vous parlez rarement, de peur qu'il ne se réalise pas.",
+       "La position actuelle des astres est favorable à cet objectif. Un premier pas, même modeste, déclenchera un enchaînement positif."],
+      ["Vous avez tendance à remettre à plus tard les décisions qui touchent votre bien-être, en donnant la priorité aux besoins des autres. Cette générosité vous honore, mais elle a un prix.",
+       "Les astres vous rappellent qu'il est temps de vous accorder la même attention que vous offrez si naturellement aux autres."],
+      ["Vous possédez une sensibilité artistique ou créative que vous n'exploitez pas pleinement au quotidien. Elle se manifeste dans vos goûts, votre style ou votre façon de voir les choses.",
+       "Une occasion de laisser s'exprimer ce côté créatif se présentera bientôt. Ne la laissez pas passer par excès de prudence."],
+      ["Vous avez parfois l'impression d'être à un carrefour, sans savoir exactement quelle direction prendre. Cette hésitation est normale : elle précède souvent les plus beaux tournants.",
+       "Votre fréquence vibratoire indique qu'une réponse claire émergera d'ici peu, probablement d'une source inattendue."],
+      ["Vous êtes à la fois rationnel et intuitif, un équilibre que peu de gens possèdent. Il vous arrive toutefois que ces deux voix se contredisent dans votre esprit.",
+       "Cette fois, les astres penchent en faveur de votre intuition. Ce que vous ressentez au fond de vous est juste."],
+      ["Vous accordez une grande importance à vos racines et à votre famille, même si vos relations n'ont pas toujours été simples. Certaines personnes occupent une place unique dans votre cœur.",
+       "Un rapprochement ou une bonne nouvelle dans votre cercle familial est fortement indiqué dans votre thème actuel."],
+      ["Vous avez déjà eu le sentiment de vivre un moment que vous aviez l'impression d'avoir déjà vécu. Ces signes ne sont pas anodins : ils indiquent que vous êtes sur la bonne voie.",
+       "Restez attentif aux coïncidences des prochains jours. L'une d'elles portera un message qui vous est destiné."],
+      ["Vous êtes plus fort dans l'adversité que dans le confort. C'est souvent sous pression que vous révélez vos meilleures idées et votre vraie nature.",
+       "Un défi récent ou à venir est en réalité une occasion déguisée. Votre thème montre une issue très favorable."],
+      ["Vous avez un rapport particulier à l'argent et à la sécurité : vous aimez vous sentir prévoyant, mais vous savez aussi vous faire plaisir quand le moment est bien choisi.",
+       "Les astres annoncent une amélioration dans ce domaine. Une décision bien réfléchie portera ses fruits plus rapidement que prévu."],
+      ["Vous avez un charme discret qui agit sur les gens sans que vous en ayez pleinement conscience. On se souvient de vous plus longtemps que vous ne le croyez.",
+       "Votre aura est particulièrement rayonnante en ce moment. C'est le moment idéal pour oser une demande ou une initiative que vous hésitiez à faire."]
     ];
 
-    var tarotCards = [
-      { name: "LE BATELEUR", num: "I", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_01_Magician.jpg", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
-      { name: "LA PAPESSE", num: "II", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
-      { name: "L'IMPÉRATRICE", num: "III", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." }
+    // Tirage sans répétition sur un même téléphone tant que les 25 n'ont pas été vues
+    function nextReadingIndex() {
+      var n = barnumReadings.length, bag = null, last = -1;
+      try {
+        bag = JSON.parse(localStorage.getItem('cn_bag') || 'null');
+        last = parseInt(localStorage.getItem('cn_last') || '-1', 10);
+      } catch (e) {}
+      if (!bag || !bag.length || !bag.every(function (i) { return i >= 0 && i < n; })) {
+        bag = [];
+        for (var i = 0; i < n; i++) bag.push(i);
+        for (var j = n - 1; j > 0; j--) { var k = randInt(j + 1), t = bag[j]; bag[j] = bag[k]; bag[k] = t; }
+        if (bag[bag.length - 1] === last && n > 1) { var tmp = bag[0]; bag[0] = bag[bag.length - 1]; bag[bag.length - 1] = tmp; }
+      }
+      var idx = bag.pop();
+      try { localStorage.setItem('cn_bag', JSON.stringify(bag)); localStorage.setItem('cn_last', String(idx)); } catch (e) {}
+      return idx;
+    }
+
+    function lowerFirst(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+
+    function renderReading(idx, prenom) {
+      var container = document.getElementById('reading-container');
+      container.innerHTML = '';
+      barnumReadings[idx].forEach(function (text, i) {
+        var p = document.createElement('p');
+        p.textContent = (i === 0 && prenom) ? prenom + ', ' + lowerFirst(text) : text;
+        container.appendChild(p);
+      });
+    }
+
+    // ================= ORACLE =================
+    var oracleAnswers = [
+      "Oui. Les astres sont clairement alignés en votre faveur.",
+      "La réponse est oui, mais pas de la façon dont vous l'imaginez.",
+      "Pas encore. Le moment idéal se présentera d'ici quelques semaines.",
+      "Votre cœur connaît déjà la réponse. Écoutez-le.",
+      "Oui, à condition de faire le premier pas vous-même.",
+      "Les signes sont favorables. Avancez avec confiance.",
+      "La patience sera votre meilleure alliée. La réponse viendra d'elle-même.",
+      "Une personne de votre entourage détient la clé de cette question.",
+      "Ce que vous redoutez n'arrivera pas. Libérez-vous de cette inquiétude.",
+      "Oui. Et plus tôt que vous ne le pensez.",
+      "Le chemin sera différent de celui prévu, mais la destination est la bonne.",
+      "Les astres conseillent d'attendre le prochain cycle lunaire avant d'agir.",
+      "Votre intuition vous a déjà donné la réponse. Faites-lui confiance.",
+      "C'est une porte qui s'ouvre. Il ne tient qu'à vous de la franchir.",
+      "La réponse est entre vos mains plus que dans celles des autres.",
+      "Un signe vous sera envoyé dans les prochains jours. Restez attentif.",
+      "Le doute que vous ressentez est normal. La réponse est positive.",
+      "Les étoiles indiquent un changement favorable dans ce domaine.",
+      "Ce n'est pas le bon moment, mais ce n'est pas non plus un non définitif.",
+      "Oui, si vous restez fidèle à vous-même.",
+      "La situation se dénouera plus simplement que vous ne le croyez.",
+      "Votre énergie actuelle attire exactement ce que vous demandez.",
+      "Concentrez-vous sur ce que vous pouvez contrôler. Le reste suivra.",
+      "Les astres sourient à cette question. Gardez espoir."
     ];
+    var lastOracleIndex = -1;
+    function pickOracleAnswer() {
+      var i = randInt(oracleAnswers.length);
+      if (i === lastOracleIndex) i = (i + 1 + randInt(oracleAnswers.length - 1)) % oracleAnswers.length;
+      lastOracleIndex = i;
+      return oracleAnswers[i];
+    }
+
+    // ================= 22 ARCANES MAJEURS =================
+    var tarotCards = [
+      { name: "LE MAT", num: "0", file: "RWS_Tarot_00_Fool.jpg", desc: "Un nouveau départ s'annonce. Osez l'inconnu avec légèreté : l'aventure qui commence vous réserve de belles surprises." },
+      { name: "LE BATELEUR", num: "I", file: "RWS_Tarot_01_Magician.jpg", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
+      { name: "LA PAPESSE", num: "II", file: "RWS_Tarot_02_High_Priestess.jpg", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
+      { name: "L'IMPÉRATRICE", num: "III", file: "RWS_Tarot_03_Empress.jpg", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." },
+      { name: "L'EMPEREUR", num: "IV", file: "RWS_Tarot_04_Emperor.jpg", desc: "Stabilité, structure et leadership. Le moment est venu de prendre les commandes et de bâtir sur des bases solides." },
+      { name: "LE PAPE", num: "V", file: "RWS_Tarot_05_Hierophant.jpg", desc: "Sagesse et transmission. Un conseil précieux ou un mentor vous guidera vers la bonne décision." },
+      { name: "L'AMOUREUX", num: "VI", file: "RWS_Tarot_06_Lovers.jpg", desc: "Un choix du cœur se présente. Harmonie et union sont favorisées si vous restez fidèle à vos valeurs." },
+      { name: "LE CHARIOT", num: "VII", file: "RWS_Tarot_07_Chariot.jpg", desc: "Victoire et détermination. Votre volonté vous mène droit vers vos objectifs : gardez le cap." },
+      { name: "LA FORCE", num: "VIII", file: "RWS_Tarot_08_Strength.jpg", desc: "Courage tranquille et maîtrise de soi. Votre douceur est votre plus grande force face aux défis." },
+      { name: "L'ERMITE", num: "IX", file: "RWS_Tarot_09_Hermit.jpg", desc: "Introspection et sagesse. Prenez un temps pour vous : la lumière que vous cherchez est déjà en vous." },
+      { name: "LA ROUE DE FORTUNE", num: "X", file: "RWS_Tarot_10_Wheel_of_Fortune.jpg", desc: "Le vent tourne en votre faveur. Un cycle favorable commence, porté par la chance et les bonnes rencontres." },
+      { name: "LA JUSTICE", num: "XI", file: "RWS_Tarot_11_Justice.jpg", desc: "Équilibre et vérité. Ce qui est juste finira par s'imposer : vos efforts seront récompensés à leur juste valeur." },
+      { name: "LE PENDU", num: "XII", file: "RWS_Tarot_12_Hanged_Man.jpg", desc: "Changez de perspective. Une pause ou un lâcher-prise vous révélera une solution que vous ne voyiez pas." },
+      { name: "LA MORT", num: "XIII", file: "RWS_Tarot_13_Death.jpg", desc: "Transformation profonde. Une page se tourne pour laisser place à un renouveau longtemps attendu." },
+      { name: "TEMPÉRANCE", num: "XIV", file: "RWS_Tarot_14_Temperance.jpg", desc: "Harmonie et patience. En trouvant le juste milieu, vous créerez l'équilibre parfait dans votre vie." },
+      { name: "LE DIABLE", num: "XV", file: "RWS_Tarot_15_Devil.jpg", desc: "Passion et magnétisme. Prenez conscience de ce qui vous retient : vous avez le pouvoir de vous en libérer." },
+      { name: "LA TOUR", num: "XVI", file: "RWS_Tarot_16_Tower.jpg", desc: "Révélation soudaine. Un bouleversement inattendu fera tomber les illusions et ouvrira un chemin plus authentique." },
+      { name: "L'ÉTOILE", num: "XVII", file: "RWS_Tarot_17_Star.jpg", desc: "Espoir et inspiration. Votre bonne étoile brille : vos souhaits les plus sincères sont en voie de se réaliser." },
+      { name: "LA LUNE", num: "XVIII", file: "RWS_Tarot_18_Moon.jpg", desc: "Rêves et intuition. Fiez-vous à vos ressentis : votre imagination vous montre ce que la raison ignore encore." },
+      { name: "LE SOLEIL", num: "XIX", file: "RWS_Tarot_19_Sun.jpg", desc: "Joie, succès et rayonnement. Une période lumineuse s'ouvre devant vous, pleine de vitalité et de réussite." },
+      { name: "LE JUGEMENT", num: "XX", file: "RWS_Tarot_20_Judgement.jpg", desc: "Renaissance et appel intérieur. Une nouvelle version de vous-même est prête à se révéler au grand jour." },
+      { name: "LE MONDE", num: "XXI", file: "RWS_Tarot_21_World.jpg", desc: "Accomplissement total. Un cycle se complète avec succès : le monde vous ouvre ses portes." }
+    ];
+    // Cartes possibles au hasard (on évite La Mort, Le Diable et La Tour, qui restent forçables)
+    var randomTarotPool = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 17, 18, 19, 20, 21];
+
+    var TAROT_LOCAL_DIR = 'tarot/';
+    function tarotCommonsUrl(file) { return 'https://commons.wikimedia.org/wiki/Special:FilePath/' + file + '?width=330'; }
+    function preloadCard(i) { try { var im = new Image(); im.src = TAROT_LOCAL_DIR + tarotCards[i].file; } catch (e) {} }
+
+    function pickTarotIndex() {
+      if (validCard(forcedPersonal)) return forcedPersonal;
+      if (validCard(forcedGlobal)) return forcedGlobal;
+      return randomTarotPool[randInt(randomTarotPool.length)];
+    }
+
+    function showTarotCard(i) {
+      var card = tarotCards[i];
+      var img = document.getElementById('tarot-card-img');
+      var fallback = document.getElementById('tarot-card-fallback');
+      document.getElementById('tarot-card-title').textContent = card.name;
+      document.getElementById('tarot-card-label').textContent = card.name;
+      document.getElementById('tarot-card-num').textContent = card.num;
+      document.getElementById('tarot-card-desc').textContent = card.desc;
+      document.getElementById('tarot-card-fallback-num').textContent = card.num;
+
+      fallback.classList.add('hidden');
+      img.style.display = '';
+      img.alt = card.name;
+      img.setAttribute('data-step', 'local');
+      // 1) dossier local  2) Wikimedia Commons  3) carte stylisée
+      img.onerror = function () {
+        if (this.getAttribute('data-step') === 'local') {
+          this.setAttribute('data-step', 'commons');
+          this.src = tarotCommonsUrl(card.file);
+        } else {
+          this.onerror = null;
+          this.style.display = 'none';
+          fallback.classList.remove('hidden');
+        }
+      };
+      img.src = TAROT_LOCAL_DIR + card.file;
+    }
 
     function getZodiacSign(day, month) {
       if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "VERSEAU";
@@ -429,23 +695,28 @@
       return "CÉLESTE";
     }
 
+    function cleanFirstName(raw) {
+      var s = String(raw || '').replace(/[<>{}\[\]\\\/"`]/g, '').replace(/\s+/g, ' ').trim().slice(0, 30);
+      if (!s) return '';
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
     // EXECUTION AU CHARGEMENT COMPLET
     window.onload = function() {
       var daySelect = document.getElementById('dob-day');
       var yearSelect = document.getElementById('dob-year');
 
-      // Génération dynamique robuste
       for (var d = 1; d <= 31; d++) {
         var optD = document.createElement('option');
         optD.value = d;
-        optD.innerHTML = d;
+        optD.textContent = d;
         daySelect.appendChild(optD);
       }
 
       for (var y = 2010; y >= 1940; y--) {
         var optY = document.createElement('option');
         optY.value = y;
-        optY.innerHTML = y;
+        optY.textContent = y;
         yearSelect.appendChild(optY);
       }
 
@@ -459,7 +730,7 @@
       // BOUTON GENERER
       document.getElementById('btn-submit-astro').onclick = function(e) {
         if (e) e.preventDefault();
-        
+
         var dayVal = document.getElementById('dob-day').value;
         var monthVal = document.getElementById('dob-month').value;
         var yearVal = document.getElementById('dob-year').value;
@@ -474,17 +745,16 @@
         selectedDay = parseInt(dayVal, 10);
         selectedMonth = parseInt(monthVal, 10);
         selectedYear = parseInt(yearVal, 10);
+        userFirstName = cleanFirstName(document.getElementById('first-name').value);
 
         secretAstroNumber = (selectedDay * 2) + selectedMonth;
         userZodiacSign = getZodiacSign(selectedDay, selectedMonth);
 
-        sendLiveReading(selectedDay, selectedMonth, selectedYear);
+        sendLiveReading(selectedDay, selectedMonth, selectedYear, userFirstName);
         setPresenceStage('lecture');
 
         document.getElementById('secret-number').textContent = secretAstroNumber;
-
-        var randomIndex = Math.floor(Math.random() * barnumReadings.length);
-        document.getElementById('reading-container').innerHTML = barnumReadings[randomIndex];
+        renderReading(nextReadingIndex(), userFirstName);
 
         document.getElementById('step-form').style.display = 'none';
         document.getElementById('step-reading').classList.remove('hidden');
@@ -500,20 +770,62 @@
         };
       }
 
+      // ORACLE
+      var oraclePanel = document.getElementById('oracle-panel');
+      var oracleQ = document.getElementById('oracle-q');
+      var oracleAsk = document.getElementById('btn-oracle-ask');
+      var oracleErr = document.getElementById('oracle-err');
+      var oracleLoading = document.getElementById('oracle-loading');
+      var oracleResult = document.getElementById('oracle-result');
+
+      document.getElementById('btn-oracle').onclick = function () {
+        var opening = oraclePanel.classList.contains('hidden');
+        oraclePanel.classList.toggle('hidden');
+        if (opening) {
+          setPresenceStage('oracle');
+          setTimeout(function () { oracleQ.focus(); }, 50);
+        }
+      };
+
+      oracleAsk.onclick = function () {
+        var q = oracleQ.value.replace(/\s+/g, ' ').trim().slice(0, 280);
+        if (q.length < 2) { oracleErr.classList.remove('hidden'); return; }
+        oracleErr.classList.add('hidden');
+        sendOracleQuestion(q, userFirstName);
+
+        oracleQ.classList.add('hidden');
+        oracleAsk.classList.add('hidden');
+        oracleLoading.classList.remove('hidden');
+        oracleQ.blur();
+
+        setTimeout(function () {
+          oracleLoading.classList.add('hidden');
+          document.getElementById('oracle-question-echo').textContent = '« ' + q + ' »';
+          document.getElementById('oracle-answer').textContent = pickOracleAnswer();
+          oracleResult.classList.remove('hidden');
+        }, 2600 + randInt(1200));
+      };
+
+      document.getElementById('btn-oracle-again').onclick = function () {
+        oracleResult.classList.add('hidden');
+        oracleQ.value = '';
+        oracleQ.classList.remove('hidden');
+        oracleAsk.classList.remove('hidden');
+        oracleQ.focus();
+      };
+
       // BOUTON TAROT
       document.getElementById('btn-tarot').onclick = function(e) {
         if (e) e.preventDefault();
-        
+
         if (!isLogoTriggeredMode) {
           document.getElementById('step-reading').classList.add('hidden');
-          var trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-          document.getElementById('tarot-card-title').textContent = trueTarot.name;
-          document.getElementById('tarot-card-label').textContent = trueTarot.name;
-          document.getElementById('tarot-card-num').textContent = trueTarot.num;
-          document.getElementById('tarot-card-img').src = trueTarot.img;
-          document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
-          document.getElementById('step-vrai-tarot').classList.remove('hidden');
+          var cardIndex = pickTarotIndex();
+          showTarotCard(cardIndex);
+          sendTarotDraw(cardIndex);
           setPresenceStage('tarot');
+          document.getElementById('step-vrai-tarot').classList.remove('hidden');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           setPresenceStage('404');
           document.getElementById('app-container').style.display = 'none';
@@ -539,6 +851,13 @@
         document.getElementById('peek-zodiac').textContent = userZodiacSign;
         document.getElementById('peek-chinese').textContent = getChineseZodiac(selectedYear);
         document.getElementById('peek-celeb').textContent = getCelebrity(selectedDay, selectedMonth);
+        var nameBox = document.getElementById('peek-name-box');
+        if (userFirstName) {
+          document.getElementById('peek-name').textContent = userFirstName;
+          nameBox.classList.remove('hidden');
+        } else {
+          nameBox.classList.add('hidden');
+        }
 
         document.getElementById('peek-modal').classList.remove('hidden');
       };
