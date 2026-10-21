@@ -40,20 +40,22 @@
 </head>
 <body class="bg-stars min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- ================= VRAI SITE (ÉTAPES 1 & 2) ================= -->
+  <!-- ================= SITE PRINCIPAL ================= -->
   <div id="app-container" class="w-full flex-grow flex flex-col justify-between">
     
     <!-- En-tête -->
     <header class="py-6 px-4 border-b border-amber-900/30 bg-slate-950/40 backdrop-blur-md">
       <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <div class="flex items-center space-x-3">
+        <!-- TRIGGER SECRET : Un clic sur le Logo active/désactive la vraie carte Tarot -->
+        <div id="logo-secret-trigger" class="flex items-center space-x-3 cursor-pointer select-none">
           <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 to-amber-200 flex items-center justify-center shadow-lg shadow-amber-900/30">
             <span class="text-slate-950 font-bold text-lg font-cinzel">✦</span>
           </div>
           <span class="font-cinzel text-xl md:text-2xl font-bold tracking-wider gold-gradient">CÉLESTIA NOVA</span>
+          <span id="secret-mode-indicator" class="text-[10px] text-amber-500/0 transition-all duration-300">✦</span>
         </div>
         <div class="text-xs tracking-widest text-amber-300/60 uppercase font-cinzel hidden sm:block">
-          Observatoire Astral & Human Alignment
+          Observatoire Astral & Alignement Humain
         </div>
       </div>
     </header>
@@ -122,39 +124,33 @@
           <p id="error-msg" class="text-rose-400 text-xs text-center hidden">Veuillez sélectionner le jour, le mois et l'année.</p>
 
           <button id="btn-submit-astro" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 transform active:scale-95 cursor-pointer">
-            GÉNÉRER MON READING CÉLESTE ✦
+            GÉNÉRER MA LECTURE CÉLESTE ✦
           </button>
         </div>
       </div>
 
-      <!-- ÉTAPE 2 : Génération du Reading & Validation -->
+      <!-- ÉTAPE 2 : Génération de la Lecture Céleste -->
       <div id="step-reading" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500">
         
         <div class="text-center border-b border-amber-900/30 pb-6 mb-6">
           <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest">Matrice Thématique Alignée</span>
           <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-slate-100 mt-1">Analyse d'Aura & Alignement</h2>
           
-          <!-- SECRET 1 : NOUVELLE FORMULE (JOUR * 2 + MOIS) -->
+          <!-- SECRET 1 : FORMULE JOUR * 2 + MOIS -->
           <div class="mt-4 inline-flex items-center px-4 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-xs font-mono text-amber-300">
-            <span>FREQUENCE VIBRATOIRE :&nbsp;</span>
+            <span>FRÉQUENCE VIBRATOIRE :&nbsp;</span>
             <span id="secret-number" class="font-bold text-amber-200">--</span>
           </div>
         </div>
 
-        <!-- Effet Barnum / Reading -->
-        <div class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base font-light mb-8">
-          <p>
-            Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine et sous contrôle, vous gardez en vous certaines incertitudes quant à vos priorités futures.
-          </p>
-          <p>
-            Vous possédez une intuition remarquable, souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage ou votre épanouissement personnel demande votre attention d'ici les prochaines semaines.
-          </p>
+        <!-- Emplacement de la Lecture Aléatoire -->
+        <div id="reading-container" class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base font-light mb-8">
         </div>
 
         <!-- Curseur de confirmation de résonance -->
         <div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-8">
           <label class="block text-xs font-cinzel uppercase text-slate-300 mb-3 text-center">
-            À quel point ce reading résonne-t-il avec votre situation actuelle ?
+            À quel point cette lecture résonne-t-elle avec votre situation actuelle ?
           </label>
           <div class="flex items-center space-x-4">
             <span class="text-xs text-slate-500">Peu</span>
@@ -164,10 +160,30 @@
           <p class="text-center text-xs text-emerald-400 mt-2 font-medium">✦ Résonance optimale confirmée.</p>
         </div>
 
-        <!-- Bouton vers le déclencheur de l'erreur (Tarot) -->
+        <!-- Bouton vers Tarot -->
         <button id="btn-tarot" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 flex items-center justify-center space-x-2 cursor-pointer">
           <span>VOIR MA CARTE DU TAROT ASTRAL</span>
           <span>→</span>
+        </button>
+      </div>
+
+      <!-- ÉTAPE VRAI TAROT (SI ACTIVÉ VIA LE LOGO) -->
+      <div id="step-vrai-tarot" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500 text-center">
+        <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest block mb-2">Arcane Majeur Tiré</span>
+        <h2 id="tarot-card-title" class="font-cinzel text-3xl font-bold text-amber-200 mb-4">LE JUGEMENT</h2>
+        
+        <div class="w-48 h-80 mx-auto my-6 rounded-xl border-2 border-amber-500/40 bg-slate-950 flex flex-col justify-between p-4 shadow-2xl relative overflow-hidden">
+          <div class="text-amber-400 font-cinzel text-xs text-left" id="tarot-card-num">XX</div>
+          <div class="my-auto text-6xl" id="tarot-card-icon">🎴</div>
+          <div class="text-amber-300 font-cinzel text-sm font-bold uppercase" id="tarot-card-label">LE JUGEMENT</div>
+        </div>
+
+        <p id="tarot-card-desc" class="text-slate-300 text-sm leading-relaxed mb-6">
+          Un réveil spirituel majeur s'annonce. Vous êtes appelé à lâcher prise sur le passé et à embrasser une nouvelle phase d'accomplissement personnel.
+        </p>
+
+        <button type="button" onclick="location.reload()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-cinzel text-xs tracking-wider transition">
+          RECOMMENCER L'ANALYSE
         </button>
       </div>
 
@@ -181,7 +197,7 @@
   </div>
 
 
-  <!-- ================= FAUSSE PAGE D'ERREUR 404 (EXACTEMENT COMME L'IMAGE) ================= -->
+  <!-- ================= FAUSSE PAGE D'ERREUR 404 ================= -->
   <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
     <div class="max-w-md w-full text-center space-y-6 my-auto">
       
@@ -190,32 +206,34 @@
 
       <!-- Message principal -->
       <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
-        Oops! The page you're looking for can't be found.
+        Oups ! La page que vous cherchez est introuvable.
       </p>
 
-      <!-- Bouton Reload -->
+      <!-- Bouton Recharger -->
       <div class="pt-2 pb-2">
         <button type="button" onclick="location.reload()" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition duration-150 text-base">
-          Reload
+          Recharger
         </button>
       </div>
 
       <!-- Explications d'erreur -->
       <div class="space-y-4 text-gray-600 text-base font-normal leading-relaxed px-2">
         <p>
-          Your phone is having trouble connecting to the internet. Please check the URL and reload.
+          Votre téléphone rencontre des difficultés pour se connecter à Internet. Veuillez vérifier l'URL et recharger.
         </p>
         
         <p>
-          If you clicked on a link to get here, the link may be outdated or incorrect<span id="secret-sign-spot" class="text-gray-900 font-semibold tracking-wide ml-1 transition-opacity duration-500"></span>.
+          Si vous avez cliqué sur un lien pour arriver ici, le lien est peut-être périmé ou incorrect.
         </p>
       </div>
 
-      <!-- Section App Store -->
+      <!-- Section Téléchargement d'application -->
       <div class="pt-6 space-y-4">
-        <h2 class="text-xl font-bold text-slate-900">Download Our Apps</h2>
+        <h2 class="text-xl font-bold text-slate-900">Téléchargez nos applications</h2>
+        
+        <!-- SECRET 2 : LE SIGNE S'INSERE SANS CROCHETS ET LÉGÈREMENT SOULIGNÉ AU DÉPART -->
         <p class="text-sm text-gray-600 leading-relaxed px-2">
-          Our apps also have more than 1.5 million definitions and synonyms plus access to our trusted reference articles. Look up the words anywhere anytime-we work offline too!
+          Nos applications proposent également plus de 1.5 million de <span id="secret-sign-spot" class="underline decoration-gray-300 decoration-1 underline-offset-2 transition-all duration-500">définitions</span> et synonymes ainsi qu'un accès à nos articles de référence. Consultez vos mots partout et à tout moment — nous fonctionnons aussi hors ligne !
         </p>
 
         <!-- Boutons Google Play / App Store -->
@@ -227,7 +245,7 @@
               <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
             </svg>
             <div>
-              <div class="text-[9px] uppercase tracking-wider text-gray-300">GET IT ON</div>
+              <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR</div>
               <div class="text-xs font-semibold leading-none mt-0.5">Google Play</div>
             </div>
           </div>
@@ -238,7 +256,7 @@
               <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
             </svg>
             <div>
-              <div class="text-[9px] uppercase tracking-wider text-gray-300">MIAGI ON THE</div>
+              <div class="text-[9px] uppercase tracking-wider text-gray-300">GET IT ON THE</div>
               <div class="text-xs font-semibold leading-none mt-0.5">App Store</div>
             </div>
           </div>
@@ -254,6 +272,55 @@
   <script>
     let userZodiacSign = "";
     let secretAstroNumber = 0;
+    let isRealTarotMode = false;
+
+    const barnumReadings = [
+      "<p>Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.</p><p>Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines.</p>",
+      "<p>Vous êtes une personne qui apprécie l'autonomie, mais qui ressent parfois le poids des responsabilités. Il vous arrive de douter de vos choix passés, même si la majorité d'entre eux vous ont conduit là où vous deviez être.</p><p>Une opportunité inattendue liée à vos projets personnels se précisera très prochainement si vous restez attentif aux signes.</p>",
+      "<p>Vous possédez une grande réserve de capacités non exploitées que vous n'avez pas encore révélées à votre entourage. Vous êtes parfois très exigeant envers vous-même, ce qui peut engendrer des tensions intérieures évitables.</p><p>Les astres indiquent qu'un réalignement majeur dans vos relations amicales ou professionnelles portera ses fruits incessamment.</p>",
+      "<p>Bien que vous soyez généralement ouvert aux autres, il vous arrive de ressentir le besoin viscéral de vous isoler pour retrouver votre énergie. Vous avez récemment surmonté une déception discrète sans en faire part à vos proches.</p><p>Votre clarté d'esprit actuelle va vous permettre de débloquer une situation qui stagnait depuis plusieurs mois.</p>",
+      "<p>Vous accordez beaucoup d'importance à la loyauté et vous êtes profondément affecté lorsque les personnes en qui vous avez confiance manquent de sincérité. Votre esprit est souvent en ébullition, cherchant à tout anticiper.</p><p>Un changement de dynamique dans votre quotidien apportera le souffle de renouveau que vous attendiez.</p>",
+      "<p>Vous êtes perçu comme quelqu'un de pragmatique, pourtant vous gardez une part de sensibilité et de spiritualité très forte en vous. Vous avez tendance à donner plus aux autres que ce que vous recevez en retour.</p><p>L'alignement actuel vous invite à vous recentrer sur vos besoins fondamentaux avant de vouloir aider les autres.</p>",
+      "<p>Certaines opportunités récentes vous ont fait hésiter par peur du risque ou du manque de garanties. Cependant, votre capacité d'adaptation est bien plus élevée que ce que vous imaginez en situation de doute.</p><p>Une nouvelle perspective va se présenter sous peu, demandant un choix clair de votre part.</p>",
+      "<p>Vous appréciez un certain niveau de sécurité et de routine, mais vous vous sentez rapidement étouffé lorsque la monotonie s'installe. Vous avez récemment remis en question une habitude ou une relation ancienne.</p><p>Faites confiance à votre premier instinct dans les jours à venir, il sera particulièrement juste.</p>",
+      "<p>Vous avez parfois l'impression que les gens ne comprennent pas toute la complexité de ce que vous ressentez. Vous savez faire preuve d'un grand soutien, mais vous avez du mal à demander de l'aide quand vous en avez besoin.</p><p>Un dénouement favorable sur un sujet financier ou matériel se profile très bientôt.</p>",
+      "<p>Vous traversez une phase de prise de conscience où plusieurs illusions du passé s'effacent pour laisser place à plus de clarté. Vous avez appris à choisir vos combats avec plus de sagesse qu'auparavant.</p><p>Votre force intérieure est perçue par votre entourage comme une source de stabilité rassurante.</p>",
+      "<p>Votre caractère combine un désir d'ordre avec un besoin soudain de liberté et de spontanéité. Vous avez tendance à trop analyser certaines conversations anodines après coup.</p><p>Lâcher prise sur ce que vous ne pouvez pas contrôler débloquera une opportunité créative sous peu.</p>",
+      "<p>Vous êtes au seuil d'un cycle important. Même si vous avez l'impression que les choses avancent lentement, les fondations que vous posez actuellement sont extrêmement solides.</p><p>Un contact ou une conversation fortuite apportera l'éclairage nécessaire sur une décision importante.</p>",
+      "<p>Vous avez un sens aigu de la justice et du respect des engagements. Vous pardonnez facilement, mais vous n'oubliez jamais les comportements qui ont entamé votre confiance.</p><p>Votre énergie vibratoire actuelle indique une période propice à la concrétisation d'un projet personnel gardé secret.</p>",
+      "<p>Vous vivez vos émotions de manière intense, bien que vous préfériez souvent les canaliser en privé. Vous cherchez un équilibre plus harmonieux entre vos ambitions et votre bien-être personnel.</p><p>Un apaisement significatif se manifestera dès que vous aurez clarifié une décision récente.</p>",
+      "<p>Vous êtes une personne persévérante qui baisse rarement les bras une fois un objectif fixé. Cependant, il vous arrive de dépenser beaucoup d'énergie pour des détails sans importance réelle.</p><p>Simplifier vos objectifs prioritaires vous apportera un succès immédiat et gratifiant.</p>",
+      "<p>Votre intuition vous avertit souvent des intentions des gens avant même qu'ils n'expriment leurs pensées. Cette sensibilité est votre plus grande ressource si vous apprenez à l'écouter sans peur.</p><p>Une belle surprise liée à un proche viendra renforcer votre sentiment de connexion.</p>",
+      "<p>Vous cherchez souvent à maintenir l'harmonie autour de vous, parfois au détriment de l'expression de vos propres désirs. Vous êtes dans une période où vous apprenez à poser des limites plus saines.</p><p>Cette transformation intérieure attirera vers vous des influences bien plus positives.</p>",
+      "<p>Vous avez une curiosité intellectuelle élevée qui vous pousse constamment à chercher à comprendre le monde et les gens. Vous avez traversé des moments de solitude fructueux qui ont forgé votre maturité.</p><p>Le moment est venu de partager vos idées avec plus de confiance.</p>",
+      "<p>Vous gardez un goût prononcé pour les nouveaux défis, même si le premier pas demande toujours un effort de votre part. Une récente remise en question s'avère extrêmement bénéfique pour votre croissance.</p><p>Les astres confirment que vous êtes sur la trajectoire exacte correspondant à votre vraie nature.</p>",
+      "<p>Vous êtes capable d'une grande empathie, ce qui fait de vous un confident recherché par votre entourage. Vous devez cependant veiller à protéger votre propre espace énergétique.</p><p>Une vague de sérénité et d'accomplissement personnel s'annonce pour la prochaine saison.</p>"
+    ];
+
+    const tarotCards = [
+      { name: "LE BATELEUR", num: "I", icon: "🧙‍♂️", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
+      { name: "LA PAPESSE", num: "II", icon: "📜", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
+      { name: "L'IMPÉRATRICE", num: "III", icon: "👑", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." },
+      { name: "L'EMPEREUR", num: "IV", icon: "🏛️", desc: "Structure, stability et maîtrise. Le moment est venu de poser des bases solides et de prendre le contrôle." },
+      { name: "LE PAPE", num: "V", icon: "🔮", desc: "Guidance spirituelle, tradition et conseils avisés. Une alliance ou un enseignement important se présente à vous." },
+      { name: "L'AMOUREUX", num: "VI", icon: "💖", desc: "Un choix important venu du cœur s'impose à vous. Alignez vos valeurs avec vos désirs authentiques." },
+      { name: "LE CHARIOT", num: "VII", icon: "⚔️", desc: "Victoire, détermination et mouvement vers l'avant. Vos efforts soutenus portent leurs fruits rapidement." },
+      { name: "LA JUSTICE", num: "VIII", icon: "⚖️", desc: "Équilibre, vérité et clarté. Chaque décision passée trouve son juste réalignement aujourd'hui." },
+      { name: "L'HERMITE", num: "IX", icon: "🕯️", desc: "Sagesse intérieure, introspection et patience. La lumière que vous cherchez se trouve au fond de vous." },
+      { name: "LA ROUE DE FORTUNE", num: "X", icon: "🎡", desc: "Changement de cycle, opportunité et destin. Tournant positif inattendu dans vos affaires." },
+      { name: "LA FORCE", num: "XI", icon: "🦁", desc: "Courage, maîtrise de soi et compassion. Votre force intérieure triomphe sur les obstacles extérieurs." },
+      { name: "LE PENDU", num: "XII", icon: "🙃", desc: "Lâcher-prise et changement de perspective. Une pause nécessaire pour voir la situation sous un nouvel angle." },
+      { name: "L'ARCANE SANS NOM", num: "XIII", icon: "🦋", desc: "Transformation radicale et fin d'un cycle usé. Faites de la place à la renaissance qui s'annonce." },
+      { name: "TEMPÉRANCE", num: "XIV", icon: "🍷", desc: "Harmonie, guérison et modération. La patience et l'équilibre apportent une paix durable." },
+      { name: "LE DIABLE", num: "XV", icon: "🔥", desc: "Attachements, désirs et puissance créative brute. Prenez conscience de ce qui vous enchaîne pour vous en libérer." },
+      { name: "LA MAISON DIEU", num: "XVI", icon: "⚡", desc: "Révélation soudaine et libération. Ce qui s'effondre laisse la place à une vérité plus authentique." },
+      { name: "L'ÉTOILE", num: "XVII", icon: "⭐", desc: "Espoir, inspiration et protection céleste. Ayez foi en l'avenir, la lumière guide vos pas." },
+      { name: "LA LUNE", num: "XVIII", icon: "🌙", desc: "Rêves, subconscient et imaginaire. Traversez les illusions pour révéler la vérité cachée." },
+      { name: "LE SOLEIL", num: "XIX", icon: "☀️", desc: "Joie, succès, clarté et vitalité radiante. Tout s'éclaire d'un jour nouveau et chaleureux." },
+      { name: "LE JUGEMENT", num: "XX", icon: "🎺", desc: "Éveil, appel intérieur et seconde chance. Il est temps de répondre à votre véritable vocation." },
+      { name: "LE MONDE", num: "XXI", icon: "🌍", desc: "Accomplissement total, succès et plénitude. Vous atteignez le sommet de votre parcours actuel." },
+      { name: "LE MAT", num: "0", icon: "🎒", desc: "Saut de foi, spontanéité et liberté absolue. Lancez-vous dans l'aventure sans regarder en arrière." }
+    ];
 
     function getZodiacSign(day, month) {
       if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "VERSEAU";
@@ -271,7 +338,18 @@
       return "CÉLESTE";
     }
 
-    // Événement clic sur le bouton Générer
+    // TRIGGER SECRET LOGO
+    document.getElementById('logo-secret-trigger').addEventListener('click', function() {
+      isRealTarotMode = !isRealTarotMode;
+      const indicator = document.getElementById('secret-mode-indicator');
+      if (isRealTarotMode) {
+        indicator.className = "text-[10px] text-amber-400 opacity-100 font-bold transition-all duration-300";
+      } else {
+        indicator.className = "text-[10px] text-amber-500/0 transition-all duration-300";
+      }
+    });
+
+    // CLIC SOUMISSION DATE DE NAISSANCE
     document.getElementById('btn-submit-astro').addEventListener('click', function() {
       const dayVal = document.getElementById('dob-day').value;
       const monthVal = document.getElementById('dob-month').value;
@@ -287,44 +365,54 @@
       const day = parseInt(dayVal);
       const month = parseInt(monthVal);
 
-      // NOUVELLE FORMULE EXACTE : Jour * 2 + Mois
+      // FORMULE EXACTE : Jour * 2 + Mois
       secretAstroNumber = (day * 2) + month;
       userZodiacSign = getZodiacSign(day, month);
 
       document.getElementById('secret-number').textContent = secretAstroNumber;
+
+      const randomIndex = Math.floor(Math.random() * barnumReadings.length);
+      document.getElementById('reading-container').innerHTML = barnumReadings[randomIndex];
 
       document.getElementById('step-form').classList.add('hidden');
       document.getElementById('step-reading').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Slider
+    // SLIDER
     const slider = document.getElementById('resonance-slider');
     const sliderVal = document.getElementById('resonance-val');
     slider.addEventListener('input', function() {
       sliderVal.textContent = this.value + '%';
     });
 
-    // Clic bouton Tarot -> Écran d'erreur
+    // CLIC BOUTON TAROT -> PAGE D'ERREUR OU VRAI TAROT
     document.getElementById('btn-tarot').addEventListener('click', function() {
-      document.getElementById('app-container').classList.add('hidden');
-      const errorScreen = document.getElementById('error-screen');
-      errorScreen.classList.remove('hidden');
+      if (isRealTarotMode) {
+        document.getElementById('step-reading').classList.add('hidden');
+        const trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+        document.getElementById('tarot-card-title').textContent = trueTarot.name;
+        document.getElementById('tarot-card-label').textContent = trueTarot.name;
+        document.getElementById('tarot-card-num').textContent = trueTarot.num;
+        document.getElementById('tarot-card-icon').textContent = trueTarot.icon;
+        document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
+        document.getElementById('step-vrai-tarot').classList.remove('hidden');
+      } else {
+        document.getElementById('app-container').classList.add('hidden');
+        const errorScreen = document.getElementById('error-screen');
+        errorScreen.classList.remove('hidden');
 
-      // INJECTION DU SIGNE ASTROLOGIQUE EN DISCRÉTION
-      // Le signe apparaît sous forme de petit suffixe textuel discret (ex: ". (BÉLIER)") juste après "incorrect".
-      const secretSpot = document.getElementById('secret-sign-spot');
-      secretSpot.textContent = ` (${userZodiacSign})`;
-      secretSpot.style.opacity = '1';
+        // INJECTION DU SIGNE : Sans crochet, même typographie, légèrement souligné
+        const secretSpot = document.getElementById('secret-sign-spot');
+        secretSpot.textContent = userZodiacSign.toLowerCase(); // Ex: "lion", "bélier"
+        secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
 
-      // MINUTEUR DE 15 SECONDES
-      // Après 15 secondes, le signe disparaît complètement sans laisser de trace.
-      setTimeout(() => {
-        secretSpot.style.opacity = '0';
+        // MINUTEUR DE 15 SECONDES : Disparition du soulignement et retour du mot "définitions"
         setTimeout(() => {
-          secretSpot.textContent = '';
-        }, 500);
-      }, 15000);
+          secretSpot.className = "no-underline font-normal transition-all duration-500";
+          secretSpot.textContent = "définitions";
+        }, 15000);
+      }
     });
   </script>
 </body>
