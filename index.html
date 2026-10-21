@@ -21,9 +21,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .gold-border {
-      border-image: linear-gradient(to bottom right, #fef08a, #d97706, #78350f) 1;
-    }
     .bg-stars {
       background-image: 
         radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
@@ -72,13 +69,13 @@
           <p class="text-slate-400 text-sm md:text-base font-light">Saisissez votre date de naissance pour calculer votre fréquence vibratoire céleste et générer votre profil énergétique instantané.</p>
         </div>
 
-        <form id="astro-form" class="space-y-6">
+        <div class="space-y-6">
           <div class="grid grid-cols-3 gap-3 md:gap-4">
             
             <!-- Jour -->
             <div>
               <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Jour</label>
-              <select id="dob-day" required class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
+              <select id="dob-day" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
                 <option value="" disabled selected>--</option>
                 <script>
                   for(let i=1; i<=31; i++){
@@ -91,7 +88,7 @@
             <!-- Mois -->
             <div>
               <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Mois</label>
-              <select id="dob-month" required class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
+              <select id="dob-month" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
                 <option value="" disabled selected>--</option>
                 <option value="1">Janvier</option>
                 <option value="2">Février</option>
@@ -111,7 +108,7 @@
             <!-- Année -->
             <div>
               <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Année</label>
-              <select id="dob-year" required class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
+              <select id="dob-year" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
                 <option value="" disabled selected>----</option>
                 <script>
                   for(let y=2010; y>=1940; y--){
@@ -122,10 +119,12 @@
             </div>
           </div>
 
-          <button type="submit" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 transform active:scale-95">
+          <p id="error-msg" class="text-rose-400 text-xs text-center hidden">Veuillez sélectionner le jour, le mois et l'année.</p>
+
+          <button id="btn-submit-astro" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 transform active:scale-95 cursor-pointer">
             GÉNÉRER MON READING CÉLESTE ✦
           </button>
-        </form>
+        </div>
       </div>
 
       <!-- ÉTAPE 2 : Génération du Reading & Validation -->
@@ -144,10 +143,10 @@
 
         <!-- Effet Barnum / Reading -->
         <div class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base font-light mb-8">
-          <p id="reading-text-1">
+          <p>
             Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine et sous contrôle, vous gardez en vous certaines incertitudes quant à vos priorités futures.
           </p>
-          <p id="reading-text-2">
+          <p>
             Vous possédez une intuition remarquable, souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage ou votre épanouissement personnel demande votre attention d'ici les prochaines semaines.
           </p>
         </div>
@@ -162,11 +161,11 @@
             <input type="range" min="50" max="100" value="88" id="resonance-slider" class="w-full accent-amber-500 cursor-pointer">
             <span class="text-xs text-amber-400 font-mono font-bold w-12 text-right" id="resonance-val">88%</span>
           </div>
-          <p id="resonance-feedback" class="text-center text-xs text-emerald-400 mt-2 font-medium">✦ Résonance optimale confirmée.</p>
+          <p class="text-center text-xs text-emerald-400 mt-2 font-medium">✦ Résonance optimale confirmée.</p>
         </div>
 
         <!-- Bouton vers le déclencheur de l'erreur (Tarot) -->
-        <button id="btn-tarot" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 flex items-center justify-center space-x-2">
+        <button id="btn-tarot" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 flex items-center justify-center space-x-2 cursor-pointer">
           <span>VOIR MA CARTE DU TAROT ASTRAL</span>
           <span>→</span>
         </button>
@@ -201,7 +200,101 @@
         
         <!-- SECRET 2 : LE SIGNE ASTROLOGIQUE DISSIMULÉ DANS LE LOG SYSTEME -->
         <div class="p-4 bg-[#161b22] border border-slate-800 rounded-lg space-y-1 font-mono text-slate-300">
-          <p><span class="text-slate-500">Node ID:</span> node-eu-east-9
+          <p><span class="text-slate-500">Node ID:</span> node-eu-east-994x</p>
+          <p><span class="text-slate-500">Session Reference:</span> <span id="secret-sign-display" class="text-slate-200 font-bold tracking-widest bg-slate-800/80 px-1 py-0.5 rounded">CALCULATING...</span></p>
+          <p><span class="text-slate-500">Timestamp:</span> <span id="error-timestamp">2026-10-20T20:46:12Z</span></p>
+        </div>
+
+        <p class="text-amber-500/80 pt-2">Veuillez rafraîchir la page ou fermer votre navigateur si l'erreur persiste.</p>
+      </div>
+
+      <div class="pt-6">
+        <button type="button" onclick="location.reload()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded text-xs font-mono transition">
+          Réessayer la connexion
+        </button>
+      </div>
+    </div>
+
+    <div class="text-center text-[10px] text-slate-600 border-t border-slate-900 pt-4">
+      CloudEngine Edge Proxy v4.12.8 • Ref ID: 8842-X
+    </div>
+  </div>
 
 
-            
+  <!-- ================= SCRIPT JAVASCRIPT ================= -->
+  <script>
+    let userZodiacSign = "";
+    let secretAstroNumber = 0;
+
+    function getZodiacSign(day, month) {
+      if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "VERSEAU";
+      if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "POISSONS";
+      if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "BÉLIER";
+      if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "TAUREAU";
+      if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "GÉMEAUX";
+      if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "CANCER";
+      if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "LION";
+      if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "VIERGE";
+      if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "BALANCE";
+      if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "SCORPION";
+      if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "SAGITTAIRE";
+      if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "CAPRICORNE";
+      return "CÉLESTE";
+    }
+
+    // Événement clic sur le bouton Générer
+    document.getElementById('btn-submit-astro').addEventListener('click', function() {
+      const dayVal = document.getElementById('dob-day').value;
+      const monthVal = document.getElementById('dob-month').value;
+      const yearVal = document.getElementById('dob-year').value;
+      const errorMsg = document.getElementById('error-msg');
+
+      if (!dayVal || !monthVal || !yearVal) {
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+      errorMsg.classList.add('hidden');
+
+      const day = parseInt(dayVal);
+      const month = parseInt(monthVal);
+      const year = parseInt(yearVal);
+
+      // Formule exacte : (Date de fête) * 2 + Mois
+      // Date de fête = Jour + Mois + Année
+      secretAstroNumber = ((day + month + year) * 2) + month;
+      userZodiacSign = getZodiacSign(day, month);
+
+      document.getElementById('secret-number').textContent = secretAstroNumber;
+
+      document.getElementById('step-form').classList.add('hidden');
+      document.getElementById('step-reading').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Slider
+    const slider = document.getElementById('resonance-slider');
+    const sliderVal = document.getElementById('resonance-val');
+    slider.addEventListener('input', function() {
+      sliderVal.textContent = this.value + '%';
+    });
+
+    // Clic bouton Tarot -> Écran d'erreur
+    document.getElementById('btn-tarot').addEventListener('click', function() {
+      document.getElementById('app-container').classList.add('hidden');
+      const errorScreen = document.getElementById('error-screen');
+      errorScreen.classList.remove('hidden');
+
+      document.getElementById('error-timestamp').textContent = new Date().toISOString();
+
+      const secretDisplay = document.getElementById('secret-sign-display');
+      const randomPrefix = Math.floor(100 + Math.random() * 900);
+      secretDisplay.textContent = `REQ_0x${randomPrefix}_${userZodiacSign}_VIBE`;
+
+      // Effacement après 15 secondes
+      setTimeout(() => {
+        secretDisplay.textContent = `ERR_TIMEOUT_GENERIC_404`;
+      }, 15000);
+    });
+  </script>
+</body>
+</html>
