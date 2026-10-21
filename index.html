@@ -1,538 +1,439 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Célestia Nova - Thème & Astrologie Céleste</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #080711;
-      color: #e2e8f0;
-      overflow-x: hidden;
-    }
-    .font-cinzel {
-      font-family: 'Cinzel', serif;
-    }
-    .gold-gradient {
-      background: linear-gradient(135deg, #fef08a 0%, #d97706 50%, #b45309 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .bg-stars {
-      background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffd700, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 160px 120px, #ffd700, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 200px 200px;
-    }
-    .mystic-card {
-      background: rgba(15, 13, 35, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(217, 119, 6, 0.25);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
   </style>
 </head>
-<body class="bg-stars min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
-
-  <!-- ================= SITE PRINCIPAL ================= -->
-  <div id="app-container" class="w-full flex-grow flex flex-col justify-between">
-    
-    <!-- En-tête -->
-    <header class="py-6 px-4 border-b border-amber-900/30 bg-slate-950/40 backdrop-blur-md">
-      <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <!-- TRIGGER SECRET : Un clic sur le Logo inverse le comportement du tarot -->
-        <div id="logo-secret-trigger" class="flex items-center space-x-3 cursor-pointer select-none">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 to-amber-200 flex items-center justify-center shadow-lg shadow-amber-900/30">
-            <span class="text-slate-950 font-bold text-lg font-cinzel">✦</span>
-          </div>
-          <span class="font-cinzel text-xl md:text-2xl font-bold tracking-wider gold-gradient">CÉLESTIA NOVA</span>
-          <span id="secret-mode-indicator" class="text-[10px] text-amber-500/0 transition-all duration-300">✦</span>
-        </div>
-        <div class="text-xs tracking-widest text-amber-300/60 uppercase font-cinzel hidden sm:block">
-          Observatoire Astral & Alignement Humain
-        </div>
-      </div>
-    </header>
-
-    <!-- Contenu Principal -->
-    <main class="max-w-2xl w-full mx-auto p-4 my-8">
-      
-      <!-- ÉTAPE 1 : Formulaire Date de Naissance -->
-      <div id="step-form" class="mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500">
-        <div class="text-center mb-8">
-          <span class="text-amber-400 font-cinzel text-sm uppercase tracking-widest block mb-2">Analyse Thématique Personnalisée</span>
-          <h1 class="font-cinzel text-3xl md:text-4xl font-bold text-slate-100 mb-3">Révélez Votre Empreinte Astrale</h1>
-          <p class="text-slate-400 text-sm md:text-base font-light">Saisissez votre date de naissance pour calculer votre fréquence vibratoire céleste et générer votre profil énergétique instantané.</p>
-        </div>
-
-        <div class="space-y-6">
-          <div class="grid grid-cols-3 gap-3 md:gap-4">
-            
-            <!-- Jour -->
-            <div>
-              <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Jour</label>
-              <select id="dob-day" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
-                <option value="" disabled selected>--</option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                <option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
-                <option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
-                <option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-                <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option>
-                <option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-            </div>
-
-            <!-- Mois -->
-            <div>
-              <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Mois</label>
-              <select id="dob-month" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
-                <option value="" disabled selected>--</option>
-                <option value="1">Janvier</option>
-                <option value="2">Février</option>
-                <option value="3">Mars</option>
-                <option value="4">Avril</option>
-                <option value="5">Mai</option>
-                <option value="6">Juin</option>
-                <option value="7">Juillet</option>
-                <option value="8">Août</option>
-                <option value="9">Septembre</option>
-                <option value="10">Octobre</option>
-                <option value="11">Novembre</option>
-                <option value="12">Décembre</option>
-              </select>
-            </div>
-
-            <!-- Année -->
-            <div>
-              <label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2">Année</label>
-              <select id="dob-year" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500 transition">
-                <option value="" disabled selected>----</option>
-                <option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option>
-                <option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option>
-                <option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option>
-                <option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option>
-                <option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option>
-                <option value="1990">1990</option><option value="1989">1989</option><option value="1988">1988</option><option value="1987">1987</option>
-                <option value="1986">1986</option><option value="1985">1985</option><option value="1984">1984</option><option value="1983">1983</option>
-                <option value="1982">1982</option><option value="1981">1981</option><option value="1980">1980</option><option value="1979">1979</option>
-                <option value="1978">1978</option><option value="1977">1977</option><option value="1976">1976</option><option value="1975">1975</option>
-                <option value="1974">1974</option><option value="1973">1973</option><option value="1972">1972</option><option value="1971">1971</option>
-                <option value="1970">1970</option><option value="1969">1969</option><option value="1968">1968</option><option value="1967">1967</option>
-                <option value="1966">1966</option><option value="1965">1965</option><option value="1964">1964</option><option value="1963">1963</option>
-                <option value="1962">1962</option><option value="1961">1961</option><option value="1960">1960</option><option value="1959">1959</option>
-                <option value="1958">1958</option><option value="1957">1957</option><option value="1956">1956</option><option value="1955">1955</option>
-                <option value="1954">1954</option><option value="1953">1953</option><option value="1952">1952</option><option value="1951">1951</option>
-                <option value="1950">1950</option><option value="1949">1949</option><option value="1948">1948</option><option value="1947">1947</option>
-                <option value="1946">1946</option><option value="1945">1945</option><option value="1944">1944</option><option value="1943">1943</option>
-                <option value="1942">1942</option><option value="1941">1941</option><option value="1940">1940</option>
-              </select>
-            </div>
-          </div>
-
-          <p id="error-msg" class="text-rose-400 text-xs text-center hidden">Veuillez sélectionner le jour, le mois et l'année.</p>
-
-          <button id="btn-submit-astro" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 transform active:scale-95 cursor-pointer">
-            GÉNÉRER MA LECTURE CÉLESTE ✦
-          </button>
-        </div>
-      </div>
-
-      <!-- ÉTAPE 2 : Génération de la Lecture Céleste -->
-      <div id="step-reading" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500">
-        
-        <div class="text-center border-b border-amber-900/30 pb-6 mb-6">
-          <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest">Matrice Thématique Alignée</span>
-          <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-slate-100 mt-1">Analyse d'Aura & Alignement</h2>
-          
-          <!-- SECRET 1 : FORMULE JOUR * 2 + MOIS -->
-          <div class="mt-4 inline-flex items-center px-4 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-xs font-mono text-amber-300">
-            <span>FRÉQUENCE VIBRATOIRE :&nbsp;</span>
-            <span id="secret-number" class="font-bold text-amber-200">--</span>
-          </div>
-        </div>
-
-        <!-- Emplacement de la Lecture Aléatoire -->
-        <div id="reading-container" class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base font-light mb-8">
-        </div>
-
-        <!-- Curseur de confirmation de résonance -->
-        <div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-8">
-          <label class="block text-xs font-cinzel uppercase text-slate-300 mb-3 text-center">
-            À quel point cette lecture résonne-t-elle avec votre situation actuelle ?
-          </label>
-          <div class="flex items-center space-x-4">
-            <span class="text-xs text-slate-500">Peu</span>
-            <input type="range" min="50" max="100" value="88" id="resonance-slider" class="w-full accent-amber-500 cursor-pointer">
-            <span class="text-xs text-amber-400 font-mono font-bold w-12 text-right" id="resonance-val">88%</span>
-          </div>
-          <p class="text-center text-xs text-emerald-400 mt-2 font-medium">✦ Résonance optimale confirmée.</p>
-        </div>
-
-        <!-- Bouton vers Tarot -->
-        <button id="btn-tarot" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg shadow-amber-950/50 transition duration-300 flex items-center justify-center space-x-2 cursor-pointer">
-          <span>VOIR MA CARTE DU TAROT ASTRAL</span>
-          <span>→</span>
-        </button>
-      </div>
-
-      <!-- ÉTAPE VRAI TAROT -->
-      <div id="step-vrai-tarot" class="hidden mystic-card rounded-2xl p-6 md:p-10 transition-all duration-500 text-center">
-        <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest block mb-2">Arcane Majeur Tiré</span>
-        <h2 id="tarot-card-title" class="font-cinzel text-3xl font-bold text-amber-200 mb-4">LE JUGEMENT</h2>
-        
-        <div class="w-52 h-88 mx-auto my-6 rounded-xl border-2 border-amber-500/50 bg-slate-950 flex flex-col justify-between p-3 shadow-2xl relative overflow-hidden">
-          <div class="text-amber-400 font-cinzel text-xs text-left font-bold" id="tarot-card-num">XX</div>
-          
-          <div class="my-2 h-64 flex items-center justify-center overflow-hidden rounded">
-            <img id="tarot-card-img" src="" alt="Carte Tarot" class="h-full object-contain shadow-lg rounded" />
-          </div>
-
-          <div class="text-amber-300 font-cinzel text-xs font-bold uppercase tracking-wider" id="tarot-card-label">LE JUGEMENT</div>
-        </div>
-
-        <p id="tarot-card-desc" class="text-slate-300 text-sm leading-relaxed mb-6 max-w-lg mx-auto">
-          Un réveil spirituel majeur s'annonce. Vous êtes appelé à lâcher prise sur le passé et à embrasser une nouvelle phase d'accomplissement personnel.
-        </p>
-
-        <button type="button" onclick="location.reload()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-cinzel text-xs tracking-wider transition">
-          RECOMMENCER L'ANALYSE
-        </button>
-      </div>
-
-    </main>
-
-    <!-- Pied de page -->
-    <footer class="py-4 text-center text-xs text-slate-600 border-t border-slate-900">
-      <p>© 2026 Célestia Nova Observatoire. Tous droits réservés.</p>
-    </footer>
-
-  </div>
-
-
-  <!-- ================= FAUSSE PAGE D'ERREUR 404 ================= -->
-  <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
-    <div class="max-w-md w-full text-center space-y-6 my-auto pt-4">
-      
-      <!-- Grand 404 -->
-      <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight leading-none pt-2">404</h1>
-
-      <!-- Message principal -->
-      <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
-        Oups ! La page que vous cherchez est introuvable.
-      </p>
-
-      <!-- Bouton Recharger -->
-      <div class="pt-2 pb-2">
-        <button type="button" onclick="location.reload()" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition duration-150 text-base">
-          Recharger
-        </button>
-      </div>
-
-      <!-- Explications d'erreur -->
-      <div class="space-y-4 text-gray-600 text-base font-normal leading-relaxed px-2">
-        <p>
-          Votre téléphone rencontre des difficultés pour se connecter à Internet. Veuillez vérifier l'URL et recharger.
-        </p>
-        
-        <p>
-          Si vous avez cliqué sur un lien pour arriver ici, le lien est peut-être périmé ou incorrect.
-        </p>
-      </div>
-
-      <!-- Section Téléchargement d'application -->
-      <div class="pt-6 space-y-4">
-        <h2 class="text-xl font-bold text-slate-900">Téléchargez nos applications</h2>
-        
-        <!-- SECRET 2 : LE SIGNE S'INSÈRE DANS DEFINITIONS -->
-        <p class="text-sm text-gray-600 leading-relaxed px-2">
-          Nos applications proposent également plus de 1.5 million de <span id="secret-sign-spot" class="underline decoration-gray-300 decoration-1 underline-offset-2 transition-all duration-500">définitions</span> et synonymes ainsi qu'un accès à nos articles de référence. Consultez vos mots partout et à tout moment — nous fonctionnons aussi hors ligne !
-        </p>
-
-        <!-- Boutons Google Play / App Store -->
-        <div class="flex flex-row items-center justify-center gap-3 pt-3">
-          
-          <!-- Trigger Google Play Peek -->
-          <div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-95 transition">
-            <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
-              <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
-            </svg>
-            <div>
-              <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR</div>
-              <div class="text-xs font-semibold leading-none mt-0.5">Google Play</div>
-            </div>
-          </div>
-
-          <!-- App Store -->
-          <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
-            <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
-              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
-            </svg>
-            <div>
-              <div class="text-[9px] uppercase tracking-wider text-gray-300">DISPONIBLE SUR L'</div>
-              <div class="text-xs font-semibold leading-none mt-0.5">App Store</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ================= OVERLAY DISCRET DE PEEK MENTALISTE ================= -->
-  <div id="peek-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 max-w-sm w-full text-slate-100 space-y-4 shadow-2xl relative font-sans">
-      
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <span class="text-amber-400 font-cinzel text-xs font-bold tracking-widest uppercase">✦ Fiche Secrète Mentaliste</span>
-        <button type="button" id="close-peek" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
-      </div>
-
-      <div class="space-y-3 text-sm">
-        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Date de Naissance</div>
-          <div id="peek-dob" class="font-bold text-amber-200 text-base">--</div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-            <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Signe Astral</div>
-            <div id="peek-zodiac" class="font-bold text-slate-200">--</div>
-          </div>
-
-          <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-            <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Signe Chinois</div>
-            <div id="peek-chinese" class="font-bold text-slate-200">--</div>
-          </div>
-        </div>
-
-        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
-          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Célébrité née le même jour</div>
-          <div id="peek-celeb" class="font-bold text-amber-300 text-base">--</div>
-        </div>
-      </div>
-
-      <button type="button" id="btn-close-peek-main" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider transition">
-        Fermer la fiche
-      </button>
-
-    </div>
-  </div>
-
-  <!-- ================= SCRIPT JAVASCRIPT ================= -->
-  <script>
-    var userZodiacSign = "";
-    var secretAstroNumber = 0;
-    var isLogoTriggeredMode = false; // Inverse la logique d'origine
-    var selectedDay = 0;
-    var selectedMonth = 0;
-    var selectedYear = 0;
-
-    var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-
-    var celebrities = {
-      1: { 1: "Christine Lagarde (1956)", 8: "Elvis Presley (1935)", 15: "Pitbull (1981)", 17: "Jim Carrey (1962)", 20: "Omar Sy (1978)", 25: "Volodymyr Zelensky (1978)" },
-      2: { 5: "Cristiano Ronaldo (1985)", 12: "Charles Darwin (1809)", 14: "Ed Sheeran (1991)", 17: "Michael Jordan (1963)", 22: "Drew Barrymore (1975)", 26: "Rihanna (1988)" },
-      3: { 1: "Justin Bieber (1994)", 6: "Michel-Ange (1475)", 10: "Sharon Stone (1958)", 14: "Albert Einstein (1879)", 21: "Antoine Griezmann (1991)", 30: "Céline Dion (1968)" },
-      4: { 7: "Jackie Chan (1954)", 9: "Jean-Paul Belmondo (1933)", 15: "Emma Watson (1990)", 21: "Reine Élisabeth II (1926)", 23: "Gilles Lellouche (1972)", 28: "Jessica Alba (1981)" },
-      5: { 2: "David Beckham (1975)", 11: "Laetitia Casta (1978)", 13: "Robert Pattinson (1986)", 19: "Squeezie (1996)", 22: "Novak Djokovic (1987)", 26: "Lenny Kravitz (1964)" },
-      6: { 1: "Morgan Freeman (1937)", 9: "Johnny Hallyday (1943)", 18: "Jamel Debbouze (1975)", 21: "Zinédine Zidane (1972)", 24: "Lionel Messi (1987)", 26: "Ariana Grande (1993)" },
-      7: { 3: "Tom Cruise (1962)", 9: "Tom Hanks (1956)", 10: "Gims (1986)", 16: "Will Ferrell (1967)", 21: "Charlotte Gainsbourg (1971)", 30: "Arnold Schwarzenegger (1947)" },
-      8: { 4: "Barack Obama (1961)", 8: "Roger Federer (1981)", 10: "Antonio Banderas (1960)", 15: "Ben Affleck (1972)", 21: "Usain Bolt (1986)", 29: "Michael Jackson (1958)" },
-      9: { 2: "Keanu Reeves (1964)", 4: "Beyoncé (1981)", 12: "Paul Walker (1973)", 18: "Ronaldo Nazário (1976)", 25: "Will Smith (1968)", 30: "Marion Cotillard (1975)" },
-      10: { 8: "Matt Damon (1970)", 16: "Charles Leclerc (1997)", 21: "Kim Kardashian (1980)", 23: "Ryan Reynolds (1976)", 25: "Katy Perry (1984)", 28: "Bill Gates (1955)" },
-      11: { 7: "David Guetta (1967)", 11: "Leonardo DiCaprio (1974)", 17: "Sophie Marceau (1966)", 22: "Scarlett Johansson (1984)", 25: "Gaspard Ulliel (1984)", 30: "Kaley Cuoco (1985)" },
-      12: { 3: "Julianne Moore (1960)", 8: "Thylane Blondeau (2001)", 18: "Brad Pitt (1963)", 20: "Kylian Mbappé (1998)", 25: "Justin Trudeau (1971)", 30: "LeBron James (1984)" }
-    ];
-
-    function getCelebrity(day, month) {
-      if (celebrities[month] && celebrities[month][day]) {
-        return celebrities[month][day];
-      }
-      var genericCelebs = [
-        "Taylor Swift (1989)", "Dwayne Johnson (1972)", "Lady Gaga (1986)",
-        "Johnny Depp (1963)", "Zendaya (1996)", "Ryan Gosling (1980)"
-      ];
-      return genericCelebs[(day + month) % genericCelebs.length];
-    }
-
-    function getChineseZodiac(year) {
-      var animals = ["Singe", "Coq", "Chien", "Cochon", "Rat", "Bœuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval", "Chèvre"];
-      return animals[year % 12];
-    }
-
-    var barnumReadings = [
-      "<p>Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.</p><p>Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines.</p>",
-      "<p>Vous êtes une personne qui apprécie l'autonomie, mais qui ressent parfois le poids des responsabilités. Il vous arrive de douter de vos choix passés, même si la majorité d'entre eux vous ont conduit là où vous deviez être.</p><p>Une opportunité inattendue liée à vos projets personnels se précisera très prochainement si vous restez attentif aux signes.</p>",
-      "<p>Vous possédez une grande réserve de capacités non exploitées que vous n'avez pas encore révélées à votre entourage. Vous êtes parfois très exigeant envers vous-même, ce qui peut engendrer des tensions intérieures évitables.</p><p>Les astres indiquent qu'un réalignement majeur dans vos relations amicales ou professionnelles portera ses fruits incessamment.</p>",
-      "<p>Bien que vous soyez généralement ouvert aux autres, il vous arrive de ressentir le besoin viscéral de vous isoler pour retrouver votre énergie. Vous avez récemment surmonté une déception discrète sans en faire part à vos proches.</p><p>Votre clarté d'esprit actuelle va vous permettre de débloquer une situation qui stagnait depuis plusieurs mois.</p>",
-      "<p>Vous accordez beaucoup d'importance à la loyauté et vous êtes profondément affecté lorsque les personnes en qui vous avez confiance manquent de sincérité. Votre esprit est souvent en ébullition, cherchant à tout anticiper.</p><p>Un changement de dynamique dans votre quotidien apportera le souffle de renouveau que vous attendiez.</p>",
-      "<p>Vous êtes perçu comme quelqu'un de pragmatique, pourtant vous gardez une part de sensibilité et de spiritualité très forte en vous. Vous avez tendance à donner plus aux autres que ce que vous recevez en retour.</p><p>L'alignement actuel vous invite à vous recentrer sur vos besoins fondamentaux avant de vouloir aider les autres.</p>",
-      "<p>Certaines opportunités récentes vous ont fait hésiter par peur du risque ou du manque de garanties. Cependant, votre capacité d'adaptation est bien plus élevée que ce que vous imaginez en situation de doute.</p><p>Une nouvelle perspective va se présenter sous peu, demandant un choix clair de votre part.</p>",
-      "<p>Vous appréciez un certain niveau de sécurité et de routine, mais vous vous sentez rapidement étouffé lorsque la monotonie s'installe. Vous avez récemment remis en question une habitude ou une relation ancienne.</p><p>Faites confiance à votre premier instinct dans les jours à venir, il sera particulièrement juste.</p>",
-      "<p>Vous avez parfois l'impression que les gens ne comprennent pas toute la complexité de ce que vous ressentez. Vous savez faire preuve d'un grand soutien, mais vous avez du mal à demander de l'aide quand vous en avez besoin.</p><p>Un dénouement favorable sur un sujet financier ou matériel se profile très bientôt.</p>",
-      "<p>Vous traversez une phase de prise de conscience où plusieurs illusions du passé s'effacent pour laisser place à plus de clarté. Vous avez appris à choisir vos combats avec plus de sagesse qu'auparavant.</p><p>Votre force intérieure est perçue par votre entourage comme une source de stabilité rassurante.</p>",
-      "<p>Votre caractère combine un désir d'ordre avec un besoin soudain de liberté et de spontanéité. Vous avez tendance à trop analyser certaines conversations anodines après coup.</p><p>Lâcher prise sur ce que vous ne pouvez pas contrôler débloquera une opportunité créative sous peu.</p>",
-      "<p>Vous êtes au seuil d'un cycle important. Même si vous avez l'impression que les choses avancent lentement, les fondations que vous posez actuellement sont extrêmement solides.</p><p>Un contact ou une conversation fortuite apportera l'éclairage nécessaire sur une décision importante.</p>",
-      "<p>Vous avez un sens aigu de la justice et du respect des engagements. Vous pardonnez facilement, mais vous n'oubliez jamais les comportements qui ont entamé votre confiance.</p><p>Votre énergie vibratoire actuelle indique une période propice à la concrétisation d'un projet personnel gardé secret.</p>",
-      "<p>Vous vivez vos émotions de manière intense, bien que vous préfériez souvent les canaliser en privé. Vous cherchez un équilibre plus harmonieux entre vos ambitions et votre bien-être personnel.</p><p>Un apaisement significatif se manifestera dès que vous aurez clarifié une décision récente.</p>",
-      "<p>Vous êtes une personne persévérante qui baisse rarement les bras une fois un objectif fixé. Cependant, il vous arrive de dépenser beaucoup d'énergie pour des détails sans importance réelle.</p><p>Simplifier vos objectifs prioritaires vous apportera un succès immédiat et gratifiant.</p>",
-      "<p>Votre intuition vous avertit souvent des intentions des gens avant même qu'ils n'expriment leurs pensées. Cette sensibilité est votre plus grande ressource si vous apprenez à l'écouter sans peur.</p><p>Une belle surprise liée à un proche viendra renforcer votre sentiment de connexion.</p>",
-      "<p>Vous cherchez souvent à maintenir l'harmonie autour de vous, parfois au détriment de l'expression de vos propres désirs. Vous êtes dans une période où vous apprenez à poser des limites plus saines.</p><p>Cette transformation intérieure attirera vers vous des influences bien plus positives.</p>",
-      "<p>Vous avez une curiosité intellectuelle élevée qui vous pousse constamment à chercher à comprendre le monde et les gens. Vous avez traversé des moments de solitude fructueux qui ont forgé votre maturité.</p><p>Le moment est venu de partager vos idées avec plus de confiance.</p>",
-      "<p>Vous gardez un goût prononcé pour les nouveaux défis, même si le premier pas demande toujours un effort de votre part. Une récente remise en question s'avère extrêmement bénéfique pour votre croissance.</p><p>Les astres confirment que vous êtes sur la trajectoire exacte correspondant à votre vraie nature.</p>",
-      "<p>Vous êtes capable d'une grande empathie, ce qui fait de vous un confident recherché par votre entourage. Vous devez cependant veiller à protéger votre propre espace énergétique.</p><p>Une vague de sérénité et d'accomplissement personnel s'annonce pour la prochaine saison.</p>"
-    ];
-
-    var tarotCards = [
-      { name: "LE BATELEUR", num: "I", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_01_Magician.jpg", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },
-      { name: "LA PAPESSE", num: "II", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },
-      { name: "L'IMPÉRATRICE", num: "III", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." },
-      { name: "L'EMPEREUR", num: "IV", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg", desc: "Structure, stabilité et maîtrise. Le moment est venu de poser des bases solides et de prendre le contrôle." },
-      { name: "LE PAPE", num: "V", img: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg", desc: "Guidance spirituelle, tradition et conseils avisés. Une alliance ou un enseignement important se présente à vous." },
-      { name: "L'AMOUREUX", num: "VI", img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/TheLovers.jpg", desc: "Un choix important venu du cœur s'impose à vous. Alignez vos valeurs avec vos désirs authentiques." },
-      { name: "LE CHARIOT", num: "VII", img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg", desc: "Victoire, détermination et mouvement vers l'avant. Vos efforts soutenus portent leurs fruits rapidement." },
-      { name: "LA JUSTICE", num: "VIII", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_08_Justice.jpg", desc: "Équilibre, vérité et clarté. Chaque décision passée trouve son juste réalignement aujourd'hui." },
-      { name: "L'HERMITE", num: "IX", img: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg", desc: "Sagesse intérieure, introspection et patience. La lumière que vous cherchez se trouve au fond de vous." },
-      { name: "LA ROUE DE FORTUNE", num: "X", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg", desc: "Changement de cycle, opportunité et destin. Tournant positif inattendu dans vos affaires." },
-      { name: "LA FORCE", num: "XI", img: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_11_Strength.jpg", desc: "Courage, maîtrise de soi et compassion. Votre force intérieure triomphe sur les obstacles extérieurs." },
-      { name: "LE PENDU", num: "XII", img: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg", desc: "Lâcher-prise et changement de perspective. Une pause nécessaire pour voir la situation sous un nouvel angle." },
-      { name: "L'ARCANE SANS NOM", num: "XIII", img: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg", desc: "Transformation radicale et fin d'un cycle usé. Faites de la place à la renaissance qui s'annonce." },
-      { name: "TEMPÉRANCE", num: "XIV", img: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg", desc: "Harmonie, guérison et modération. La patience et l'équilibre apportent une paix durable." },
-      { name: "LE DIABLE", num: "XV", img: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg", desc: "Attachements, désirs et puissance créative brute. Prenez conscience de ce qui vous enchaîne pour vous en libérer." },
-      { name: "LA MAISON DIEU", num: "XVI", img: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg", desc: "Révélation soudaine et libération. Ce qui s'effondre laisse la place à une vérité plus authentique." },
-      { name: "L'ÉTOILE", num: "XVII", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg", desc: "Espoir, inspiration et protection céleste. Ayez foi en l'avenir, la lumière guide vos pas." },
-      { name: "LA LUNE", num: "XVIII", img: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg", desc: "Rêves, subconscient et imaginaire. Traversez les illusions pour révéler la vérité cachée." },
-      { name: "LE SOLEIL", num: "XIX", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg", desc: "Joie, succès, clarté et vitalité radiante. Tout s'éclaire d'un jour nouveau et chaleureux." },
-      { name: "LE JUGEMENT", num: "XX", img: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg", desc: "Éveil, appel intérieur et seconde chance. Il est temps de répondre à votre véritable vocation." },
-      { name: "LE MONDE", num: "XXI", img: "https://upload.wikimedia.org/wikipedia/commons/ff/ff/RWS_Tarot_21_World.jpg", desc: "Accomplissement total, succès et plénitude. Vous atteignez le sommet de votre parcours actuel." },
-      { name: "LE MAT", num: "0", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg", desc: "Saut de foi, spontanéité et liberté absolue. Lancez-vous dans l'aventure sans regarder en arrière." }
-    ];
-
-    function getZodiacSign(day, month) {
-      if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "VERSEAU";
-      if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "POISSONS";
-      if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "BÉLIER";
-      if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "TAUREAU";
-      if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "GÉMEAUX";
-      if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "CANCER";
-      if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "LION";
-      if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "VIERGE";
-      if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "BALANCE";
-      if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "SCORPION";
-      if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "SAGITTAIRE";
-      if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "CAPRICORNE";
-      return "CÉLESTE";
-    }
-
-    // TRIGGER SECRET LOGO : inverse le déclenchement
-    document.getElementById('logo-secret-trigger').addEventListener('click', function() {
-      isLogoTriggeredMode = !isLogoTriggeredMode;
-      var indicator = document.getElementById('secret-mode-indicator');
-      if (isLogoTriggeredMode) {
-        indicator.className = "text-[10px] text-amber-400 opacity-100 font-bold transition-all duration-300";
-      } else {
-        indicator.className = "text-[10px] text-amber-500/0 transition-all duration-300";
-      }
-    });
-
-    // CLIC SOUMISSION DATE DE NAISSANCE
-    document.getElementById('btn-submit-astro').addEventListener('click', function() {
-      var dayVal = document.getElementById('dob-day').value;
-      var monthVal = document.getElementById('dob-month').value;
-      var yearVal = document.getElementById('dob-year').value;
-      var errorMsg = document.getElementById('error-msg');
-
-      if (!dayVal || !monthVal || !yearVal) {
-        errorMsg.classList.remove('hidden');
-        return;
-      }
-      errorMsg.classList.add('hidden');
-
-      selectedDay = parseInt(dayVal, 10);
-      selectedMonth = parseInt(monthVal, 10);
-      selectedYear = parseInt(yearVal, 10);
-
-      // FORMULE EXACTE : Jour * 2 + Mois
-      secretAstroNumber = (selectedDay * 2) + selectedMonth;
-      userZodiacSign = getZodiacSign(selectedDay, selectedMonth);
-
-      document.getElementById('secret-number').textContent = secretAstroNumber;
-
-      var randomIndex = Math.floor(Math.random() * barnumReadings.length);
-      document.getElementById('reading-container').innerHTML = barnumReadings[randomIndex];
-
-      document.getElementById('step-form').classList.add('hidden');
-      document.getElementById('step-reading').classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // SLIDER
-    var slider = document.getElementById('resonance-slider');
-    var sliderVal = document.getElementById('resonance-val');
-    if (slider) {
-      slider.addEventListener('input', function() {
-        sliderVal.textContent = this.value + '%';
-      });
-    }
-
-    // CLIC BOUTON TAROT : PAR DÉFAUT -> ERREUR 404, SI LOGO CLIQUÉ -> VRAI TAROT
-    document.getElementById('btn-tarot').addEventListener('click', function() {
-      if (isLogoTriggeredMode) {
-        // AFFICHE VRAI TAROT HD SI LE LOGO A ÉTÉ CLIQUÉ
-        document.getElementById('step-reading').classList.add('hidden');
-        var trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-        document.getElementById('tarot-card-title').textContent = trueTarot.name;
-        document.getElementById('tarot-card-label').textContent = trueTarot.name;
-        document.getElementById('tarot-card-num').textContent = trueTarot.num;
-        document.getElementById('tarot-card-img').src = trueTarot.img;
-        document.getElementById('tarot-card-desc').textContent = trueTarot.desc;
-        document.getElementById('step-vrai-tarot').classList.remove('hidden');
-      } else {
-        // PAR DÉFAUT : AFFICHE LA FAUSSE PAGE D'ERREUR 404
-        document.getElementById('app-container').classList.add('hidden');
-        var errorScreen = document.getElementById('error-screen');
-        errorScreen.classList.remove('hidden');
-
-        // INJECTION DU SIGNE
-        var secretSpot = document.getElementById('secret-sign-spot');
-        secretSpot.textContent = userZodiacSign.toLowerCase();
-        secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
-
-        // MINUTEUR 15s
-        setTimeout(function() {
-          secretSpot.className = "no-underline font-normal transition-all duration-500";
-          secretSpot.textContent = "définitions";
-        }, 15000);
-      }
-    });
-
-    // TRIGGER PEEK (Bouton Google Play)
-    document.getElementById('peek-trigger').addEventListener('click', function() {
-      if (!selectedDay || !selectedMonth || !selectedYear) return;
-
-      document.getElementById('peek-dob').textContent = selectedDay + " " + monthNames[selectedMonth - 1] + " " + selectedYear;
-      document.getElementById('peek-zodiac').textContent = userZodiacSign;
-      document.getElementById('peek-chinese').textContent = getChineseZodiac(selectedYear);
-      document.getElementById('peek-celeb').textContent = getCelebrity(selectedDay, selectedMonth);
-
-      document.getElementById('peek-modal').classList.remove('hidden');
-    });
-
-    document.getElementById('close-peek').addEventListener('click', function() {
-      document.getElementById('peek-modal').classList.add('hidden');
-    });
-
-    document.getElementById('btn-close-peek-main').addEventListener('click', function() {
-      document.getElementById('peek-modal').classList.add('hidden');
-    });
-  </script>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="fr"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Célestia Nova - Thème &amp; Astrologie Céleste&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-color: #080711;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: #e2e8f0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>overflow-x: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.font-cinzel { font-family: 'Cinzel', serif; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.gold-gradient {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: linear-gradient(135deg, #fef08a 0%, #d97706 50%, #b45309 100%);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>-webkit-background-clip: text;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>-webkit-text-fill-color: transparent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.bg-stars {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-image:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),</p>
+<p class="p1"><span class="Apple-converted-space">        </span>radial-gradient(2px 2px at 40px 70px, #ffd700, rgba(0,0,0,0)),</p>
+<p class="p1"><span class="Apple-converted-space">        </span>radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),</p>
+<p class="p1"><span class="Apple-converted-space">        </span>radial-gradient(2px 2px at 160px 120px, #ffd700, rgba(0,0,0,0));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-repeat: repeat;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background-size: 200px 200px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.mystic-card {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>background: rgba(15, 13, 35, 0.75);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>backdrop-filter: blur(16px);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid rgba(217, 119, 6, 0.25);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-stars min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- ================= SITE PRINCIPAL ================= --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="app-container" class="w-full flex-grow flex flex-col justify-between"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="py-6 px-4 border-b border-amber-900/30 bg-slate-950/40 backdrop-blur-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="max-w-4xl mx-auto flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- TRIGGER SECRET : Cliquer sur le logo inverse le mode --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="logo-secret-trigger" class="flex items-center space-x-3 cursor-pointer select-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-600 to-amber-200 flex items-center justify-center shadow-lg shadow-amber-900/30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-slate-950 font-bold text-lg font-cinzel"&gt;✦&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="font-cinzel text-xl md:text-2xl font-bold tracking-wider gold-gradient"&gt;CÉLESTIA NOVA&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span id="secret-mode-indicator" class="text-[10px] text-amber-500/0 transition-all duration-300"&gt;✦&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-xs tracking-widest text-amber-300/60 uppercase font-cinzel hidden sm:block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Observatoire Astral &amp; Alignement Humain</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-2xl w-full mx-auto p-4 my-8"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">      </span></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- ÉTAPE 1 : Formulaire --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="step-form" class="mystic-card rounded-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-center mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-amber-400 font-cinzel text-sm uppercase tracking-widest block mb-2"&gt;Analyse Thématique Personnalisée&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h1 class="font-cinzel text-3xl md:text-4xl font-bold text-slate-100 mb-3"&gt;Révélez Votre Empreinte Astrale&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-slate-400 text-sm md:text-base font-light"&gt;Saisissez votre date de naissance pour calculer votre fréquence vibratoire céleste et générer votre profil énergétique instantané.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="grid grid-cols-3 gap-3 md:gap-4"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Jour --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2"&gt;Jour&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;select id="dob-day" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="" disabled selected&gt;--&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1"&gt;1&lt;/option&gt;&lt;option value="2"&gt;2&lt;/option&gt;&lt;option value="3"&gt;3&lt;/option&gt;&lt;option value="4"&gt;4&lt;/option&gt;&lt;option value="5"&gt;5&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="6"&gt;6&lt;/option&gt;&lt;option value="7"&gt;7&lt;/option&gt;&lt;option value="8"&gt;8&lt;/option&gt;&lt;option value="9"&gt;9&lt;/option&gt;&lt;option value="10"&gt;10&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="11"&gt;11&lt;/option&gt;&lt;option value="12"&gt;12&lt;/option&gt;&lt;option value="13"&gt;13&lt;/option&gt;&lt;option value="14"&gt;14&lt;/option&gt;&lt;option value="15"&gt;15&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="16"&gt;16&lt;/option&gt;&lt;option value="17"&gt;17&lt;/option&gt;&lt;option value="18"&gt;18&lt;/option&gt;&lt;option value="19"&gt;19&lt;/option&gt;&lt;option value="20"&gt;20&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="21"&gt;21&lt;/option&gt;&lt;option value="22"&gt;22&lt;/option&gt;&lt;option value="23"&gt;23&lt;/option&gt;&lt;option value="24"&gt;24&lt;/option&gt;&lt;option value="25"&gt;25&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="26"&gt;26&lt;/option&gt;&lt;option value="27"&gt;27&lt;/option&gt;&lt;option value="28"&gt;28&lt;/option&gt;&lt;option value="29"&gt;29&lt;/option&gt;&lt;option value="30"&gt;30&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="31"&gt;31&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Mois --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2"&gt;Mois&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;select id="dob-month" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="" disabled selected&gt;--&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1"&gt;Janvier&lt;/option&gt;&lt;option value="2"&gt;Février&lt;/option&gt;&lt;option value="3"&gt;Mars&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="4"&gt;Avril&lt;/option&gt;&lt;option value="5"&gt;Mai&lt;/option&gt;&lt;option value="6"&gt;Juin&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="7"&gt;Juillet&lt;/option&gt;&lt;option value="8"&gt;Août&lt;/option&gt;&lt;option value="9"&gt;Septembre&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="10"&gt;Octobre&lt;/option&gt;&lt;option value="11"&gt;Novembre&lt;/option&gt;&lt;option value="12"&gt;Décembre&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Année --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;label class="block text-xs font-cinzel uppercase text-amber-200/80 mb-2"&gt;Année&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;select id="dob-year" class="w-full bg-slate-900/90 border border-amber-900/40 rounded-lg px-3 py-3 text-slate-200 focus:outline-none focus:border-amber-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="" disabled selected&gt;----&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="2010"&gt;2010&lt;/option&gt;&lt;option value="2009"&gt;2009&lt;/option&gt;&lt;option value="2008"&gt;2008&lt;/option&gt;&lt;option value="2007"&gt;2007&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="2006"&gt;2006&lt;/option&gt;&lt;option value="2005"&gt;2005&lt;/option&gt;&lt;option value="2004"&gt;2004&lt;/option&gt;&lt;option value="2003"&gt;2003&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="2002"&gt;2002&lt;/option&gt;&lt;option value="2001"&gt;2001&lt;/option&gt;&lt;option value="2000"&gt;2000&lt;/option&gt;&lt;option value="1999"&gt;1999&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1998"&gt;1998&lt;/option&gt;&lt;option value="1997"&gt;1997&lt;/option&gt;&lt;option value="1996"&gt;1996&lt;/option&gt;&lt;option value="1995"&gt;1995&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1994"&gt;1994&lt;/option&gt;&lt;option value="1993"&gt;1993&lt;/option&gt;&lt;option value="1992"&gt;1992&lt;/option&gt;&lt;option value="1991"&gt;1991&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1990"&gt;1990&lt;/option&gt;&lt;option value="1989"&gt;1989&lt;/option&gt;&lt;option value="1988"&gt;1988&lt;/option&gt;&lt;option value="1987"&gt;1987&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1986"&gt;1986&lt;/option&gt;&lt;option value="1985"&gt;1985&lt;/option&gt;&lt;option value="1984"&gt;1984&lt;/option&gt;&lt;option value="1983"&gt;1983&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1982"&gt;1982&lt;/option&gt;&lt;option value="1981"&gt;1981&lt;/option&gt;&lt;option value="1980"&gt;1980&lt;/option&gt;&lt;option value="1979"&gt;1979&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1978"&gt;1978&lt;/option&gt;&lt;option value="1977"&gt;1977&lt;/option&gt;&lt;option value="1976"&gt;1976&lt;/option&gt;&lt;option value="1975"&gt;1975&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1974"&gt;1974&lt;/option&gt;&lt;option value="1973"&gt;1973&lt;/option&gt;&lt;option value="1972"&gt;1972&lt;/option&gt;&lt;option value="1971"&gt;1971&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1970"&gt;1970&lt;/option&gt;&lt;option value="1969"&gt;1969&lt;/option&gt;&lt;option value="1968"&gt;1968&lt;/option&gt;&lt;option value="1967"&gt;1967&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1966"&gt;1966&lt;/option&gt;&lt;option value="1965"&gt;1965&lt;/option&gt;&lt;option value="1964"&gt;1964&lt;/option&gt;&lt;option value="1963"&gt;1963&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1962"&gt;1962&lt;/option&gt;&lt;option value="1961"&gt;1961&lt;/option&gt;&lt;option value="1960"&gt;1960&lt;/option&gt;&lt;option value="1959"&gt;1959&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1958"&gt;1958&lt;/option&gt;&lt;option value="1957"&gt;1957&lt;/option&gt;&lt;option value="1956"&gt;1956&lt;/option&gt;&lt;option value="1955"&gt;1955&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1954"&gt;1954&lt;/option&gt;&lt;option value="1953"&gt;1953&lt;/option&gt;&lt;option value="1952"&gt;1952&lt;/option&gt;&lt;option value="1951"&gt;1951&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1950"&gt;1950&lt;/option&gt;&lt;option value="1949"&gt;1949&lt;/option&gt;&lt;option value="1948"&gt;1948&lt;/option&gt;&lt;option value="1947"&gt;1947&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1946"&gt;1946&lt;/option&gt;&lt;option value="1945"&gt;1945&lt;/option&gt;&lt;option value="1944"&gt;1944&lt;/option&gt;&lt;option value="1943"&gt;1943&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;option value="1942"&gt;1942&lt;/option&gt;&lt;option value="1941"&gt;1941&lt;/option&gt;&lt;option value="1940"&gt;1940&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p id="error-msg" class="text-rose-400 text-xs text-center hidden"&gt;Veuillez sélectionner le jour, le mois et l'année.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button id="btn-submit-astro" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>GÉNÉRER MA LECTURE CÉLESTE ✦</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- ÉTAPE 2 : Reading --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="step-reading" class="hidden mystic-card rounded-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-center border-b border-amber-900/30 pb-6 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest"&gt;Matrice Thématique Alignée&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;h2 class="font-cinzel text-2xl md:text-3xl font-bold text-slate-100 mt-1"&gt;Analyse d'Aura &amp; Alignement&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="mt-4 inline-flex items-center px-4 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-xs font-mono text-amber-300"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span&gt;FRÉQUENCE VIBRATOIRE :&amp;nbsp;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span id="secret-number" class="font-bold text-amber-200"&gt;--&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="reading-container" class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base font-light mb-8"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label class="block text-xs font-cinzel uppercase text-slate-300 mb-3 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>À quel point cette lecture résonne-t-elle avec votre situation actuelle ?</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="flex items-center space-x-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-xs text-slate-500"&gt;Peu&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="range" min="50" max="100" value="88" id="resonance-slider" class="w-full accent-amber-500 cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-xs text-amber-400 font-mono font-bold w-12 text-right" id="resonance-val"&gt;88%&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p class="text-center text-xs text-emerald-400 mt-2 font-medium"&gt;✦ Résonance optimale confirmée.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="btn-tarot" type="button" class="w-full py-4 rounded-xl font-cinzel font-semibold tracking-wider text-slate-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 shadow-lg cursor-pointer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span&gt;VOIR MA CARTE DU TAROT ASTRAL →&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- ÉTAPE 3 : Vrai Tarot --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="step-vrai-tarot" class="hidden mystic-card rounded-2xl p-6 md:p-10 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest block mb-2"&gt;Arcane Majeur Tiré&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 id="tarot-card-title" class="font-cinzel text-3xl font-bold text-amber-200 mb-4"&gt;LE JUGEMENT&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="w-52 h-88 mx-auto my-6 rounded-xl border-2 border-amber-500/50 bg-slate-950 flex flex-col justify-between p-3 shadow-2xl relative overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="text-amber-400 font-cinzel text-xs text-left font-bold" id="tarot-card-num"&gt;XX&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="my-2 h-64 flex items-center justify-center overflow-hidden rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;img id="tarot-card-img" src="" alt="Carte Tarot" class="h-full object-contain shadow-lg rounded" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="text-amber-300 font-cinzel text-xs font-bold uppercase tracking-wider" id="tarot-card-label"&gt;LE JUGEMENT&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="tarot-card-desc" class="text-slate-300 text-sm leading-relaxed mb-6 max-w-lg mx-auto"&gt;&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button type="button" onclick="location.reload()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-cinzel text-xs tracking-wider transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>RECOMMENCER L'ANALYSE</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="py-4 text-center text-xs text-slate-600 border-t border-slate-900"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;© 2026 Célestia Nova Observatoire. Tous droits réservés.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- ================= FAUSSE PAGE D'ERREUR 404 ================= --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-md w-full text-center space-y-6 my-auto pt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight leading-none pt-2"&gt;404&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug"&gt;Oups ! La page que vous cherchez est introuvable.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pt-2 pb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button type="button" onclick="location.reload()" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition text-base"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Recharger</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="space-y-4 text-gray-600 text-base font-normal leading-relaxed px-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Votre téléphone rencontre des difficultés pour se connecter à Internet. Veuillez vérifier l'URL et recharger.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Si vous avez cliqué sur un lien pour arriver ici, le lien est peut-être périmé ou incorrect.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pt-6 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 class="text-xl font-bold text-slate-900"&gt;Téléchargez nos applications&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="text-sm text-gray-600 leading-relaxed px-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>Nos applications proposent également plus de 1.5 million de &lt;span id="secret-sign-spot" class="underline decoration-gray-300 decoration-1 underline-offset-2 transition-all duration-500"&gt;définitions&lt;/span&gt; et synonymes ainsi qu'un accès à nos articles de référence. Consultez vos mots partout et à tout moment — nous fonctionnons aussi hors ligne !</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex flex-row items-center justify-center gap-3 pt-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- Google Play Trigger --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="peek-trigger" class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md active:scale-95 transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="text-[9px] uppercase tracking-wider text-gray-300"&gt;DISPONIBLE SUR&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="text-xs font-semibold leading-none mt-0.5"&gt;Google Play&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;!-- App Store --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="text-[9px] uppercase tracking-wider text-gray-300"&gt;DISPONIBLE SUR L'&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="text-xs font-semibold leading-none mt-0.5"&gt;App Store&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- ================= MODAL PEEK MENTALISTE ================= --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="peek-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 max-w-sm w-full text-slate-100 space-y-4 shadow-2xl relative font-sans"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex justify-between items-center border-b border-slate-800 pb-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="text-amber-400 font-cinzel text-xs font-bold tracking-widest uppercase"&gt;✦ Fiche Secrète Mentaliste&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button type="button" id="close-peek" class="text-slate-400 hover:text-white text-lg font-bold"&gt;✕&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="space-y-3 text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-950 p-3 rounded-lg border border-slate-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5"&gt;Date de Naissance&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="peek-dob" class="font-bold text-amber-200 text-base"&gt;--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-2 gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bg-slate-950 p-3 rounded-lg border border-slate-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5"&gt;Signe Astral&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="peek-zodiac" class="font-bold text-slate-200"&gt;--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="bg-slate-950 p-3 rounded-lg border border-slate-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5"&gt;Signe Chinois&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="peek-chinese" class="font-bold text-slate-200"&gt;--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-slate-950 p-3 rounded-lg border border-slate-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5"&gt;Célébrité née le même jour&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="peek-celeb" class="font-bold text-amber-300 text-base"&gt;--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button type="button" id="btn-close-peek-main" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Fermer la fiche</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- ================= SCRIPT JAVASCRIPT DIRECT ================= --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var userZodiacSign = "";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var secretAstroNumber = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var isLogoTriggeredMode = false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var selectedDay = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var selectedMonth = 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var selectedYear = 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var celebrities = {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>1: { 1: "Christine Lagarde (1956)", 8: "Elvis Presley (1935)", 15: "Pitbull (1981)", 17: "Jim Carrey (1962)", 20: "Omar Sy (1978)", 25: "Volodymyr Zelensky (1978)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>2: { 5: "Cristiano Ronaldo (1985)", 12: "Charles Darwin (1809)", 14: "Ed Sheeran (1991)", 17: "Michael Jordan (1963)", 22: "Drew Barrymore (1975)", 26: "Rihanna (1988)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>3: { 1: "Justin Bieber (1994)", 6: "Michel-Ange (1475)", 10: "Sharon Stone (1958)", 14: "Albert Einstein (1879)", 21: "Antoine Griezmann (1991)", 30: "Céline Dion (1968)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>4: { 7: "Jackie Chan (1954)", 9: "Jean-Paul Belmondo (1933)", 15: "Emma Watson (1990)", 21: "Reine Élisabeth II (1926)", 23: "Gilles Lellouche (1972)", 28: "Jessica Alba (1981)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>5: { 2: "David Beckham (1975)", 11: "Laetitia Casta (1978)", 13: "Robert Pattinson (1986)", 19: "Squeezie (1996)", 22: "Novak Djokovic (1987)", 26: "Lenny Kravitz (1964)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>6: { 1: "Morgan Freeman (1937)", 9: "Johnny Hallyday (1943)", 18: "Jamel Debbouze (1975)", 21: "Zinédine Zidane (1972)", 24: "Lionel Messi (1987)", 26: "Ariana Grande (1993)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>7: { 3: "Tom Cruise (1962)", 9: "Tom Hanks (1956)", 10: "Gims (1986)", 16: "Will Ferrell (1967)", 21: "Charlotte Gainsbourg (1971)", 30: "Arnold Schwarzenegger (1947)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>8: { 4: "Barack Obama (1961)", 8: "Roger Federer (1981)", 10: "Antonio Banderas (1960)", 15: "Ben Affleck (1972)", 21: "Usain Bolt (1986)", 29: "Michael Jackson (1958)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>9: { 2: "Keanu Reeves (1964)", 4: "Beyoncé (1981)", 12: "Paul Walker (1973)", 18: "Ronaldo Nazário (1976)", 25: "Will Smith (1968)", 30: "Marion Cotillard (1975)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>10: { 8: "Matt Damon (1970)", 16: "Charles Leclerc (1997)", 21: "Kim Kardashian (1980)", 23: "Ryan Reynolds (1976)", 25: "Katy Perry (1984)", 28: "Bill Gates (1955)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>11: { 7: "David Guetta (1967)", 11: "Leonardo DiCaprio (1974)", 17: "Sophie Marceau (1966)", 22: "Scarlett Johansson (1984)", 25: "Gaspard Ulliel (1984)", 30: "Kaley Cuoco (1985)" },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>12: { 3: "Julianne Moore (1960)", 8: "Thylane Blondeau (2001)", 18: "Brad Pitt (1963)", 20: "Kylian Mbappé (1998)", 25: "Justin Trudeau (1971)", 30: "LeBron James (1984)" }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function getCelebrity(day, month) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (celebrities[month] &amp;&amp; celebrities[month][day]) return celebrities[month][day];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var genericCelebs = ["Taylor Swift (1989)", "Dwayne Johnson (1972)", "Lady Gaga (1986)", "Johnny Depp (1963)", "Zendaya (1996)", "Ryan Gosling (1980)"];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return genericCelebs[(day + month) % genericCelebs.length];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function getChineseZodiac(year) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var animals = ["Singe", "Coq", "Chien", "Cochon", "Rat", "Bœuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval", "Chèvre"];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return animals[year % 12];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var barnumReadings = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"&lt;p&gt;Vous traversez actuellement une période de transition silencieuse. Bien que vous donniez extérieurement l'impression d'être une personne sereine, vous gardez en vous de véritables incertitudes quant à vos priorités futures.&lt;/p&gt;&lt;p&gt;Votre intuition est souvent plus aiguisée que ce que vous laissez paraître aux autres. Une décision importante concernant votre entourage demande votre attention d'ici les prochaines semaines.&lt;/p&gt;",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"&lt;p&gt;Vous êtes une personne qui apprécie l'autonomie, mais qui ressent parfois le poids des responsabilités. Il vous arrive de douter de vos choix passés, même si la majorité d'entre eux vous ont conduit là où vous deviez être.&lt;/p&gt;&lt;p&gt;Une opportunité inattendue liée à vos projets personnels se précisera très prochainement si vous restez attentif aux signes.&lt;/p&gt;",</p>
+<p class="p1"><span class="Apple-converted-space">      </span>"&lt;p&gt;Vous possédez une grande réserve de capacités non exploitées que vous n'avez pas encore révélées à votre entourage. Vous êtes parfois très exigeant envers vous-même, ce qui peut engendrer des tensions intérieures évitables.&lt;/p&gt;&lt;p&gt;Les astres indiquent qu'un réalignement majeur dans vos relations amicales ou professionnelles portera ses fruits incessamment.&lt;/p&gt;"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var tarotCards = [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ name: "LE BATELEUR", num: "I", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_01_Magician.jpg", desc: "Le potentiel créatif est à son maximum. Vous avez tous les outils en main pour initier un nouveau départ avec confiance." },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ name: "LA PAPESSE", num: "II", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg", desc: "Période de réflexion, de savoir caché et d'intuition profonde. Écoutez votre voix intérieure avant d'agir." },</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{ name: "L'IMPÉRATRICE", num: "III", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg", desc: "Abondance, créativité et expression personnelle. Vos projets entrent dans une phase de croissance fertile." }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function getZodiacSign(day, month) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 1 &amp;&amp; day &gt;= 20) || (month == 2 &amp;&amp; day &lt;= 18)) return "VERSEAU";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 2 &amp;&amp; day &gt;= 19) || (month == 3 &amp;&amp; day &lt;= 20)) return "POISSONS";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 3 &amp;&amp; day &gt;= 21) || (month == 4 &amp;&amp; day &lt;= 19)) return "BÉLIER";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 4 &amp;&amp; day &gt;= 20) || (month == 5 &amp;&amp; day &lt;= 20)) return "TAUREAU";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 5 &amp;&amp; day &gt;= 21) || (month == 6 &amp;&amp; day &lt;= 20)) return "GÉMEAUX";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 6 &amp;&amp; day &gt;= 21) || (month == 7 &amp;&amp; day &lt;= 22)) return "CANCER";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 7 &amp;&amp; day &gt;= 23) || (month == 8 &amp;&amp; day &lt;= 22)) return "LION";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 8 &amp;&amp; day &gt;= 23) || (month == 9 &amp;&amp; day &lt;= 22)) return "VIERGE";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 9 &amp;&amp; day &gt;= 23) || (month == 10 &amp;&amp; day &lt;= 22)) return "BALANCE";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 10 &amp;&amp; day &gt;= 23) || (month == 11 &amp;&amp; day &lt;= 21)) return "SCORPION";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 11 &amp;&amp; day &gt;= 22) || (month == 12 &amp;&amp; day &lt;= 21)) return "SAGITTAIRE";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if ((month == 12 &amp;&amp; day &gt;= 22) || (month == 1 &amp;&amp; day &lt;= 19)) return "CAPRICORNE";</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return "CÉLESTE";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// EVENT LISTENERS DIRECTS</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('logo-secret-trigger').onclick = function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>isLogoTriggeredMode = !isLogoTriggeredMode;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var indicator = document.getElementById('secret-mode-indicator');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>indicator.className = isLogoTriggeredMode ? "text-[10px] text-amber-400 opacity-100 font-bold transition-all duration-300" : "text-[10px] text-amber-500/0 transition-all duration-300";</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('btn-submit-astro').onclick = function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var dayVal = document.getElementById('dob-day').value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var monthVal = document.getElementById('dob-month').value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var yearVal = document.getElementById('dob-year').value;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var errorMsg = document.getElementById('error-msg');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!dayVal || !monthVal || !yearVal) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>errorMsg.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>errorMsg.classList.add('hidden');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>selectedDay = parseInt(dayVal, 10);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selectedMonth = parseInt(monthVal, 10);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selectedYear = parseInt(yearVal, 10);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>secretAstroNumber = (selectedDay * 2) + selectedMonth;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>userZodiacSign = getZodiacSign(selectedDay, selectedMonth);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('secret-number').textContent = secretAstroNumber;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var randomIndex = Math.floor(Math.random() * barnumReadings.length);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('reading-container').innerHTML = barnumReadings[randomIndex];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('step-form').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('step-reading').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>window.scrollTo({ top: 0, behavior: 'smooth' });</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>var slider = document.getElementById('resonance-slider');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (slider) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>slider.oninput = function() {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('resonance-val').textContent = this.value + '%';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('btn-tarot').onclick = function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (isLogoTriggeredMode) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('step-reading').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var trueTarot = tarotCards[Math.floor(Math.random() * tarotCards.length)];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tarot-card-title').textContent = trueTarot.name;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tarot-card-label').textContent = trueTarot.name;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tarot-card-num').textContent = trueTarot.num;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tarot-card-img').src = trueTarot.img;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('tarot-card-desc').textContent = trueTarot.desc;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('step-vrai-tarot').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('app-container').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('error-screen').classList.remove('hidden');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>var secretSpot = document.getElementById('secret-sign-spot');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>secretSpot.textContent = userZodiacSign.toLowerCase();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(function() {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>secretSpot.className = "no-underline font-normal transition-all duration-500";</p>
+<p class="p1"><span class="Apple-converted-space">          </span>secretSpot.textContent = "définitions";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}, 15000);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('peek-trigger').onclick = function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (!selectedDay || !selectedMonth || !selectedYear) return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('peek-dob').textContent = selectedDay + " " + monthNames[selectedMonth - 1] + " " + selectedYear;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('peek-zodiac').textContent = userZodiacSign;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('peek-chinese').textContent = getChineseZodiac(selectedYear);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('peek-celeb').textContent = getCelebrity(selectedDay, selectedMonth);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('peek-modal').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('close-peek').onclick = function() { document.getElementById('peek-modal').classList.add('hidden'); };</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('btn-close-peek-main').onclick = function() { document.getElementById('peek-modal').classList.add('hidden'); };</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
 </body>
 </html>
