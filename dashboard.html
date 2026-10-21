@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Coulisses</title>
+  <!-- Icône d'écran d'accueil (iPhone + Android) -->
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <meta name="apple-mobile-web-app-title" content="Coulisses">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#07060f">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07060f; --card: #12101f; --line: #2a2440; --text: #e8e6f0;
+      --muted: #8b86a3; --gold: #f2c35b; --gold-dim: #8a6a24; --new: #3b2a0a; --danger: #e5484d;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 16px; padding-top: calc(16px + env(safe-area-inset-top)); padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+    h1 { font-family: 'Cinzel', serif; font-size: 18px; letter-spacing: .12em; color: var(--gold); }
+    .muted { color: var(--muted); font-size: 13px; }
+    button, select, input {
+      font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line);
+      border-radius: 10px; padding: 10px 12px; font-size: 14px;
+    }
+    button { cursor: pointer; font-weight: 600; }
+    button.primary { background: var(--gold); color: #1a1205; border-color: var(--gold); }
+    button.danger { color: var(--danger); border-color: #4a1d22; }
+    button:active { transform: scale(.97); }
+
+    /* Connexion */
+    #login { display: none; max-width: 360px; margin: 18vh auto 0; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+    #login h1 { margin-bottom: 16px; text-align: center; }
+    #login input { width: 100%; margin-bottom: 10px; }
+    #login button { width: 100%; }
+    #login-err { color: var(--danger); font-size: 13px; min-height: 18px; margin-top: 8px; text-align: center; }
+
+    /* Tableau de bord */
+    #app { display: none; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+    .dot.on { background: #3ddc84; box-shadow: 0 0 8px #3ddc84; }
+    .count { font-family: 'Cinzel', serif; font-size: 44px; color: var(--gold); line-height: 1; }
+    .presence { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 4px; }
+    .pbox { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 8px; text-align: center; }
+    .pbox .n { font-size: 26px; font-weight: 700; line-height: 1.1; }
+    .pbox .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+    .pbox.total { border-color: var(--gold-dim); }
+    .pbox.total .n { color: var(--gold); }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+    .toolbar select { flex: 1 1 140px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .chip { font-size: 12px; padding: 4px 9px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--muted); }
+    .chip b { color: var(--text); }
+
+    .entry {
+      display: grid; grid-template-columns: 1fr auto; gap: 4px 12px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 14px 16px; margin-bottom: 10px; transition: background 2s, border-color 2s;
+    }
+    .entry.fresh { background: var(--new); border-color: var(--gold-dim); }
+    .dob { font-size: 22px; font-weight: 700; letter-spacing: .01em; }
+    .age { font-size: 22px; font-weight: 700; color: var(--gold); text-align: right; }
+    .meta { font-size: 13px; color: var(--muted); }
+    .meta b { color: var(--text); font-weight: 600; }
+    .time { font-size: 12px; color: var(--muted); text-align: right; }
+    .celeb { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+    .empty { text-align: center; padding: 48px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: 14px; }
+    footer { margin-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  </style>
+</head>
+<body>
+
+  <!-- CONNEXION -->
+  <div id="login">
+    <h1>✦ COULISSES</h1>
+    <input id="email" type="email" placeholder="Courriel" autocomplete="username">
+    <input id="pass" type="password" placeholder="Mot de passe" autocomplete="current-password">
+    <button class="primary" id="btn-login">Entrer</button>
+    <div id="login-err"></div>
+  </div>
+
+  <!-- TABLEAU DE BORD -->
+  <div id="app" class="wrap">
+    <header>
+      <div>
+        <h1>✦ EN DIRECT</h1>
+        <div class="live"><span class="dot" id="dot"></span><span id="status">Connexion…</span></div>
+      </div>
+      <div style="text-align:right">
+        <div class="count" id="count">0</div>
+        <div class="muted">dates reçues</div>
+      </div>
+    </header>
+
+    <div class="presence">
+      <div class="pbox total"><div class="n" id="p-total">0</div><div class="l">Sur le site</div></div>
+      <div class="pbox"><div class="n" id="p-form">0</div><div class="l">Formulaire</div></div>
+      <div class="pbox"><div class="n" id="p-read">0</div><div class="l">Lecture</div></div>
+      <div class="pbox"><div class="n" id="p-end">0</div><div class="l">Tarot / 404</div></div>
+    </div>
+
+    <div class="toolbar">
+      <select id="filter-show"><option value="*">Tous les shows</option></select>
+      <select id="sort">
+        <option value="recent">Plus récentes d'abord</option>
+        <option value="calendar">Ordre du calendrier</option>
+        <option value="age">Du plus jeune au plus vieux</option>
+      </select>
+      <button class="primary" id="btn-new-show">Nouveau show</button>
+    </div>
+
+    <div class="muted" id="since" style="margin-bottom:10px"></div>
+    <div class="chips" id="chips"></div>
+    <div id="list"></div>
+
+    <footer>
+      <button class="danger" id="btn-clear">Tout effacer</button>
+      <button id="btn-logout">Déconnexion</button>
+    </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    // >>> MÊME CONFIG QUE DANS LE SITE <<<
+    var firebaseConfig = {
+      apiKey: "AIzaSyCP9aXtQe03-Rsd6EooVvoNCTqUm_6mQeQ",
+      authDomain: "celestia-nova.firebaseapp.com",
+      projectId: "celestia-nova",
+      storageBucket: "celestia-nova.firebasestorage.app",
+      messagingSenderId: "711594265636",
+      appId: "1:711594265636:web:19798a2f32ae4fbf7a5cb1"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var auth = firebase.auth();
+    var db = firebase.firestore();
+
+    var MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+    var CHINESE = ["Singe","Coq","Chien","Cochon","Rat","Bœuf","Tigre","Lapin","Dragon","Serpent","Cheval","Chèvre"];
+    var CELEBS = {
+      1:{1:"Christine Lagarde",8:"Elvis Presley",15:"Pitbull",17:"Jim Carrey",20:"Omar Sy",25:"Volodymyr Zelensky"},
+      2:{5:"Cristiano Ronaldo",12:"Charles Darwin",14:"Ed Sheeran",17:"Michael Jordan",22:"Drew Barrymore",26:"Rihanna"},
+      3:{1:"Justin Bieber",6:"Michel-Ange",10:"Sharon Stone",14:"Albert Einstein",21:"Antoine Griezmann",30:"Céline Dion"},
+      4:{7:"Jackie Chan",9:"Jean-Paul Belmondo",15:"Emma Watson",21:"Élisabeth II",23:"Gilles Lellouche",28:"Jessica Alba"},
+      5:{2:"David Beckham",11:"Laetitia Casta",13:"Robert Pattinson",19:"Squeezie",22:"Novak Djokovic",26:"Lenny Kravitz"},
+      6:{1:"Morgan Freeman",9:"Johnny Hallyday",18:"Jamel Debbouze",21:"Zinédine Zidane",24:"Lionel Messi",26:"Ariana Grande"},
+      7:{3:"Tom Cruise",9:"Tom Hanks",10:"Gims",16:"Will Ferrell",21:"Charlotte Gainsbourg",30:"Arnold Schwarzenegger"},
+      8:{4:"Barack Obama",8:"Roger Federer",10:"Antonio Banderas",15:"Ben Affleck",21:"Usain Bolt",29:"Michael Jackson"},
+      9:{2:"Keanu Reeves",4:"Beyoncé",12:"Paul Walker",18:"Ronaldo Nazário",25:"Will Smith",30:"Marion Cotillard"},
+      10:{8:"Matt Damon",16:"Charles Leclerc",21:"Kim Kardashian",23:"Ryan Reynolds",25:"Katy Perry",28:"Bill Gates"},
+      11:{7:"David Guetta",11:"Leonardo DiCaprio",17:"Sophie Marceau",22:"Scarlett Johansson",25:"Gaspard Ulliel",30:"Kaley Cuoco"},
+      12:{3:"Julianne Moore",8:"Thylane Blondeau",18:"Brad Pitt",20:"Kylian Mbappé",25:"Justin Trudeau",30:"LeBron James"}
+    };
+
+    function zodiac(d, m) {
+      if ((m==1&&d>=20)||(m==2&&d<=18)) return "Verseau";
+      if ((m==2&&d>=19)||(m==3&&d<=20)) return "Poissons";
+      if ((m==3&&d>=21)||(m==4&&d<=19)) return "Bélier";
+      if ((m==4&&d>=20)||(m==5&&d<=20)) return "Taureau";
+      if ((m==5&&d>=21)||(m==6&&d<=20)) return "Gémeaux";
+      if ((m==6&&d>=21)||(m==7&&d<=22)) return "Cancer";
+      if ((m==7&&d>=23)||(m==8&&d<=22)) return "Lion";
+      if ((m==8&&d>=23)||(m==9&&d<=22)) return "Vierge";
+      if ((m==9&&d>=23)||(m==10&&d<=22)) return "Balance";
+      if ((m==10&&d>=23)||(m==11&&d<=21)) return "Scorpion";
+      if ((m==11&&d>=22)||(m==12&&d<=21)) return "Sagittaire";
+      return "Capricorne";
+    }
+    function age(d, m, y) {
+      var now = new Date(), a = now.getFullYear() - y;
+      if (now.getMonth() + 1 < m || (now.getMonth() + 1 == m && now.getDate() < d)) a--;
+      return a;
+    }
+    function daysToBirthday(d, m) {
+      var now = new Date(); now.setHours(0,0,0,0);
+      var next = new Date(now.getFullYear(), m - 1, d);
+      if (next < now) next.setFullYear(now.getFullYear() + 1);
+      return Math.round((next - now) / 86400000);
+    }
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    }
+
+    // ---- État ----
+    var showStart = Number(safeGet('cn_show_start')) || (Date.now() - 6 * 3600 * 1000); // défaut : 6 dernières heures
+    var entries = [];
+    var seen = {};
+    var firstLoad = true;
+    var unsub = null;
+
+    function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+    // ---- Connexion ----
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(function(){});
+    document.getElementById('btn-login').onclick = function () {
+      var err = document.getElementById('login-err'); err.textContent = '';
+      auth.signInWithEmailAndPassword(
+        document.getElementById('email').value.trim(),
+        document.getElementById('pass').value
+      ).catch(function () { err.textContent = 'Identifiants invalides.'; });
+    };
+    document.getElementById('pass').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') document.getElementById('btn-login').click();
+    });
+    document.getElementById('btn-logout').onclick = function () { auth.signOut(); };
+
+    auth.onAuthStateChanged(function (user) {
+      document.getElementById('login').style.display = user ? 'none' : 'block';
+      document.getElementById('app').style.display = user ? 'block' : 'none';
+      if (user) { listen(); listenPresence(); }
+      else {
+        if (unsub) { unsub(); unsub = null; }
+        if (unsubPresence) { unsubPresence(); unsubPresence = null; }
+      }
+    });
+
+    // ---- Présence en direct ----
+    var ACTIVE_MS = 40000;          // considéré présent si vu dans les 40 dernières secondes
+    var presence = {};
+    var unsubPresence = null;
+
+    function listenPresence() {
+      if (unsubPresence) unsubPresence();
+      presence = {};
+      unsubPresence = db.collection('presence')
+        .where('vu', '>=', firebase.firestore.Timestamp.fromMillis(Date.now() - 10 * 60000))
+        .onSnapshot(function (snap) {
+          snap.docChanges().forEach(function (ch) {
+            if (ch.type === 'removed') { delete presence[ch.doc.id]; return; }
+            var x = ch.doc.data();
+            presence[ch.doc.id] = { show: x.show || 'general', etape: x.etape, t: x.vu ? x.vu.toMillis() : Date.now() };
+          });
+          renderPresence();
+        }, function () {});
+    }
+
+    function renderPresence() {
+      var f = document.getElementById('filter-show').value;
+      var now = Date.now(), c = { total: 0, formulaire: 0, lecture: 0, fin: 0 };
+      Object.keys(presence).forEach(function (id) {
+        var p = presence[id];
+        if (now - p.t > ACTIVE_MS) return;
+        if (f !== '*' && p.show !== f) return;
+        c.total++;
+        if (p.etape === 'formulaire') c.formulaire++;
+        else if (p.etape === 'lecture') c.lecture++;
+        else c.fin++;
+      });
+      document.getElementById('p-total').textContent = c.total;
+      document.getElementById('p-form').textContent = c.formulaire;
+      document.getElementById('p-read').textContent = c.lecture;
+      document.getElementById('p-end').textContent = c.fin;
+    }
+    setInterval(renderPresence, 3000);
+
+    // Ménage automatique : supprime les présences inactives depuis plus de 10 min
+    setInterval(function () {
+      if (!auth.currentUser) return;
+      db.collection('presence')
+        .where('vu', '<', firebase.firestore.Timestamp.fromMillis(Date.now() - 10 * 60000))
+        .limit(400).get().then(function (snap) {
+          if (snap.empty) return;
+          var b = db.batch();
+          snap.docs.forEach(function (d) { b.delete(d.ref); });
+          return b.commit();
+        }).catch(function () {});
+    }, 60000);
+
+    // ---- Écoute en temps réel ----
+    function listen() {
+      if (unsub) unsub();
+      entries = []; seen = {}; firstLoad = true;
+      setStatus(false, 'Connexion…');
+      updateSince();
+      unsub = db.collection('lectures')
+        .where('cree', '>=', firebase.firestore.Timestamp.fromMillis(showStart))
+        .orderBy('cree', 'desc')
+        .onSnapshot(function (snap) {
+          var gotNew = false;
+          entries = snap.docs.map(function (doc) {
+            var x = doc.data();
+            var isNew = !seen[doc.id];
+            seen[doc.id] = true;
+            if (isNew && !firstLoad) gotNew = true;
+            return {
+              id: doc.id, d: x.jour, m: x.mois, y: x.annee, show: x.show || 'general',
+              t: x.cree ? x.cree.toMillis() : Date.now(), fresh: isNew && !firstLoad
+            };
+          });
+          firstLoad = false;
+          setStatus(true, 'En direct');
+          if (gotNew && navigator.vibrate) navigator.vibrate(60);
+          refreshShowFilter();
+          render();
+        }, function () { setStatus(false, 'Hors ligne — vérifie les règles Firestore'); });
+    }
+
+    function setStatus(on, txt) {
+      document.getElementById('dot').className = 'dot' + (on ? ' on' : '');
+      document.getElementById('status').textContent = txt;
+    }
+    function updateSince() {
+      var d = new Date(showStart);
+      document.getElementById('since').textContent =
+        'Depuis ' + d.toLocaleDateString('fr-CA', { weekday: 'short', day: 'numeric', month: 'short' }) +
+        ' à ' + d.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function refreshShowFilter() {
+      var sel = document.getElementById('filter-show'), cur = sel.value;
+      var shows = {};
+      entries.forEach(function (e) { shows[e.show] = (shows[e.show] || 0) + 1; });
+      sel.innerHTML = '';
+      var all = el('option', null, 'Tous les shows'); all.value = '*'; sel.appendChild(all);
+      Object.keys(shows).sort().forEach(function (s) {
+        var o = el('option', null, s + ' (' + shows[s] + ')'); o.value = s; sel.appendChild(o);
+      });
+      sel.value = shows[cur] ? cur : '*';
+    }
+
+    function render() {
+      var f = document.getElementById('filter-show').value;
+      var sort = document.getElementById('sort').value;
+      var list = entries.filter(function (e) { return f === '*' || e.show === f; });
+
+      if (sort === 'calendar') list.sort(function (a, b) { return (a.m - b.m) || (a.d - b.d); });
+      else if (sort === 'age') list.sort(function (a, b) { return (b.y - a.y) || (b.m - a.m) || (b.d - a.d); });
+
+      document.getElementById('count').textContent = list.length;
+
+      // Répartition par signe
+      var chips = document.getElementById('chips'); chips.innerHTML = '';
+      var bySign = {};
+      list.forEach(function (e) { var z = zodiac(e.d, e.m); bySign[z] = (bySign[z] || 0) + 1; });
+      Object.keys(bySign).sort(function (a, b) { return bySign[b] - bySign[a]; }).forEach(function (z) {
+        var c = el('span', 'chip'); c.appendChild(document.createTextNode(z + ' '));
+        c.appendChild(el('b', null, String(bySign[z]))); chips.appendChild(c);
+      });
+
+      var box = document.getElementById('list'); box.innerHTML = '';
+      if (!list.length) {
+        box.appendChild(el('div', 'empty', 'En attente des premières dates…'));
+        return;
+      }
+      list.forEach(function (e) {
+        var card = el('div', 'entry' + (e.fresh ? ' fresh' : ''));
+        card.appendChild(el('div', 'dob', e.d + ' ' + MONTHS[e.m - 1] + ' ' + e.y));
+        card.appendChild(el('div', 'age', age(e.d, e.m, e.y) + ' ans'));
+
+        var meta = el('div', 'meta');
+        meta.appendChild(el('b', null, zodiac(e.d, e.m)));
+        meta.appendChild(document.createTextNode(' · ' + CHINESE[e.y % 12]));
+        var dtb = daysToBirthday(e.d, e.m);
+        if (dtb === 0) meta.appendChild(document.createTextNode(' · 🎂 C\'EST SA FÊTE AUJOURD\'HUI'));
+        else if (dtb <= 30) meta.appendChild(document.createTextNode(' · fête dans ' + dtb + ' j'));
+        card.appendChild(meta);
+
+        card.appendChild(el('div', 'time',
+          new Date(e.t).toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
+          (e.show !== 'general' ? ' · ' + e.show : '')));
+
+        var celeb = CELEBS[e.m] && CELEBS[e.m][e.d];
+        if (celeb) card.appendChild(el('div', 'celeb', 'Même jour que ' + celeb));
+
+        box.appendChild(card);
+        if (e.fresh) { setTimeout(function () { card.classList.remove('fresh'); }, 6000); e.fresh = false; }
+      });
+    }
+
+    document.getElementById('filter-show').onchange = function () { render(); renderPresence(); };
+    document.getElementById('sort').onchange = render;
+
+    document.getElementById('btn-new-show').onclick = function () {
+      if (!confirm('Démarrer un nouveau show ? La liste repartira de zéro à partir de maintenant.')) return;
+      showStart = Date.now();
+      safeSet('cn_show_start', String(showStart));
+      listen();
+    };
+
+    document.getElementById('btn-clear').onclick = function () {
+      if (!confirm('Supprimer définitivement TOUTES les dates enregistrées (tous les shows) ?')) return;
+      Promise.all([db.collection('lectures').get(), db.collection('presence').get()]).then(function (snaps) {
+        var docs = snaps[0].docs.concat(snaps[1].docs);
+        var batches = [], b = db.batch(), n = 0;
+        docs.forEach(function (doc) {
+          b.delete(doc.ref); n++;
+          if (n % 450 === 0) { batches.push(b.commit()); b = db.batch(); }
+        });
+        batches.push(b.commit());
+        return Promise.all(batches);
+      }).then(function () { alert('Tout est effacé.'); })
+        .catch(function () { alert('Erreur pendant la suppression.'); });
+    };
+  </script>
+</body>
+</html>
