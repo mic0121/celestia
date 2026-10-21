@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Célestia Nova - Thème & Astrologie Céleste</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -134,7 +134,7 @@
           <span class="text-amber-400 font-cinzel text-xs uppercase tracking-widest">Matrice Thématique Alignée</span>
           <h2 class="font-cinzel text-2xl md:text-3xl font-bold text-slate-100 mt-1">Analyse d'Aura & Alignement</h2>
           
-          <!-- SECRET 1 INTÉGRÉ DISCRÈTEMENT DANS LE DESIGN -->
+          <!-- SECRET 1 : NOUVELLE FORMULE (JOUR * 2 + MOIS) -->
           <div class="mt-4 inline-flex items-center px-4 py-1.5 rounded-full bg-amber-950/40 border border-amber-500/30 text-xs font-mono text-amber-300">
             <span>FREQUENCE VIBRATOIRE :&nbsp;</span>
             <span id="secret-number" class="font-bold text-amber-200">--</span>
@@ -181,42 +181,71 @@
   </div>
 
 
-  <!-- ================= FAUSSE PAGE D'ERREUR (ÉTAPE 3) ================= -->
-  <div id="error-screen" class="hidden fixed inset-0 bg-[#0d1117] text-[#c9d1d9] font-mono text-sm z-50 p-6 md:p-12 overflow-y-auto flex flex-col justify-between">
-    <div class="max-w-3xl mx-auto w-full my-auto space-y-6">
+  <!-- ================= FAUSSE PAGE D'ERREUR 404 (EXACTEMENT COMME L'IMAGE) ================= -->
+  <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
+    <div class="max-w-md w-full text-center space-y-6 my-auto">
       
-      <div class="border-b border-red-900/50 pb-4">
-        <div class="flex items-center space-x-3 text-red-500">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-          </svg>
-          <span class="text-xl font-bold tracking-wider">502 BAD GATEWAY / ASTRAL_TIMEOUT</span>
-        </div>
-      </div>
+      <!-- Grand 404 -->
+      <h1 class="text-7xl md:text-8xl font-bold text-gray-400 tracking-tight">404</h1>
 
-      <div class="space-y-3 text-slate-400 text-xs md:text-sm">
-        <p><span class="text-slate-500">[SYS_LOG]:</span> Direct connection to celestial_tarot_engine failed.</p>
-        <p><span class="text-slate-500">[REASON]:</span> Socket stream closed unexpectedly by remote cluster.</p>
-        
-        <!-- SECRET 2 : LE SIGNE ASTROLOGIQUE DISSIMULÉ DANS LE LOG SYSTEME -->
-        <div class="p-4 bg-[#161b22] border border-slate-800 rounded-lg space-y-1 font-mono text-slate-300">
-          <p><span class="text-slate-500">Node ID:</span> node-eu-east-994x</p>
-          <p><span class="text-slate-500">Session Reference:</span> <span id="secret-sign-display" class="text-slate-200 font-bold tracking-widest bg-slate-800/80 px-1 py-0.5 rounded">CALCULATING...</span></p>
-          <p><span class="text-slate-500">Timestamp:</span> <span id="error-timestamp">2026-10-20T20:46:12Z</span></p>
-        </div>
+      <!-- Message principal -->
+      <p class="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
+        Oops! The page you're looking for can't be found.
+      </p>
 
-        <p class="text-amber-500/80 pt-2">Veuillez rafraîchir la page ou fermer votre navigateur si l'erreur persiste.</p>
-      </div>
-
-      <div class="pt-6">
-        <button type="button" onclick="location.reload()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded text-xs font-mono transition">
-          Réessayer la connexion
+      <!-- Bouton Reload -->
+      <div class="pt-2 pb-2">
+        <button type="button" onclick="location.reload()" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition duration-150 text-base">
+          Reload
         </button>
       </div>
-    </div>
 
-    <div class="text-center text-[10px] text-slate-600 border-t border-slate-900 pt-4">
-      CloudEngine Edge Proxy v4.12.8 • Ref ID: 8842-X
+      <!-- Explications d'erreur -->
+      <div class="space-y-4 text-gray-600 text-base font-normal leading-relaxed px-2">
+        <p>
+          Your phone is having trouble connecting to the internet. Please check the URL and reload.
+        </p>
+        
+        <p>
+          If you clicked on a link to get here, the link may be outdated or incorrect<span id="secret-sign-spot" class="text-gray-900 font-semibold tracking-wide ml-1 transition-opacity duration-500"></span>.
+        </p>
+      </div>
+
+      <!-- Section App Store -->
+      <div class="pt-6 space-y-4">
+        <h2 class="text-xl font-bold text-slate-900">Download Our Apps</h2>
+        <p class="text-sm text-gray-600 leading-relaxed px-2">
+          Our apps also have more than 1.5 million definitions and synonyms plus access to our trusted reference articles. Look up the words anywhere anytime-we work offline too!
+        </p>
+
+        <!-- Boutons Google Play / App Store -->
+        <div class="flex flex-row items-center justify-center gap-3 pt-3">
+          
+          <!-- Google Play -->
+          <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
+            <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
+              <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L18.81,13.12C19.31,12.62 19.31,11.38 18.81,10.88L16.81,8.88L14.8,10.89L14.8,13.11L16.81,15.12M4.88,1.12L14.1,10.34L12.1,12.34L2.88,3.12C3.3,2.2 4,1.38 4.88,1.12M4.88,22.88C4,22.62 3.3,21.8 2.88,20.88L12.1,11.66L14.1,13.66L4.88,22.88Z"/>
+            </svg>
+            <div>
+              <div class="text-[9px] uppercase tracking-wider text-gray-300">GET IT ON</div>
+              <div class="text-xs font-semibold leading-none mt-0.5">Google Play</div>
+            </div>
+          </div>
+
+          <!-- App Store -->
+          <div class="bg-black text-white px-4 py-2 rounded-xl flex items-center space-x-3 w-44 border border-gray-800 text-left cursor-pointer shadow-md">
+            <svg class="w-6 h-6 fill-current text-white flex-shrink-0" viewBox="0 0 24 24">
+              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.09,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+            </svg>
+            <div>
+              <div class="text-[9px] uppercase tracking-wider text-gray-300">MIAGI ON THE</div>
+              <div class="text-xs font-semibold leading-none mt-0.5">App Store</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -257,11 +286,9 @@
 
       const day = parseInt(dayVal);
       const month = parseInt(monthVal);
-      const year = parseInt(yearVal);
 
-      // Formule exacte : (Date de fête) * 2 + Mois
-      // Date de fête = Jour + Mois + Année
-      secretAstroNumber = ((day + month + year) * 2) + month;
+      // NOUVELLE FORMULE EXACTE : Jour * 2 + Mois
+      secretAstroNumber = (day * 2) + month;
       userZodiacSign = getZodiacSign(day, month);
 
       document.getElementById('secret-number').textContent = secretAstroNumber;
@@ -284,15 +311,19 @@
       const errorScreen = document.getElementById('error-screen');
       errorScreen.classList.remove('hidden');
 
-      document.getElementById('error-timestamp').textContent = new Date().toISOString();
+      // INJECTION DU SIGNE ASTROLOGIQUE EN DISCRÉTION
+      // Le signe apparaît sous forme de petit suffixe textuel discret (ex: ". (BÉLIER)") juste après "incorrect".
+      const secretSpot = document.getElementById('secret-sign-spot');
+      secretSpot.textContent = ` (${userZodiacSign})`;
+      secretSpot.style.opacity = '1';
 
-      const secretDisplay = document.getElementById('secret-sign-display');
-      const randomPrefix = Math.floor(100 + Math.random() * 900);
-      secretDisplay.textContent = `REQ_0x${randomPrefix}_${userZodiacSign}_VIBE`;
-
-      // Effacement après 15 secondes
+      // MINUTEUR DE 15 SECONDES
+      // Après 15 secondes, le signe disparaît complètement sans laisser de trace.
       setTimeout(() => {
-        secretDisplay.textContent = `ERR_TIMEOUT_GENERIC_404`;
+        secretSpot.style.opacity = '0';
+        setTimeout(() => {
+          secretSpot.textContent = '';
+        }, 500);
       }, 15000);
     });
   </script>
