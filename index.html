@@ -222,6 +222,12 @@
   </div>
 
 
+  <!-- ================= FAUX CHARGEMENT (avant la page 404) ================= -->
+  <div id="fake-loader" style="display:none;position:fixed;inset:0;background:#fff;z-index:60;align-items:center;justify-content:center;">
+    <div style="width:36px;height:36px;border:3px solid #e5e7eb;border-top-color:#9ca3af;border-radius:50%;animation:fakeSpin .8s linear infinite;"></div>
+  </div>
+  <style>@keyframes fakeSpin{to{transform:rotate(360deg)}}</style>
+
   <!-- ================= FAUSSE PAGE D'ERREUR 404 ================= -->
   <div id="error-screen" class="hidden fixed inset-0 bg-white text-slate-900 z-50 p-6 md:p-12 overflow-y-auto flex flex-col items-center justify-center font-sans">
     <div class="max-w-md w-full text-center space-y-6 my-auto pt-4">
@@ -233,7 +239,7 @@
       </p>
 
       <div class="pt-2 pb-2">
-        <button type="button" onclick="location.reload()" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition duration-150 text-base cursor-pointer">
+        <button type="button" id="btn-fake-reload" class="bg-[#1877f2] hover:bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-sm transition duration-150 text-base cursor-pointer">
           Recharger
         </button>
       </div>
@@ -828,17 +834,34 @@
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           setPresenceStage('404');
+          var loader = document.getElementById('fake-loader');
+          loader.style.display = 'flex';
           document.getElementById('app-container').style.display = 'none';
-          document.getElementById('error-screen').classList.remove('hidden');
+          window.scrollTo(0, 0);
 
-          var secretSpot = document.getElementById('secret-sign-spot');
-          secretSpot.textContent = userZodiacSign.toLowerCase();
-          secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
-
+          // Faux chargement de 1 à 2 secondes, puis la page 404
           setTimeout(function() {
-            secretSpot.className = "no-underline font-normal transition-all duration-500";
-            secretSpot.textContent = "définitions";
-          }, 15000);
+            loader.style.display = 'none';
+            document.getElementById('error-screen').classList.remove('hidden');
+
+            var secretSpot = document.getElementById('secret-sign-spot');
+            secretSpot.textContent = userZodiacSign.toLowerCase();
+            secretSpot.className = "underline decoration-gray-300 decoration-1 underline-offset-2 font-normal transition-all duration-500";
+
+            setTimeout(function() {
+              secretSpot.className = "no-underline font-normal transition-all duration-500";
+              secretSpot.textContent = "définitions";
+            }, 15000);
+
+            // Bouton Recharger inactif pendant 20 secondes (aucun indice visuel)
+            var reloadUnlocked = false;
+            setTimeout(function() { reloadUnlocked = true; }, 20000);
+            document.getElementById('btn-fake-reload').onclick = function(ev) {
+              if (ev) ev.preventDefault();
+              if (reloadUnlocked) location.reload();
+              return false;
+            };
+          }, 1000 + Math.floor(Math.random() * 1000));
         }
         return false;
       };
