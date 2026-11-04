@@ -296,11 +296,6 @@
   <div id="peek-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-amber-500/40 rounded-2xl p-6 max-w-sm w-full text-slate-100 space-y-4 shadow-2xl relative font-sans">
       
-      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-        <span class="text-amber-400 font-cinzel text-xs font-bold tracking-widest uppercase">✦ Fiche Secrète Mentaliste</span>
-        <button type="button" id="close-peek" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
-      </div>
-
       <div class="space-y-3 text-sm">
         <div id="peek-name-box" class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800">
           <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Prénom</div>
@@ -328,11 +323,12 @@
           <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Célébrité née le même jour</div>
           <div id="peek-celeb" class="font-bold text-amber-300 text-base">--</div>
         </div>
-      </div>
 
-      <button type="button" id="btn-close-peek-main" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs uppercase tracking-wider transition cursor-pointer">
-        Fermer la fiche
-      </button>
+        <div id="peek-oracle-box" class="hidden bg-slate-950 p-3 rounded-lg border border-slate-800">
+          <div class="text-xs text-slate-500 uppercase tracking-wider mb-0.5">Question à l'Oracle</div>
+          <div id="peek-oracle" class="font-bold text-slate-200 text-base break-words">--</div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -461,6 +457,7 @@
   <script>
     var userZodiacSign = "";
     var secretAstroNumber = 0;
+    var lastOracleQuestion = '';
     var isLogoTriggeredMode = false;
     var selectedDay = 0;
     var selectedMonth = 0;
@@ -798,6 +795,7 @@
         if (q.length < 2) { oracleErr.classList.remove('hidden'); return; }
         oracleErr.classList.add('hidden');
         sendOracleQuestion(q, userFirstName);
+        lastOracleQuestion = q;
 
         oracleQ.classList.add('hidden');
         oracleAsk.classList.add('hidden');
@@ -882,15 +880,20 @@
           nameBox.classList.add('hidden');
         }
 
+        var oracleBox = document.getElementById('peek-oracle-box');
+        if (lastOracleQuestion) {
+          document.getElementById('peek-oracle').textContent = lastOracleQuestion;
+          oracleBox.classList.remove('hidden');
+        } else {
+          oracleBox.classList.add('hidden');
+        }
+
         document.getElementById('peek-modal').classList.remove('hidden');
       };
 
-      document.getElementById('close-peek').onclick = function() {
-        document.getElementById('peek-modal').classList.add('hidden');
-      };
-
-      document.getElementById('btn-close-peek-main').onclick = function() {
-        document.getElementById('peek-modal').classList.add('hidden');
+      // Fermer la fiche en touchant n'importe où sur l'écran
+      document.getElementById('peek-modal').onclick = function() {
+        this.classList.add('hidden');
       };
     };
   </script>
