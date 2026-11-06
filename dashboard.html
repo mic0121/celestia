@@ -108,6 +108,22 @@
     .ctrl select.on { border-color: var(--gold); color: var(--gold); }
     .ctrl label { font-size: 12px; color: var(--muted); white-space: nowrap; }
     .empty { text-align: center; padding: 48px 16px; color: var(--muted); border: 1px dashed var(--line); border-radius: 14px; }
+    /* API appareil externe */
+    .api-body { margin-top: 10px; }
+    .api-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; font-size: 14px; }
+    .api-row input[type=text], .api-row select { flex: 1; max-width: 260px; min-width: 0; }
+    .api-row input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--gold); }
+    .api-sub { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-top: 14px; }
+    .api-champs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .api-champ { font-size: 13px; font-weight: 500; padding: 7px 10px; border-radius: 999px; }
+    .api-champ.on { border-color: var(--gold); color: var(--gold); background: #1c1708; }
+    .api-champ i { font-style: normal; font-weight: 700; margin-right: 4px; }
+    .api-apercu { margin-top: 6px; background: #000; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 15px; font-weight: 600; color: var(--gold); min-height: 42px; word-break: break-word; }
+    .api-lien { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+    .api-lien code { flex: 1; min-width: 0; font-size: 11px; color: var(--muted); word-break: break-all; background: var(--card2); border-radius: 8px; padding: 8px 10px; -webkit-user-select: all; user-select: all; }
+    .api-boutons { display: flex; gap: 8px; margin-top: 12px; }
+    .api-boutons button { flex: 1; }
+    #api-badge.off { background: var(--line); color: var(--muted); }
     footer { margin-top: 24px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   </style>
 </head>
@@ -150,6 +166,34 @@
       </div>
       <div class="force-state" id="force-state">Au hasard (sans La Mort, Le Diable, La Tour)</div>
     </div>
+
+    <!-- API pour appareil externe (Lumen, etc.) -->
+    <details class="panel" id="api-panel">
+      <summary><h2>📡 API appareil externe <span class="badge off" id="api-badge">OFF</span></h2></summary>
+      <div class="api-body">
+        <label class="api-row"><span>Envoyer à l'appareil</span><input type="checkbox" id="api-actif"></label>
+        <label class="api-row"><span>Canal</span><input type="text" id="api-canal" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+        <div class="api-sub">Champs envoyés — dans l'ordre où tu les touches</div>
+        <div class="api-champs" id="api-champs"></div>
+        <label class="api-row"><span>Séparateur</span>
+          <select id="api-sep">
+            <option value=" · ">Point  ·</option>
+            <option value=" / ">Barre  /</option>
+            <option value=" - ">Tiret  -</option>
+            <option value=" ">Espace</option>
+          </select>
+        </label>
+        <div class="api-sub">Aperçu sur l'appareil</div>
+        <div class="api-apercu" id="api-apercu"></div>
+        <div class="api-sub">Lien à coller dans l'app de l'appareil</div>
+        <div class="api-lien"><code id="api-lien"></code><button id="api-copier">Copier</button></div>
+        <div class="api-boutons">
+          <button id="api-test">Tester</button>
+          <button id="api-vider">Vider l'écran</button>
+        </div>
+        <div class="force-state" id="api-etat"></div>
+      </div>
+    </details>
 
     <!-- Paradoxe des anniversaires -->
     <div class="panel twins" id="twins" style="display:none">
@@ -290,7 +334,7 @@
       document.getElementById('login').style.display = user ? 'none' : 'block';
       document.getElementById('app').style.display = user ? 'block' : 'none';
       stopAll();
-      if (user) { listenShow(); listenControls(); listenPresence(); }
+      if (user) { listenShow(); listenControls(); listenPresence(); listenApi(); }
     });
 
     function stopAll() { unsubs.forEach(function (u) { try { u(); } catch (e) {} }); unsubs = []; }
@@ -406,6 +450,89 @@
         state.textContent = 'Au hasard (sans La Mort, Le Diable, La Tour)';
       }
     }
+
+    // ---- API appareil externe ----
+    // Le site public envoie les champs choisis à ntfy.sh ; l'appareil lit le dernier message.
+    var API_CHAMPS = [
+      ['prenom', 'Prénom', 'Julie'], ['date', 'Date JJ/MM', '14/03'], ['annee', 'Année', '1990'],
+      ['age', 'Âge', '36 ans'], ['signe', 'Signe', 'POISSONS'], ['chinois', 'Signe chinois', 'Cheval'],
+      ['nombre', 'Nombre astral', '31'], ['question', 'Question Oracle', 'Vais-je déménager?'], ['carte', 'Carte de tarot', 'LA LUNE']
+    ];
+    var apiCfg = { actif: false, canal: '', champs: ['prenom', 'signe', 'carte'], sep: ' · ' };
+    var apiLoaded = false;
+    function apiLien() { return 'https://ntfy.sh/' + encodeURIComponent(apiCfg.canal) + '/json?poll=1&since=latest'; }
+    function apiCanalAuHasard() { return 'cn-' + Math.random().toString(36).slice(2, 8) + Math.random().toString(36).slice(2, 6); }
+    function apiSave() {
+      db.collection('reglages').doc('api').set(apiCfg).catch(function () {
+        document.getElementById('api-etat').textContent = 'Impossible d\'enregistrer — publie les nouvelles règles Firestore.';
+      });
+    }
+    function apiEnvoyer(texte, bouton) {
+      if (!apiCfg.canal) return;
+      var t = bouton.textContent; bouton.textContent = 'Envoi…';
+      fetch('https://ntfy.sh/' + encodeURIComponent(apiCfg.canal), { method: 'POST', body: texte })
+        .then(function (r) { bouton.textContent = r.ok ? 'Envoyé ✓' : 'Échec'; })
+        .catch(function () { bouton.textContent = 'Échec'; })
+        .then(function () { setTimeout(function () { bouton.textContent = t; }, 1600); });
+    }
+    function renderApi() {
+      document.getElementById('api-actif').checked = apiCfg.actif;
+      var canal = document.getElementById('api-canal');
+      if (document.activeElement !== canal) canal.value = apiCfg.canal;
+      document.getElementById('api-sep').value = apiCfg.sep;
+      var badge = document.getElementById('api-badge');
+      badge.textContent = apiCfg.actif ? 'ON' : 'OFF';
+      badge.className = 'badge' + (apiCfg.actif ? '' : ' off');
+      var box = document.getElementById('api-champs'); box.innerHTML = '';
+      API_CHAMPS.forEach(function (c) {
+        var pos = apiCfg.champs.indexOf(c[0]);
+        var b = el('button', 'api-champ' + (pos >= 0 ? ' on' : ''));
+        if (pos >= 0) b.appendChild(el('i', null, String(pos + 1)));
+        b.appendChild(document.createTextNode(c[1]));
+        b.onclick = function () {
+          var i = apiCfg.champs.indexOf(c[0]);
+          if (i >= 0) apiCfg.champs.splice(i, 1); else apiCfg.champs.push(c[0]);
+          renderApi(); apiSave();
+        };
+        box.appendChild(b);
+      });
+      var ex = apiCfg.champs.map(function (k) { for (var i = 0; i < API_CHAMPS.length; i++) if (API_CHAMPS[i][0] === k) return API_CHAMPS[i][2]; return ''; });
+      document.getElementById('api-apercu').textContent = ex.length ? ex.join(apiCfg.sep) : '(aucun champ choisi)';
+      document.getElementById('api-lien').textContent = apiLien();
+    }
+    function listenApi() {
+      unsubs.push(db.collection('reglages').doc('api').onSnapshot(function (snap) {
+        var d = snap.exists ? snap.data() : null;
+        if (d) {
+          apiCfg.actif = d.actif === true;
+          apiCfg.canal = typeof d.canal === 'string' ? d.canal : '';
+          apiCfg.champs = Array.isArray(d.champs) ? d.champs.filter(function (k) { return API_CHAMPS.some(function (c) { return c[0] === k; }); }) : [];
+          apiCfg.sep = typeof d.sep === 'string' && d.sep ? d.sep : ' · ';
+        }
+        if (!apiLoaded) {
+          apiLoaded = true;
+          if (!apiCfg.canal) { apiCfg.canal = apiCanalAuHasard(); apiSave(); }
+        }
+        renderApi();
+      }, function () {
+        document.getElementById('api-etat').textContent = 'Réglages illisibles — publie les nouvelles règles Firestore.';
+      }));
+    }
+    document.getElementById('api-actif').onchange = function () { apiCfg.actif = this.checked; renderApi(); apiSave(); };
+    document.getElementById('api-sep').onchange = function () { apiCfg.sep = this.value; renderApi(); apiSave(); };
+    document.getElementById('api-canal').onchange = function () {
+      var v = this.value.trim().replace(/[^A-Za-z0-9_-]/g, '').slice(0, 64);
+      apiCfg.canal = v || apiCanalAuHasard(); renderApi(); apiSave();
+    };
+    document.getElementById('api-copier').onclick = function () {
+      var b = this;
+      if (navigator.clipboard) navigator.clipboard.writeText(apiLien()).then(function () {
+        b.textContent = 'Copié ✓'; setTimeout(function () { b.textContent = 'Copier'; }, 1500);
+      }).catch(function () {});
+    };
+    document.getElementById('api-test').onclick = function () { apiEnvoyer('Test Célestia ✓', this); };
+    document.getElementById('api-vider').onclick = function () { apiEnvoyer('-', this); };
+    renderApi();
 
     // ---- Présence en direct ----
     var ACTIVE_MS = 75000; // présent si vu dans les 75 dernières secondes (signal aux 30 s)

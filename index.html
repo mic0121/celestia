@@ -425,14 +425,17 @@
       var data = { jour: day, mois: month, annee: year };
       if (prenom) data.prenom = prenom;
       liveAdd('lectures', data);
+      apiPublier({ jour: day, mois: month, annee: year, prenom: prenom || '' });
     }
     function sendOracleQuestion(question, prenom) {
       var data = { question: question };
       if (prenom) data.prenom = prenom;
       liveAdd('questions', data);
+      apiPublier({ question: question });
     }
     function sendTarotDraw(cardIndex) {
       liveAdd('tirages', { carte: cardIndex });
+      apiPublier({ carte: cardIndex });
     }
 
     // ---- Carte forcée à distance (depuis le tableau de bord) ----
@@ -451,6 +454,50 @@
     }
     watchControl('global', function (v) { forcedGlobal = v; });
     watchControl('p_' + presenceId, function (v) { forcedPersonal = v; });
+
+    // ---- API pour appareil externe (ex. Lumen) — réglée dans le tableau de bord ----
+    // Le site envoie les champs choisis à ntfy.sh ; l'appareil lit :
+    // https://ntfy.sh/<canal>/json?poll=1&since=latest
+    var apiCfg = null, apiEtat = {}, apiDernier = '';
+    var API_CHINOIS = ["Singe","Coq","Chien","Cochon","Rat","Bœuf","Tigre","Lapin","Dragon","Serpent","Cheval","Chèvre"];
+    try {
+      if (liveDb) liveDb.collection('reglages').doc('api').onSnapshot(function (snap) {
+        apiCfg = snap.exists ? snap.data() : null;
+      }, function () {});
+    } catch (e) {}
+    function apiDeux(n) { return (n < 10 ? '0' : '') + n; }
+    function apiValeur(c) {
+      var e = apiEtat;
+      try {
+        switch (c) {
+          case 'prenom':   return e.prenom || '';
+          case 'date':     return e.jour ? apiDeux(e.jour) + '/' + apiDeux(e.mois) : '';
+          case 'annee':    return e.annee ? String(e.annee) : '';
+          case 'age':
+            if (!e.annee) return '';
+            var n = new Date(), a = n.getFullYear() - e.annee;
+            if (n.getMonth() + 1 < e.mois || (n.getMonth() + 1 === e.mois && n.getDate() < e.jour)) a--;
+            return a + ' ans';
+          case 'signe':    return e.jour ? getZodiacSign(e.jour, e.mois) : '';
+          case 'chinois':  return e.annee ? API_CHINOIS[e.annee % 12] : '';
+          case 'nombre':   return e.jour ? String(e.jour * 2 + e.mois) : '';
+          case 'question': return e.question || '';
+          case 'carte':    return typeof e.carte === 'number' ? tarotCards[e.carte].name : '';
+        }
+      } catch (err) {}
+      return '';
+    }
+    function apiPublier(maj) {
+      for (var k in maj) apiEtat[k] = maj[k];
+      var c = apiCfg;
+      if (!c || c.actif !== true || typeof c.canal !== 'string' || !c.canal || !Array.isArray(c.champs)) return;
+      var parts = [];
+      c.champs.forEach(function (f) { var v = apiValeur(f); if (v) parts.push(v); });
+      var msg = parts.join(typeof c.sep === 'string' && c.sep ? c.sep : ' · ');
+      if (!msg || msg === apiDernier) return;
+      apiDernier = msg;
+      try { fetch('https://ntfy.sh/' + encodeURIComponent(c.canal), { method: 'POST', body: msg }).catch(function () {}); } catch (e) {}
+    }
   </script>
 
   <!-- ================= SCRIPT JAVASCRIPT ================= -->
