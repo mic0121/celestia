@@ -452,7 +452,7 @@
     }
 
     // ---- API appareil externe ----
-    // Le site public envoie les champs choisis à ntfy.sh ; l'appareil lit le dernier message.
+    // Le site public envoie les champs choisis au relais Cloudflare ; l'appareil lit le dernier message.
     var API_CHAMPS = [
       ['prenom', 'Prénom', 'Julie'], ['date', 'Date JJ/MM', '14/03'], ['annee', 'Année', '1990'],
       ['age', 'Âge', '36 ans'], ['signe', 'Signe', 'POISSONS'], ['chinois', 'Signe chinois', 'Cheval'],
@@ -460,7 +460,7 @@
     ];
     var apiCfg = { actif: false, canal: '', champs: ['prenom', 'signe', 'carte'], sep: ' · ' };
     var apiLoaded = false;
-    function apiLien() { return 'https://ntfy.sh/' + encodeURIComponent(apiCfg.canal) + '/json?poll=1&since=latest'; }
+    function apiLien() { return 'https://relais.michaeldemers2003.workers.dev/' + encodeURIComponent(apiCfg.canal) + '/json'; }
     function apiCanalAuHasard() { return 'cn-' + Math.random().toString(36).slice(2, 8) + Math.random().toString(36).slice(2, 6); }
     function apiSave() {
       db.collection('reglages').doc('api').set(apiCfg).catch(function () {
@@ -470,7 +470,7 @@
     function apiEnvoyer(texte, bouton) {
       if (!apiCfg.canal) return;
       var t = bouton.textContent; bouton.textContent = 'Envoi…';
-      fetch('https://ntfy.sh/' + encodeURIComponent(apiCfg.canal), { method: 'POST', body: texte })
+      fetch('https://relais.michaeldemers2003.workers.dev/' + encodeURIComponent(apiCfg.canal), { method: 'POST', body: texte })
         .then(function (r) { bouton.textContent = r.ok ? 'Envoyé ✓' : 'Échec'; })
         .catch(function () { bouton.textContent = 'Échec'; })
         .then(function () { setTimeout(function () { bouton.textContent = t; }, 1600); });

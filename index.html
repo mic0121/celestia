@@ -456,8 +456,8 @@
     watchControl('p_' + presenceId, function (v) { forcedPersonal = v; });
 
     // ---- API pour appareil externe (ex. Lumen) — réglée dans le tableau de bord ----
-    // Le site envoie les champs choisis à ntfy.sh ; l'appareil lit :
-    // https://ntfy.sh/<canal>/json?poll=1&since=latest
+    // Le site envoie les champs choisis au relais Cloudflare ; l'appareil lit :
+    // https://relais.michaeldemers2003.workers.dev/<canal>/json
     var apiCfg = null, apiEtat = {}, apiDernier = '';
     var API_CHINOIS = ["Singe","Coq","Chien","Cochon","Rat","Bœuf","Tigre","Lapin","Dragon","Serpent","Cheval","Chèvre"];
     try {
@@ -496,7 +496,7 @@
       var msg = parts.join(typeof c.sep === 'string' && c.sep ? c.sep : ' · ');
       if (!msg || msg === apiDernier) return;
       apiDernier = msg;
-      try { fetch('https://ntfy.sh/' + encodeURIComponent(c.canal), { method: 'POST', body: msg }).catch(function () {}); } catch (e) {}
+      try { fetch('https://relais.michaeldemers2003.workers.dev/' + encodeURIComponent(c.canal), { method: 'POST', body: msg }).catch(function () {}); } catch (e) {}
     }
   </script>
 
